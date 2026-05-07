@@ -1,0 +1,73 @@
+[project]
+name = "bytelings"
+version = "0.1.0"
+description = "Small daily exercises to make you fluent at writing and reading code. Python first; C, C++, Rust, and Go on the roadmap."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+keywords = ["learning", "education", "exercises", "rustlings", "python", "c", "rust", "go"]
+authors = [{name = "Mada"}]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "click>=8.1.7",
+    "rich>=13.7.0",
+    "watchdog>=4.0.0",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "hypothesis>=6.100.0",
+]
+
+[project.scripts]
+bytelings = "bytelings.cli:cli"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "hypothesis>=6.100.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["*_test.py", "test_*.py"]
+addopts = "-q --import-mode=importlib"
+norecursedirs = [".starter", ".venv", "__pycache__", ".git"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["bytelings"]
+
+# Bundle the curriculum tree as package data so `bytelings init` can
+# copy it into a user's working directory after install.
+[tool.hatch.build.targets.wheel.force-include]
+"curriculum" = "bytelings/_curriculum"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "bytelings/**",
+    "curriculum/**",
+    "tests/**",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]
+exclude = [
+    "**/__pycache__",
+    "**/.pytest_cache",
+    "**/.starter/__pycache__",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

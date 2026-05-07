@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# uv / venv
+.venv/
+.python-version
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Internal design docs — not for public repo
+docs/superpowers/
+
+# Track progress (it's the user's audit trail)
+!progress/
+!progress/**

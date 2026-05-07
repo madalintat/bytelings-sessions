@@ -1,0 +1,28 @@
+"""Rung 5: Apply.
+
+Tiny CLI: read words from stdin (whitespace-separated), print anagram
+groups, one group per line, words space-separated within a group.
+
+Reuses anagram_groups from rung 4.
+
+Try it: echo "eat tea tan ate nat bat" | uv run python 05_apply.py
+"""
+import sys
+from importlib.util import module_from_spec, spec_from_file_location
+from pathlib import Path
+
+_spec = spec_from_file_location(
+    "_solo", Path(__file__).parent / "04_solo.py"
+)
+_solo = module_from_spec(_spec)
+_spec.loader.exec_module(_solo)
+
+
+def main() -> None:
+    words = sys.stdin.read().split()
+    for group in _solo.anagram_groups(words):
+        print(" ".join(group))
+
+
+if __name__ == "__main__":
+    main()
