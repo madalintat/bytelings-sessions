@@ -39,7 +39,6 @@ pip install bytelings
 ```bash
 bytelings init           # creates ./bytelings/ with curriculum + uv project
 cd bytelings
-uv sync                  # install dev deps (pytest, hypothesis, ...)
 bytelings                # starts the watcher — save a file, see green panels
 ```
 
