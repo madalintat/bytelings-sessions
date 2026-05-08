@@ -24,7 +24,7 @@ def test_init_creates_project_dir(tmp_path: Path, monkeypatch):
     assert result.exit_code == 0, result.output
     assert (tmp_path / "bytelings").is_dir()
     assert (tmp_path / "bytelings" / "curriculum").is_dir()
-    assert (tmp_path / "bytelings" / "curriculum" / "phase-1-python-core").is_dir()
+    assert (tmp_path / "bytelings" / "curriculum" / "001-uv-setup-and-pytest").is_dir()
 
 
 def test_init_refuses_to_overwrite(tmp_path: Path, monkeypatch):
@@ -42,7 +42,7 @@ def test_init_force_overwrites(tmp_path: Path, monkeypatch):
     result = CliRunner().invoke(cli, ["init", "--force"])
     assert result.exit_code == 0, result.output
     assert not (tmp_path / "bytelings" / "stale.txt").exists()
-    assert (tmp_path / "bytelings" / "curriculum" / "phase-1-python-core").is_dir()
+    assert (tmp_path / "bytelings" / "curriculum" / "001-uv-setup-and-pytest").is_dir()
 
 
 def test_list_shows_days(cli_runner: CliRunner, fake_curriculum: Path):
