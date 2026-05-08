@@ -1,5 +1,5 @@
 ---
-day: day-074-the-gil-and-concurrent-futures
+day: 074-the-gil-and-concurrent-futures
 phase: phase-3-quality-production
 module: module-15-concurrency-in-practice
 style: tour

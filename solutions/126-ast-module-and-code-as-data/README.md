@@ -1,5 +1,5 @@
 ---
-day: day-126-ast-module-and-code-as-data
+day: 126-ast-module-and-code-as-data
 phase: phase-6-packaging-ast-capstone
 module: module-26-ast-and-static-analysis
 style: build-it

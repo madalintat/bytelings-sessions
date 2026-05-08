@@ -1,5 +1,5 @@
 ---
-day: day-006-string-indexing-and-slicing
+day: 006-string-indexing-and-slicing
 phase: phase-1-python-core
 module: module-02-strings-deep
 style: trace

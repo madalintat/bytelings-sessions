@@ -1,5 +1,5 @@
 ---
-day: day-085-doubly-linked-list
+day: 085-doubly-linked-list
 phase: phase-4-data-structures
 module: module-17-linked-lists
 style: tour

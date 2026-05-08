@@ -1,10 +1,10 @@
 ---
-day: day-091-heap-invariant-and-heapq
+day: 092-heap-invariant-and-heapq
 phase: phase-4-data-structures
 module: module-19-heaps-and-hash-tables
 style: tour
 ---
-# Day 91 — A tour of `heapq` (and the invariant under it)
+# Day 92 — A tour of `heapq` (and the invariant under it)
 
 You need a structure that always gives you the minimum, fast — but
 also lets you add new items, fast. You don't need full sorted order;

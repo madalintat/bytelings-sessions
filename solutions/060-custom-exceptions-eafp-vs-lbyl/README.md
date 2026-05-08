@@ -1,5 +1,5 @@
 ---
-day: day-060-custom-exceptions-eafp-vs-lbyl
+day: 060-custom-exceptions-eafp-vs-lbyl
 phase: phase-3-quality-production
 module: module-11-errors-eafp-debugging
 style: compare

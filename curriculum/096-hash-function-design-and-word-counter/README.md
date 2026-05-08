@@ -1,10 +1,10 @@
 ---
-day: day-095-hash-function-design-and-word-counter
+day: 096-hash-function-design-and-word-counter
 phase: phase-4-data-structures
 module: module-19-heaps-and-hash-tables
 style: detective
 ---
-# Day 95 — The case of the slow word counter
+# Day 96 — The case of the slow word counter
 
 You inherited a script that counts word frequencies in a 5GB text
 corpus. It used to run in 90 seconds. Today it ran for 25 minutes

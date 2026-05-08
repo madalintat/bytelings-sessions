@@ -1,5 +1,5 @@
 ---
-day: day-064-fixtures-and-parametrize
+day: 064-fixtures-and-parametrize
 phase: phase-3-quality-production
 module: module-12-testing-with-pytest
 style: build-it

@@ -1,5 +1,5 @@
 ---
-day: day-040-real-world-async-with-httpx
+day: 040-real-world-async-with-httpx
 phase: phase-2-pythonic-tools
 module: module-07-async-await
 style: story

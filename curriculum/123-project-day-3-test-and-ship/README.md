@@ -1,5 +1,5 @@
 ---
-day: day-123-project-day-3-test-and-ship
+day: 123-project-day-3-test-and-ship
 phase: phase-5-algorithms
 module: phase-5-project-pathfinder
 style: story

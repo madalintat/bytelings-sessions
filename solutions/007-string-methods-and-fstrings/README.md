@@ -1,5 +1,5 @@
 ---
-day: day-007-string-methods-and-fstrings
+day: 007-string-methods-and-fstrings
 phase: phase-1-python-core
 module: module-02-strings-deep
 style: tour

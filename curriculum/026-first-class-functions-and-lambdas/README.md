@@ -1,5 +1,5 @@
 ---
-day: day-026-first-class-functions-and-lambdas
+day: 026-first-class-functions-and-lambdas
 phase: phase-1-python-core
 module: module-05-functions-closures-decorators
 style: metaphor

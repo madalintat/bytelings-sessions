@@ -1,7 +1,7 @@
 ---
-day: day-087-binary-tree-basics
+day: 087-binary-tree-basics
 phase: phase-4-data-structures
-module: module-18-trees-and-bst
+module: module-18-trees-recursion-bst
 style: metaphor
 ---
 # Day 87 — A binary tree is a family tree

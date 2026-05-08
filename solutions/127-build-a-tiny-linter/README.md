@@ -1,5 +1,5 @@
 ---
-day: day-127-build-a-tiny-linter
+day: 127-build-a-tiny-linter
 phase: phase-6-packaging-ast-capstone
 module: module-26-ast-and-static-analysis
 style: story

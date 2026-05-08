@@ -1,5 +1,5 @@
 ---
-day: day-055-real-world-io-patterns
+day: 055-real-world-io-patterns
 phase: phase-2-pythonic-tools
 module: module-10-files-paths-json-csv-toml
 style: pain

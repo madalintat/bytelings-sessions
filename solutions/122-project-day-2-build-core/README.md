@@ -1,5 +1,5 @@
 ---
-day: day-122-project-day-2-build-core
+day: 122-project-day-2-build-core
 phase: phase-5-algorithms
 module: phase-5-project-pathfinder
 style: build-it

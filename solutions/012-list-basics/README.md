@@ -1,7 +1,7 @@
 ---
-day: day-012-list-basics
+day: 012-list-basics
 phase: phase-1-python-core
-module: module-03-lists-and-bigo
+module: module-03-lists-and-counting
 style: tour
 ---
 # Day 12 — A guided tour of one tiny list

@@ -1,5 +1,5 @@
 ---
-day: day-125-console-scripts-and-distribution
+day: 125-console-scripts-and-distribution
 phase: phase-6-packaging-ast-capstone
 module: module-25-packaging-with-uv
 style: build-it

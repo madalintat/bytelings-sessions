@@ -1,10 +1,10 @@
 ---
-day: day-094-hash-table-open-addressing
+day: 095-hash-table-open-addressing
 phase: phase-4-data-structures
 module: module-19-heaps-and-hash-tables
 style: compare
 ---
-# Day 94 — Two ways to handle a collision
+# Day 95 — Two ways to handle a collision
 
 You wrote a hash map yesterday. Two different keys hashed to the same
 slot. You handled it by stuffing both into a list at that slot. That's

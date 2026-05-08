@@ -1,5 +1,5 @@
 ---
-day: day-039-async-iterators-and-async-for
+day: 039-async-iterators-and-async-for
 phase: phase-2-pythonic-tools
 module: module-07-async-await
 style: trace

@@ -1,5 +1,5 @@
 ---
-day: day-073-why-is-this-slow
+day: 073-why-is-this-slow
 phase: phase-3-quality-production
 module: module-14-logging-profiling-perf
 style: detective

@@ -1,5 +1,5 @@
 ---
-day: day-078-project-day-2-build-core
+day: 078-project-day-2-build-core
 phase: phase-3-quality-production
 module: phase-3-project-log-analyzer
 style: story

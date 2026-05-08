@@ -1,10 +1,10 @@
 ---
-day: day-098-project-day-3-test-and-ship
+day: 102-project-day-3-test-and-ship
 phase: phase-4-data-structures
 module: phase-4-project-tiny-database
 style: story
 ---
-# Day 98 — Project Day 3: test and ship
+# Day 102 — Project Day 3: test and ship
 
 The table works. Yesterday's test.py is green. Today is the day you
 turn "passes the tests we thought of" into "passes tests we didn't

@@ -1,5 +1,5 @@
 ---
-day: day-107-two-pointer-pattern
+day: 107-two-pointer-pattern
 phase: phase-5-algorithms
 module: module-22-two-pointer-sliding-window-prefix
 style: metaphor

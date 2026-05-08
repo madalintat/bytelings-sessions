@@ -1,5 +1,5 @@
 ---
-day: day-086-lru-cache-project
+day: 086-lru-cache-project
 phase: phase-4-data-structures
 module: module-17-linked-lists
 style: story

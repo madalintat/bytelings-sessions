@@ -1,5 +1,5 @@
 ---
-day: day-071-logging-done-right
+day: 071-logging-done-right
 phase: phase-3-quality-production
 module: module-14-logging-profiling-perf
 style: pain

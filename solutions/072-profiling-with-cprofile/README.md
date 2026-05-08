@@ -1,5 +1,5 @@
 ---
-day: day-072-profiling-with-cprofile
+day: 072-profiling-with-cprofile
 phase: phase-3-quality-production
 module: module-14-logging-profiling-perf
 style: tour

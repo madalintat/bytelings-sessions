@@ -1,106 +1,117 @@
 ---
-day: day-130-capstone-day-3-build-core
+day: 130-capstone-day-3-build-core
 phase: phase-6-packaging-ast-capstone
 module: capstone
 style: build-it
 ---
-# Capstone Day 3 — Build the core
+# Capstone Day 3 — Hit the 5-rule minimum
 
-You have a CLI shell. Today you make `habit done <name>` actually
-record something to disk, and `habit list` actually read it back.
+Day 1: design + bare-except. Day 2: scaffold + 2 more. Today: get to
+**5 distinct, tested rules** — the minimum-viable bar from the
+capstone spec.
 
-This is the meaty day. By tonight your tool *works* — just barely.
+## Today's deliverables
 
-## The slice
+1. **Two more rules implemented**, each with a fixture file and the
+   two-test pair (flags-violation + no-false-positive). Total
+   active rules: 5+.
+2. **Refactor the visitor** if it's grown messy. Each rule should be
+   a single `@rule_for(...)` function. If you've started branching
+   inside a rule for sub-cases, split into two registered rules.
+3. **A `Finding` dataclass** that captures everything needed for
+   tomorrow's output formatting (path, line, col, rule_id, message).
 
-Three things to build:
+## Pick the next two rules carefully
 
-1. **Storage** — a `Database` class in `storage.py` that loads/saves
-   a JSON file atomically. "Atomically" matters: if the user hits
-   Ctrl-C mid-write, the old file should still be intact. Pattern:
-   write to a temp file, then `os.replace` over the real one.
-2. **Domain model** — a `Habit` dataclass in `core.py` with
-   `name: str`, `created: date`, `log: list[date]`. Add a
-   `mark_done(today)` method and a `streak(today)` method.
-3. **Wire-up** — replace the TODO in `cli.py done`. Load the DB,
-   call `mark_done`, save the DB, print a friendly confirmation.
+Some rules are easy (`bare-except`, `mutable-default-argument`,
+`function-too-long`). Some are hard (`unused-import`, which needs a
+**scope stack**). For Day 3 the right pick is one of each:
 
-## Concepts you're using
+- **One easy**: `print-in-non-cli` or `class-with-only-static-methods`
+  or `single-letter-name`. Each is one AST-node type, no state.
+- **One stateful**: `unused-import`. This one EARNS its difficulty
+  because it requires the scope-stack pattern that real linters use.
 
-This is where the curriculum pays off. From across all six phases:
+## The unused-import rule (worked example)
 
-- **Dataclasses (M8)** — `@dataclass` for `Habit`. `field(default_factory=list)`
-  for the log. `__post_init__` if you parse `date` from strings.
-- **Files + JSON (M10)** — `json.dump`, `Path.write_text`,
-  `tempfile.NamedTemporaryFile` for atomic writes.
-- **Context managers (M9)** — `with` for the temp file lifecycle.
-- **EAFP / errors (M11)** — handle "file doesn't exist yet" with
-  `try/except FileNotFoundError`, not `if path.exists()`.
-- **Type hints (M5/M8)** — annotate every function. `Path`, `date`,
-  `dict[str, Habit]`.
-- **Streak calc (M22-flavor)** — count consecutive days backward from
-  `today` that appear in `log`. Exactly one loop.
-
-## The atomic-write pattern, briefly
-
-The naive way:
+You can't just visit `ast.Import` and complain — you need to know
+whether the imported names are used *anywhere in the same module*.
+That's a two-pass walk:
 
 ```python
-path.write_text(json.dumps(data))
+class UnusedImportRule:
+    def __init__(self) -> None:
+        self.imported: dict[str, ast.AST] = {}    # name → import node
+        self.used: set[str] = set()
+
+    def collect_imports(self, tree: ast.AST) -> None:
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    name = alias.asname or alias.name.split(".")[0]
+                    self.imported[name] = node
+            elif isinstance(node, ast.ImportFrom):
+                for alias in node.names:
+                    name = alias.asname or alias.name
+                    self.imported[name] = node
+
+    def collect_uses(self, tree: ast.AST) -> None:
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+                self.used.add(node.id)
+            elif isinstance(node, ast.Attribute):
+                # `os.path` uses `os`. Walk to the base.
+                base = node
+                while isinstance(base, ast.Attribute):
+                    base = base.value
+                if isinstance(base, ast.Name):
+                    self.used.add(base.id)
+
+    def findings(self) -> list[Finding]:
+        return [
+            Finding(node, "unused-import", f"`{name}` imported but never used")
+            for name, node in self.imported.items()
+            if name not in self.used
+        ]
 ```
 
-If this is interrupted, the file is half-written. The atomic way:
+Two passes is fine; the file is already in memory as the AST. You
+get scope-correct results without writing a full scope-stack
+analyzer (which is overkill for module-level imports).
+
+## The visitor refactor
+
+If your `Linter` class has grown 10+ `visit_X` methods, the registry
+pattern from Day 129 pays off now. Re-look at `_REGISTRY` and
+extract every `visit_X` into a `@rule_for(ast.X)` function.
+Whole-module rules (like unused-import) live OUTSIDE the visitor
+and run after a single `ast.walk(tree)` pass.
 
 ```python
-import tempfile, os, json
-from pathlib import Path
-
-def save_atomic(path: Path, data: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = tempfile.NamedTemporaryFile(
-        "w", dir=path.parent, delete=False, encoding="utf-8"
-    )
-    try:
-        json.dump(data, tmp, indent=2)
-        tmp.flush()
-        os.fsync(tmp.fileno())
-        tmp.close()
-        os.replace(tmp.name, path)
-    except Exception:
-        os.unlink(tmp.name)
-        raise
+def lint_file(path: Path) -> list[Finding]:
+    tree = ast.parse(path.read_text())
+    findings: list[Finding] = []
+    # node-level rules via the visitor
+    visitor = Linter()
+    visitor.visit(tree)
+    findings.extend(visitor.findings)
+    # whole-module rules
+    for whole_module_rule in WHOLE_MODULE_RULES:
+        findings.extend(whole_module_rule(tree))
+    return findings
 ```
 
-`os.replace` is atomic on POSIX *and* Windows. This pattern shows up
-in every database, every config tool, every "save to disk" library.
-It's worth knowing once and reusing forever.
+## Tomorrow
 
-## Today's deliverable
+Day 131: configurability. `pyproject.toml [tool.<name>-lint]`
+reading via `tomllib`. Per-rule allowlist, per-rule thresholds.
 
-When you're done:
+## Stretch (only if you finish early)
 
-- [ ] `habit done meditate` writes `~/.config/habit/data.json`
-      (or whatever path you configured)
-- [ ] `habit done meditate` *again* on the same day is idempotent
-      (no duplicate log entries)
-- [ ] `habit list` reads the file and prints habits with streak counts
-- [ ] `tests/test_core.py` passes
+- Add line numbers to `Finding`. AST nodes carry `node.lineno` and
+  `node.col_offset` natively.
+- Try running your linter on its own source. The dogfood pass.
+  Document any findings (real or false positive) in a TODO list —
+  Day 133 will help you fix the false positives before publishing.
 
-A starter `Database` and `Habit` are in this folder with the hard
-parts left as TODOs. You can also rewrite from scratch — your call.
-
-## A choice you have to make today
-
-What does `habit done meditate` do if the habit doesn't exist yet?
-Two reasonable answers:
-
-(a) **Auto-create.** Quietly add it the first time you mark it done.
-    Lower friction. What I'd pick.
-(b) **Require explicit `habit add`.** More structured. More commands.
-
-Pick one. Document it (in `design.md` from yesterday). Move on.
-
-## Next
-
-Tomorrow: features. `list`, `reset`, maybe `recent` or a multi-habit
-filter. The scaffolding is done. From here it's just code.
+## Now: code

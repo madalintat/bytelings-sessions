@@ -1,116 +1,118 @@
 ---
-day: day-117-2d-dp
+day: 117-n-queens-backtracking
 phase: phase-5-algorithms
 module: module-24-dp-greedy-backtracking
 style: build-it
 ---
-# Day 117 — Build a 2D DP table
+# Day 117 — N-queens: when the state space is too big for DP
 
-A 2D DP is the same recipe as yesterday, but the state has **two**
-indices: a position in array A and a position in array B, or row and
-column on a grid, or "first i items, capacity j."
+Day 116 was DP at home. Today's problem looks like DP from one angle
+and is actually backtracking. The recognition signal is the *size of
+the state space*, and you're going to feel it.
 
-The leap from 1D to 2D is mostly mental — you're filling a grid
-instead of a row. Once you know which way to walk the grid, the rest
-follows.
+## The problem
 
-## Worked example: unique paths in a grid
-
-A robot at the top-left of an m×n grid wants to reach bottom-right.
-It can only move right or down. How many distinct paths?
-
-**State:** `dp[r][c]` = number of distinct paths from (0,0) to (r,c).
-
-**Recurrence:**
 ```
-dp[r][c] = dp[r-1][c] + dp[r][c-1]
+Place N queens on an N×N chessboard so that no two queens attack each
+other (same row, same column, same diagonal). Return all valid
+configurations as lists of column-per-row.
 ```
 
-To reach (r, c), you came from above or from the left. Add up the
-ways.
+N=4: 2 solutions. N=8: 92. N=12: 14,200. The numbers grow fast, but
+the *valid* placements are a tiny fraction of all 4^N possible ones.
 
-**Base:** `dp[0][0] = 1`. Top row and left column are all 1 (only
-one way: straight along).
+## Why DP fails here
 
-**Code (build it from scratch):**
+A DP solution would need a state. Natural one: "rows processed so far
++ which queens are where." But the queen positions are *part* of the
+state — you can't compress them. The state space is at least `N!`,
+which for N=12 is half a billion entries. Memoizing that table is
+hopeless and most cells never get visited anyway.
+
+Whenever the state space is exponential AND most of it is dead
+(invalid), DP is the wrong lens. You don't want a *table*; you want a
+*search that prunes invalid branches early*. That's backtracking.
+
+## The backtracking shape (memorize this)
+
+```
+def solve(state):
+    if state.is_complete():
+        record(state)
+        return
+    for choice in state.legal_next_choices():
+        state.apply(choice)
+        solve(state)
+        state.undo(choice)        # ← the backtrack
+```
+
+Four blanks to fill every time:
+1. **State** — a partial solution. For N-queens: a list of column
+   indices, one per row processed.
+2. **is_complete** — when do we record? When `len(cols) == N`.
+3. **legal_next_choices** — at row `r`, which columns are safe? Any
+   column not equal to a previous queen's column AND not on a
+   diagonal (`abs(r - r') == abs(c - c')`).
+4. **undo** — pop the last column.
+
 ```python
-def unique_paths(m, n):
-    dp = [[1] * n for _ in range(m)]
-    for r in range(1, m):
-        for c in range(1, n):
-            dp[r][c] = dp[r-1][c] + dp[r][c-1]
-    return dp[m-1][n-1]
+def n_queens(n: int) -> list[list[int]]:
+    solutions: list[list[int]] = []
+    cols: list[int] = []
+
+    def is_safe(row: int, col: int) -> bool:
+        for r, c in enumerate(cols):
+            if c == col or abs(row - r) == abs(col - c):
+                return False
+        return True
+
+    def solve(row: int) -> None:
+        if row == n:
+            solutions.append(cols.copy())
+            return
+        for col in range(n):
+            if is_safe(row, col):
+                cols.append(col)
+                solve(row + 1)
+                cols.pop()                 # backtrack
+
+    solve(0)
+    return solutions
 ```
 
-Three lines of inner work. The fill order is "top-to-bottom,
-left-to-right" — every cell's dependencies are above or to the left,
-which we've already filled.
+## The two backtracking superpowers
 
-## Worked example #2: edit distance (Levenshtein)
+1. **Prune early.** `is_safe` runs *before* recursing. A collision at
+   row 1 prevents the entire `solve(2..n)` subtree. For N=8 this
+   skips roughly 99.9% of the brute-force tree.
+2. **The undo is what makes it backtracking, not DFS.** You explore
+   one branch fully, *back out*, try the next. `cols.pop()` is the
+   distinguishing line.
 
-Given two strings, the **edit distance** is the minimum number of
-single-character edits (insert, delete, or replace) to transform
-one into the other. The shape of every spell-checker, every diff
-tool, every git merge.
+## Today's exercises
 
-**State:** `dp[i][j]` = edit distance between `a[:i]` and `b[:j]`.
+- **Fluency**: trace `solve(0)` for N=4 by hand. The diagnose helper
+  catches the off-by-one in the diagonal check (a common bug — using
+  `r - r' == c - c'` instead of `abs(...)`, missing the
+  anti-diagonal).
+- **Guided**: implement `is_safe` only. The recursion is provided.
+- **Solo**: full N-queens, returning all solutions in pretty-board
+  format (`. . . Q / Q . . . / …`).
+- **Apply**: extend to count-only (don't enumerate, just count). For
+  N=14 the count is ~365,596. Your code prints that in under a
+  second if pruning is right; hours if it isn't.
 
-**Recurrence:**
-```
-if a[i-1] == b[j-1]:
-    dp[i][j] = dp[i-1][j-1]               # no edit needed
-else:
-    dp[i][j] = 1 + min(
-        dp[i-1][j],     # delete from a
-        dp[i][j-1],     # insert into a
-        dp[i-1][j-1],   # replace
-    )
-```
+## Pattern Catalog
 
-**Base:** `dp[0][j] = j` (turn empty into b[:j] takes j inserts).
-`dp[i][0] = i` (delete all of a[:i]).
+`bytelings patterns P-27` — dfs-with-explicit-stack. Today's
+recursion is implicit DFS; tomorrow's word-break shows the explicit
+stack form. Both have the *try → recurse → undo* shape.
 
-**Why three options?** Each cell asks: "What was my previous state?"
-You either matched a letter (diagonal, no cost), inserted (came from
-the left, +1), deleted (came from above, +1), or replaced (diagonal,
-+1). Min of those, then +1 if you actually edited.
+## Recognition signal recap
 
-The clearest 2D DP in the repertoire. Worth tracing once on paper.
-
-## The fill-order question
-
-For 2D DP, after writing the recurrence, ask: "Which cells does
-`dp[r][c]` depend on?"
-
-- Above and left? Fill row by row, left to right (most cases).
-- Below and right? Fill bottom-up, right to left.
-- Anywhere on the same row at lower column? Fill the row left to
-  right, but be careful — yesterday's "iterate downward" trick for
-  knapsack came from this.
-
-This is *the* place beginners get tripped up. Always sketch the
-dependency arrows on a small example before you code.
-
-## Space optimization (when you can)
-
-If `dp[r][c]` only depends on row r-1 and the current row, you only
-need two rows of memory, not the whole table. Sometimes you can
-collapse to a single rolling row. Same trick as yesterday's "two
-variables instead of an array."
-
-## WHEN you reach for 2D DP
-
-Trigger phrases:
-
-- "Compare/align two strings/sequences."
-- "Number of paths in a grid with obstacles."
-- "Pick from items with two constraints (count + budget)."
-- "Match two arrays element-by-element with insert/delete cost."
-
-Real-world hits: spell-checkers, DNA alignment (Needleman-Wunsch is
-2D edit distance with a different cost matrix), `diff` and `patch`,
-typing autocorrect, bioinformatics in general.
+DP wanted a *table* indexed by compact state. Backtracking wants a
+*search tree* that you prune. When the state has many independent
+dimensions or grows combinatorially, you're in backtracking land.
+Don't draw the DP table — draw the search tree, mark dead branches.
 
 ## Now: open `fluency.py`
-
-A unique-paths function with a wrong fill order. Fix it.

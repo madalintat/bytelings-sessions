@@ -1,5 +1,5 @@
 ---
-day: day-061-pdb-and-breakpoint
+day: 061-pdb-and-breakpoint
 phase: phase-3-quality-production
 module: module-11-errors-eafp-debugging
 style: detective

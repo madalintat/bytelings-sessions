@@ -1,5 +1,5 @@
 ---
-day: day-010-regex-essentials
+day: 010-regex-essentials
 phase: phase-1-python-core
 module: module-02-strings-deep
 style: build-it

@@ -1,131 +1,128 @@
 ---
-day: day-118-string-dp
+day: 118-word-break-bridge
 phase: phase-5-algorithms
 module: module-24-dp-greedy-backtracking
 style: detective
 ---
-# Day 118 — Why is "is this a valid word?" so slow?
+# Day 118 — Word break: where backtracking and DP meet
 
-A spell-check colleague pings you. Their function decides whether a
-string can be split into a sequence of dictionary words. It works
-fine on test inputs but **hangs** on `s = "aaaaaaaaaaaaaaaaab"` with
-dictionary `["a", "aa", "aaa", "aaaa"]`.
+Days 116 and 117 cleanly separated the lenses: DP for compact-state
+optimization, backtracking for tree-shaped search. Today's problem
+sits on the bridge — both lenses fit, and seeing why is the
+graduation moment.
+
+## The problem
+
+```
+Given a string `s` and a list `words`, return True iff `s` can be
+segmented into a sequence of words from the list. Words can be
+reused.
+```
+
+Example: `s = "leetcode"`, `words = ["leet", "code"]` → True.
+`s = "applepenapple"`, `words = ["apple", "pen"]` → True.
+`s = "catsandog"`, `words = ["cats", "dog", "sand", "and", "cat"]` → False.
+
+## First instinct: backtracking
+
+The shape *is* a tree of choices. At position `i` in `s`, try every
+word that matches starting at `i`; if it does, recurse from `i +
+len(word)`. If you reach `i == len(s)`, success.
 
 ```python
-def can_segment(s, words):
-    if not s:
-        return True
-    for w in words:
-        if s.startswith(w):
-            if can_segment(s[len(w):], words):
+def can_break(s: str, words: list[str]) -> bool:
+    word_set = set(words)
+    def solve(i: int) -> bool:
+        if i == len(s):
+            return True
+        for j in range(i + 1, len(s) + 1):
+            if s[i:j] in word_set and solve(j):
                 return True
-    return False
+        return False
+    return solve(0)
 ```
 
-Looks reasonable. Why does it hang?
+This works. For small inputs it's fast. For adversarial inputs like
+`s = "aaaaaaaaaaaab"`, `words = ["a", "aa", "aaa", "aaaa", "aaaaa"]`,
+**it's exponential**. Each position has many word choices, and
+backtracking explores them all from the same starting point
+repeatedly. There's a fix screaming for attention.
 
-## The crime scene
+## Second look: DP via memoization
 
-Trace `can_segment("aaaab", ["a","aa"])` by hand:
-
-```text
-"aaaab"
-  try "a"  → "aaab"
-    try "a"  → "aab"
-      try "a"  → "ab" → no word starts with "ab" → False
-      try "aa" → "b"  → False
-    try "aa" → "ab" → False     ← already computed!
-  try "aa" → "aab"               ← already computed!
-    ...
-```
-
-Every prefix is solved many times because each split point is reached
-via many decision paths. With "a","aa","aaa","aaaa" all valid, the
-branching factor is 4 at every step. 17 a's deep, you get 4^17 ≈
-17 billion calls.
-
-This is **string DP** in disguise — the subproblems are "is the
-suffix starting at index i segmentable?" and they overlap. Solution:
-memoize on the *position*, not the substring (avoids string slicing
-overhead too).
-
-## Suspect 1: the slicing
-
-`s[len(w):]` creates a new string each call. That's wasteful, but
-not exponentially so. Crossed off.
-
-## Suspect 2: no memoization (the actual culprit)
+Notice: `solve(j)` is called with the same `j` from many different
+call sites. That's the DP signal. Cache it:
 
 ```python
 from functools import cache
 
-def can_segment(s, words):
-    words = set(words)
-    max_len = max(map(len, words), default=0)
-
+def can_break(s: str, words: list[str]) -> bool:
+    word_set = set(words)
     @cache
-    def from_index(i):
+    def solve(i: int) -> bool:
         if i == len(s):
             return True
-        for L in range(1, min(max_len, len(s) - i) + 1):
-            if s[i:i + L] in words and from_index(i + L):
+        for j in range(i + 1, len(s) + 1):
+            if s[i:j] in word_set and solve(j):
                 return True
         return False
-
-    return from_index(0)
+    return solve(0)
 ```
 
-Now there are at most `len(s)` unique calls. Total work: O(len(s) ×
-max_word_len). The 17-a's-deep input now finishes in microseconds.
+One decorator. The exponential blow-up collapses to **O(n²)**:
+each position visited once, each call does O(n) work scanning ahead.
 
-The fix has three parts: (1) parameterize on the index, not the
-suffix string; (2) memoize that helper; (3) use a set + max-length
-to bound the inner loop.
+This is the bridge. The *control flow* is still backtracking (try a
+choice, recurse, return on success). The *correctness optimization*
+is DP (cache the results). One concept rarely shows up without the
+other in real problems.
 
-## The lesson: most string DP is "1D DP indexed by position"
-
-When the problem is "can I do X to this string?" or "minimum
-operations to transform this string?" or "how many ways to parse
-this string?" — the natural state is a **position** (or two, for
-two-string problems).
+## The bottom-up DP version (for completeness)
 
 ```python
-@cache
-def f(i):
-    if i == len(s):
-        return base_case_answer
-    # decide what to do starting at index i
-    # combine with f(i + L) for various L
-    return combined
+def can_break(s: str, words: list[str]) -> bool:
+    word_set = set(words)
+    n = len(s)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(1, n + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break
+    return dp[n]
 ```
 
-This is the most common shape of string DP in the wild.
+`dp[i]` = True iff `s[:i]` can be segmented. Same O(n²) complexity,
+no recursion. Pick this when you want the iterative shape; pick the
+memoized recursion when the recurrence is more readable that way
+(usually true for tree-of-choices problems).
 
-## Other classic string-DP detectives
+## Today's exercises
 
-**Palindrome partitioning.** "Min cuts to partition s into all-
-palindrome pieces?" State: dp[i] = min cuts needed for `s[i:]`.
-Inner loop: try every L such that `s[i:i+L]` is a palindrome.
+- **Fluency**: trace the memoized version on a tiny adversarial
+  input. The diagnose helper catches "you forgot @cache" by checking
+  call counts.
+- **Guided**: fill in the `for j in range(i + 1, len(s) + 1)` body.
+- **Solo**: extend to *return the segmentation*, not just True/False.
+  Hint: store the chosen word per position in a parallel array.
+- **Apply**: a CLI that reads a sentence with no spaces and a
+  dictionary file, prints the most likely segmentation. (Optional:
+  stretch to the *all-segmentations* version which is always
+  exponential — there's no escaping the output size.)
 
-**Regex matching with `*`.** State: dp[i][j] = "does pattern `p[:j]`
-match string `s[:i]`?" Recurrence handles the wildcard explicitly.
-This is the engine inside grep.
+## Pattern Catalog
 
-**Decode ways.** "How many ways can `'12'` decode as letters
-(A=1..Z=26)?" State: dp[i] = ways to decode the suffix starting at i.
+`bytelings patterns P-28` — memoize-recursive. Today is its
+canonical use: a recursion that's exponential without caching and
+polynomial with it. The decorator IS the algorithmic improvement.
 
-In each case, the trap is the same: write the recursion naively,
-watch it explode, then add `@cache` and parameterize by index.
+## When you see this pattern in the wild
 
-## WHEN to suspect string DP
-
-The recipe: when the problem mentions splitting / matching /
-transforming a string AND the recursion in your head would re-visit
-the same prefix or suffix — that's overlap, that's DP.
-
-If the recursion is tree-shaped without re-visits (parsing JSON,
-walking an AST), it's not DP — it's just recursion.
+Word break, regex matching, string splitting under constraints —
+all bridge problems. The recipe: write the recursion as if it's a
+plain backtracking search; if you hit the same subproblem multiple
+times, slap `@cache` on. If complexity drops from exponential to
+polynomial, you've found a DP problem dressed as a search problem.
 
 ## Now: open `fluency.py`
-
-Same hangs-on-input bug. Add memoization.

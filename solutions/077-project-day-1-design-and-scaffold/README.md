@@ -1,5 +1,5 @@
 ---
-day: day-077-project-day-1-design-and-scaffold
+day: 077-project-day-1-design-and-scaffold
 phase: phase-3-quality-production
 module: phase-3-project-log-analyzer
 style: story

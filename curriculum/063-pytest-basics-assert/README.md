@@ -1,5 +1,5 @@
 ---
-day: day-063-pytest-basics-assert
+day: 063-pytest-basics-assert
 phase: phase-3-quality-production
 module: module-12-testing-with-pytest
 style: tour

@@ -1,5 +1,5 @@
 ---
-day: day-067-reading-code-you-didnt-write
+day: 067-reading-code-you-didnt-write
 phase: phase-3-quality-production
 module: module-13-refactor-in-context
 style: tour

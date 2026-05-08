@@ -1,5 +1,5 @@
 ---
-day: day-004-names-vs-values
+day: 004-names-vs-values
 phase: phase-1-python-core
 module: module-01-setup-and-values
 style: trace

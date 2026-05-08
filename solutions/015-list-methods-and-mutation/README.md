@@ -1,7 +1,7 @@
 ---
-day: day-015-list-methods-and-mutation
+day: 015-list-methods-and-mutation
 phase: phase-1-python-core
-module: module-03-lists-and-bigo
+module: module-03-lists-and-counting
 style: detective
 ---
 # Day 15 — Why `sort()` returned `None`

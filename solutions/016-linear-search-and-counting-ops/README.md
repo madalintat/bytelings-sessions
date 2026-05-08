@@ -1,7 +1,7 @@
 ---
-day: day-016-linear-search-and-counting-ops
+day: 016-linear-search-and-counting-ops
 phase: phase-1-python-core
-module: module-03-lists-and-bigo
+module: module-03-lists-and-counting
 style: build-it
 ---
 # Day 16 — Pretend `in` doesn't exist

@@ -1,5 +1,5 @@
 ---
-day: day-042-tuples-and-namedtuples
+day: 042-tuples-and-namedtuples
 phase: phase-2-pythonic-tools
 module: module-08-tuples-dataclasses-types-deep
 style: compare

@@ -1,5 +1,5 @@
 ---
-day: day-043-dataclasses-and-frozen
+day: 043-dataclasses-and-frozen
 phase: phase-2-pythonic-tools
 module: module-08-tuples-dataclasses-types-deep
 style: tour

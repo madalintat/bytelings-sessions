@@ -1,10 +1,10 @@
 ---
-day: day-090-bst-delete-and-balance
+day: 091-bst-delete-and-balance
 phase: phase-4-data-structures
-module: module-18-trees-and-bst
+module: module-18-trees-recursion-bst
 style: detective
 ---
-# Day 90 — Delete is a crime scene
+# Day 91 — Delete is a crime scene
 
 You wrote a BST yesterday. Insert was clean. Search was clean. Today
 you write **delete**, and you'll find out why every textbook spends

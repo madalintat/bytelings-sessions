@@ -1,5 +1,5 @@
 ---
-day: day-008-string-immutability-and-concat-traps
+day: 008-string-immutability-and-concat-traps
 phase: phase-1-python-core
 module: module-02-strings-deep
 style: pain

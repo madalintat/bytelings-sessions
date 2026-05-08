@@ -1,7 +1,7 @@
 ---
-day: day-020-defaultdict-and-counter
+day: 020-defaultdict-and-counter
 phase: phase-1-python-core
-module: module-04-dicts-sets-hashing
+module: module-04-hashing-dicts-sets-and-bigo
 style: pain
 ---
 # Day 20 — The `if key not in d` ceremony

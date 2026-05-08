@@ -1,5 +1,5 @@
 ---
-day: day-105-merge-sort-and-quick-sort
+day: 105-merge-sort-and-quick-sort
 phase: phase-5-algorithms
 module: module-21-searching-sorting
 style: build-it

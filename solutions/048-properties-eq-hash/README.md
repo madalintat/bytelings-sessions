@@ -1,5 +1,5 @@
 ---
-day: day-048-properties-eq-hash
+day: 048-properties-eq-hash
 phase: phase-2-pythonic-tools
 module: module-09-classes-dunders-context-managers
 style: detective

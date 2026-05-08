@@ -1,5 +1,5 @@
 ---
-day: day-066-property-based-testing-intro
+day: 066-property-based-testing-intro
 phase: phase-3-quality-production
 module: module-12-testing-with-pytest
 style: metaphor

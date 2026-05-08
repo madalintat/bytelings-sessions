@@ -1,5 +1,5 @@
 ---
-day: day-024-args-kwargs-defaults
+day: 024-args-kwargs-defaults
 phase: phase-1-python-core
 module: module-05-functions-closures-decorators
 style: detective

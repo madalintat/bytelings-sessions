@@ -1,5 +1,5 @@
 ---
-day: day-034-iterator-protocol
+day: 034-iterator-protocol
 phase: phase-2-pythonic-tools
 module: module-06-comprehensions-iterators-generators
 style: build-it

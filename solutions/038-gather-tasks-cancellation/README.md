@@ -1,5 +1,5 @@
 ---
-day: day-038-gather-tasks-cancellation
+day: 038-gather-tasks-cancellation
 phase: phase-2-pythonic-tools
 module: module-07-async-await
 style: pain

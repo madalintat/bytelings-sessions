@@ -1,10 +1,10 @@
 ---
-day: day-101-recursion-vs-iteration
+day: 098-recursion-vs-iteration
 phase: phase-5-algorithms
-module: module-20-recursion
+module: module-20-recursion-tail
 style: compare
 ---
-# Day 101 — Two ways to add up a list. Pick one.
+# Day 98 — Two ways to add up a list. Pick one.
 
 Here are two functions that compute the same answer.
 

@@ -1,5 +1,5 @@
 ---
-day: 114-three-lenses-dp-greedy-backtracking
+day: 114-recursion-to-memoization
 phase: phase-5-algorithms
 module: module-24-dp-greedy-backtracking
 style: compare

@@ -1,5 +1,5 @@
 ---
-day: day-051-context-managers-via-classes
+day: 051-context-managers-via-classes
 phase: phase-2-pythonic-tools
 module: module-09-classes-dunders-context-managers
 style: pain

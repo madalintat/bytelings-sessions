@@ -1,5 +1,5 @@
 ---
-day: day-028-decorators-with-args-and-type-hints
+day: 028-decorators-with-args-and-type-hints
 phase: phase-1-python-core
 module: module-05-functions-closures-decorators
 style: tour

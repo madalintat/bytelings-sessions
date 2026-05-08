@@ -1,5 +1,5 @@
 ---
-day: day-056-project-day-1-design-and-scaffold
+day: 056-project-day-1-design-and-scaffold
 phase: phase-2-pythonic-tools
 module: phase-2-project-async-snapshotter
 style: story

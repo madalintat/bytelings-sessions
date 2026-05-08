@@ -1,5 +1,5 @@
 ---
-day: day-044-equality-identity-hashing-semantics
+day: 044-equality-identity-hashing-semantics
 phase: phase-2-pythonic-tools
 module: module-08-tuples-dataclasses-types-deep
 style: trace

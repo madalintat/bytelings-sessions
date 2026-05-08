@@ -1,10 +1,10 @@
 ---
-day: day-102-stack-depth-and-python-limits
+day: 099-stack-depth-and-python-limits
 phase: phase-5-algorithms
-module: module-20-recursion
+module: module-20-recursion-tail
 style: detective
 ---
-# Day 102 — The case of the function that worked yesterday
+# Day 99 — The case of the function that worked yesterday
 
 A teammate Slacks you. *"My JSON walker crashed in production. Worked
 fine on my laptop. Same input."* Stack trace:

@@ -1,5 +1,5 @@
 ---
-day: day-029-project-day-1-design-and-scaffold
+day: 029-project-day-1-design-and-scaffold
 phase: phase-1-python-core
 module: phase-1-project-contacts-manager
 style: story

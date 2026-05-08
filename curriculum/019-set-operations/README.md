@@ -1,7 +1,7 @@
 ---
-day: day-019-set-operations
+day: 019-set-operations
 phase: phase-1-python-core
-module: module-04-dicts-sets-hashing
+module: module-04-hashing-dicts-sets-and-bigo
 style: compare
 ---
 # Day 19 — List vs set: pick wisely

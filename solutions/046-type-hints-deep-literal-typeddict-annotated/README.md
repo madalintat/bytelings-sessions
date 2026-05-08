@@ -1,5 +1,5 @@
 ---
-day: day-046-type-hints-deep-literal-typeddict-annotated
+day: 046-type-hints-deep-literal-typeddict-annotated
 phase: phase-2-pythonic-tools
 module: module-08-tuples-dataclasses-types-deep
 style: tour

@@ -1,5 +1,5 @@
 ---
-day: day-068-refactoring-katas
+day: 068-refactoring-katas
 phase: phase-3-quality-production
 module: module-13-refactor-in-context
 style: pain

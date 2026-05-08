@@ -1,95 +1,111 @@
 ---
-day: day-131-capstone-day-4-build-features
+day: 131-capstone-day-4-configurability
 phase: phase-6-packaging-ast-capstone
 module: capstone
 style: build-it
 ---
-# Capstone Day 4 — Add the next two features
+# Capstone Day 4 — Make the linter configurable
 
-Yesterday: `done`, `list`, and storage. Today you flesh out the rest:
-`reset`, `recent`, and a richer `list`. By tonight `habit` should
-feel like a complete tiny tool — the kind you'd actually paste into
-your dotfiles.
+A linter without configuration is a linter nobody adopts. Half the
+work of a real tool is letting users say "yes use these rules but
+not THAT one, and bump function-too-long-max to 30 because we like
+small functions here."
 
-## Today's three features
+## Today's deliverables
 
-1. **`habit reset <name>`** — wipe a habit's log (or delete the habit
-   entirely; pick one and stay consistent). Add a `--yes` flag for
-   non-interactive use; otherwise prompt to confirm.
-2. **`habit recent [--days N]`** — print the last N days as a
-   tiny calendar grid. Default N=14. Shows which days each habit
-   was done. Sketch:
+1. **Read `pyproject.toml`** from the target project's root via
+   `tomllib`. Look for `[tool.<your-name>-lint]`.
+2. **Honor a `rules` allowlist.** Default is "all rules"; if the
+   user supplied `rules = ["bare-except", "unused-import"]`, only
+   those run.
+3. **Honor per-rule thresholds.** At minimum:
+   - `function-too-long-max` (int, default 50)
+   - `nested-loop-depth-max` (int, default 3) — only if you
+     implemented that rule
+4. **An `exclude` glob list** (default empty) that filters paths
+   before linting.
+5. **Tests for the config layer.** A fixture `pyproject.toml` with
+   a non-default config; a test that runs the linter and checks
+   the right rules ran with the right thresholds.
 
-   ```text
-   meditate    . . X X . X X . X X X X X X
-   read        X X X X . . . . . . . . . .
-                Tu W  Th F  Sa Su M Tu W  Th F  Sa Su M
-   ```
-
-3. **`habit list --sort streak|name`** — let the user pick how to
-   sort. Default is alphabetical; `--sort streak` puts longest
-   streaks first.
-
-## Concepts you're using today
-
-- **Click subcommands + options** (M5 + M25) — the verbs are click
-  commands, the flags are click options.
-- **Comprehensions / generators** (M6) — for filtering recent dates.
-- **`itertools`** (M6) — `itertools.takewhile` is gorgeous for
-  streak-walking. Re-implement `streak()` with it if you're feeling
-  fancy.
-- **Sorting with key** (M5/M21) — `sorted(habits.values(),
-  key=lambda h: -h.streak(today))` for streak-first.
-- **Dates + `timedelta`** (stdlib) — `date.today() - timedelta(days=n)`.
-
-## A note on UX
-
-You're the user too. After you implement each feature, *use it*.
-
-If `habit reset meditate` makes you nervous because there's no undo
-prompt — add a prompt. If `habit recent` is unreadable — change the
-formatting. The whole point of building your own tools is the
-feedback loop on UX is *you*.
-
-If you're stuck on what to print: copy what `git status` does. Short
-header, list of items, blank line, footer hint. Boring is good.
-
-## Composition over copy-paste
-
-Two things in `core.py` you'll likely add today:
+## The tomllib pattern
 
 ```python
-def filter_log(habit: Habit, since: date) -> list[date]:
-    """Return log entries on or after `since`."""
+import tomllib
+from pathlib import Path
 
-def streak_with(itertools_walk) -> int:
-    """Optional itertools-based reimplementation."""
+DEFAULTS = {
+    "rules": None,                   # None = all
+    "function-too-long-max": 50,
+    "nested-loop-depth-max": 3,
+    "exclude": [],
+}
+
+def load_config(target_root: Path, tool_name: str) -> dict:
+    pyproject = target_root / "pyproject.toml"
+    if not pyproject.is_file():
+        return dict(DEFAULTS)
+    data = tomllib.loads(pyproject.read_text())
+    user = data.get("tool", {}).get(tool_name, {})
+    return {**DEFAULTS, **user}
 ```
 
-Putting these in `core.py` (not in `cli.py`) means tomorrow's tests
-will be easy to write — they'll test `filter_log(...)` directly without
-clicking through the CLI runner. **Keep CLI files thin.** They should
-parse args, call core, format output. That's it.
+That's the entire implementation. tomllib is stdlib in Python 3.11+,
+no third-party dep needed.
 
-## Today's deliverable
+## Threading the config through
 
-- [ ] `habit reset <name>` works (with confirm or `--yes`)
-- [ ] `habit recent` prints a 14-day grid
-- [ ] `habit list --sort streak` sorts by longest streak first
-- [ ] All tests in `tests/` pass — including the new ones for these
-      features
+Each rule needs the config to look up its threshold:
 
-The starter `core.py` and `cli.py` carry over from day 3 but with
-TODOs for the new functions and commands. Tests for `filter_log` and
-the sort key are pre-written.
+```python
+@rule_for(ast.FunctionDef)
+def function_too_long(node, ctx):
+    body = node.body
+    if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant):
+        body = body[1:]      # skip docstring
+    if not body:
+        return
+    line_count = (body[-1].end_lineno or body[-1].lineno) - body[0].lineno + 1
+    if line_count > ctx.config["function-too-long-max"]:
+        ctx.findings.append(Finding(node, "function-too-long",
+            f"function `{node.name}` is {line_count} lines (max {ctx.config['function-too-long-max']})"))
+```
 
-## Scope check
+The visitor's `ctx` carries `findings` (Day 129) and `config`
+(today). Two pieces of context, threaded uniformly.
 
-If you're behind: skip `recent`. The grid is the most fiddly part and
-the least useful. `reset` and `list --sort streak` are the high-value
-two.
+## The `rules` allowlist mechanics
 
-## Next
+Easiest approach: filter at registration-call time, not at
+registration time.
 
-Tomorrow is the test-and-edge-cases day. Today's job is to make the
-features *exist*. Tomorrow's job is to make them *correct*.
+```python
+def lint_file(path: Path, config: dict) -> list[Finding]:
+    tree = ast.parse(path.read_text())
+    visitor = Linter(config)
+    visitor.visit(tree)
+    findings = visitor.findings
+    findings.extend(rule(tree) for rule in WHOLE_MODULE_RULES)
+    if config["rules"] is not None:
+        allowlist = set(config["rules"])
+        findings = [f for f in findings if f.rule_id in allowlist]
+    return findings
+```
+
+A post-filter is wasteful (computes findings just to throw them
+away) but simple. A registration-time filter is faster but adds
+complexity. For a linter running on ~hundreds of files at a time,
+the wasted work is negligible. Ship the simple version.
+
+## Tomorrow
+
+Day 132: output formatting. `path:line:col: rule-id: message`. Sort.
+Exit codes. The CI integration story.
+
+## Stretch
+
+- Per-file inline overrides via `# noqa: rule-id` comments. Real
+  linters do this; it's ~20 lines of source-line-comment parsing.
+- `--rules` and `--exclude` CLI flags that override pyproject.
+
+## Now: code

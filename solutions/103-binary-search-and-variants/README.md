@@ -1,5 +1,5 @@
 ---
-day: day-103-binary-search-and-variants
+day: 103-binary-search-and-variants
 phase: phase-5-algorithms
 module: module-21-searching-sorting
 style: build-it

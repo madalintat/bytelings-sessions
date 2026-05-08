@@ -1,5 +1,5 @@
 ---
-day: day-075-threads-vs-async-vs-procs
+day: 075-threads-vs-async-vs-procs
 phase: phase-3-quality-production
 module: module-15-concurrency-in-practice
 style: compare

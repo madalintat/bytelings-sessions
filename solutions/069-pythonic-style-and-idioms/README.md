@@ -1,5 +1,5 @@
 ---
-day: day-069-pythonic-style-and-idioms
+day: 069-pythonic-style-and-idioms
 phase: phase-3-quality-production
 module: module-13-refactor-in-context
 style: compare

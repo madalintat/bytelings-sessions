@@ -1,5 +1,5 @@
 ---
-day: day-047-classes-init-repr
+day: 047-classes-init-repr
 phase: phase-2-pythonic-tools
 module: module-09-classes-dunders-context-managers
 style: tour

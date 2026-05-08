@@ -1,5 +1,5 @@
 ---
-day: day-037-async-def-await-asyncio-run
+day: 037-async-def-await-asyncio-run
 phase: phase-2-pythonic-tools
 module: module-07-async-await
 style: tour

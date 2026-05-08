@@ -1,5 +1,5 @@
 ---
-day: day-050-iter-len-contains-dunders
+day: 050-iter-len-contains-dunders
 phase: phase-2-pythonic-tools
 module: module-09-classes-dunders-context-managers
 style: build-it

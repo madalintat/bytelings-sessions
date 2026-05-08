@@ -1,5 +1,5 @@
 ---
-day: day-121-project-day-1-design-and-scaffold
+day: 121-project-day-1-design-and-scaffold
 phase: phase-5-algorithms
 module: phase-5-project-pathfinder
 style: story

@@ -1,5 +1,5 @@
 ---
-day: day-084-singly-linked-list
+day: 084-singly-linked-list
 phase: phase-4-data-structures
 module: module-17-linked-lists
 style: build-it

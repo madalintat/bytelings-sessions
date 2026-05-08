@@ -1,5 +1,5 @@
 ---
-day: day-112-dfs-and-cycle-detection
+day: 112-dfs-and-cycle-detection
 phase: phase-5-algorithms
 module: module-23-graphs
 style: build-it

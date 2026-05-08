@@ -1,5 +1,5 @@
 ---
-day: day-104-bubble-insertion-selection
+day: 104-bubble-insertion-selection
 phase: phase-5-algorithms
 module: module-21-searching-sorting
 style: tour

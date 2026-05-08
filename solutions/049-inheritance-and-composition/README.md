@@ -1,5 +1,5 @@
 ---
-day: day-049-inheritance-and-composition
+day: 049-inheritance-and-composition
 phase: phase-2-pythonic-tools
 module: module-09-classes-dunders-context-managers
 style: compare

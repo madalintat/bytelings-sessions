@@ -1,5 +1,5 @@
 ---
-day: day-035-yield-and-lazy-evaluation
+day: 035-yield-and-lazy-evaluation
 phase: phase-2-pythonic-tools
 module: module-06-comprehensions-iterators-generators
 style: trace

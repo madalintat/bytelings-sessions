@@ -1,5 +1,5 @@
 ---
-day: day-106-sort-stability-timsort-keys
+day: 106-sort-stability-timsort-keys
 phase: phase-5-algorithms
 module: module-21-searching-sorting
 style: compare

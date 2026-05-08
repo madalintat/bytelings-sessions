@@ -1,5 +1,5 @@
 ---
-day: day-045-type-hints-deep-generic-typevar-protocol
+day: 045-type-hints-deep-generic-typevar-protocol
 phase: phase-2-pythonic-tools
 module: module-08-tuples-dataclasses-types-deep
 style: build-it

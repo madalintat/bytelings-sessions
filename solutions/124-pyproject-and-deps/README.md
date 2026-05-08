@@ -1,5 +1,5 @@
 ---
-day: day-124-pyproject-and-deps
+day: 124-pyproject-and-deps
 phase: phase-6-packaging-ast-capstone
 module: module-25-packaging-with-uv
 style: tour

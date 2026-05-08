@@ -1,5 +1,5 @@
 ---
-day: day-076-multiprocessing-patterns
+day: 076-multiprocessing-patterns
 phase: phase-3-quality-production
 module: module-15-concurrency-in-practice
 style: build-it

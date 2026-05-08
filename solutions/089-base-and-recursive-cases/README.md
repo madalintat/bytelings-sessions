@@ -1,10 +1,10 @@
 ---
-day: day-099-base-and-recursive-cases
+day: 089-base-and-recursive-cases
 phase: phase-5-algorithms
-module: module-20-recursion
+module: module-18-trees-recursion-bst
 style: metaphor
 ---
-# Day 99 — Russian dolls and the smallest doll
+# Day 89 — Russian dolls and the smallest doll
 
 You're holding a matryoshka — a Russian nesting doll. To "process" the
 whole stack, you have one rule: open the doll in your hand, and apply

@@ -1,10 +1,10 @@
 ---
-day: day-089-bst-insert-search
+day: 090-bst-insert-search
 phase: phase-4-data-structures
-module: module-18-trees-and-bst
+module: module-18-trees-recursion-bst
 style: build-it
 ---
-# Day 89 — A binary search tree, from scratch
+# Day 90 — A binary search tree, from scratch
 
 Pretend `dict` and `set` don't exist. You want to keep a collection
 of comparable values and answer two questions fast: *is X in here?*

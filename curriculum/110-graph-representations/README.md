@@ -1,5 +1,5 @@
 ---
-day: day-110-graph-representations
+day: 110-graph-representations
 phase: phase-5-algorithms
 module: module-23-graphs
 style: compare

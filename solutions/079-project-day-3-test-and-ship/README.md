@@ -1,5 +1,5 @@
 ---
-day: day-079-project-day-3-test-and-ship
+day: 079-project-day-3-test-and-ship
 phase: phase-3-quality-production
 module: phase-3-project-log-analyzer
 style: story

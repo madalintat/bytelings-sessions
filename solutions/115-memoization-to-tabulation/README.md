@@ -1,115 +1,119 @@
 ---
-day: day-115-memoization-to-tabulation
+day: 115-coin-change-greedy-fails
 phase: phase-5-algorithms
 module: module-24-dp-greedy-backtracking
-style: tour
+style: detective
 ---
-# Day 115 — A guided tour: same DP, two flavors
+# Day 115 — Coin change: greedy looks right and is wrong
 
-Yesterday you cached a recursion. That's **top-down DP**: start from
-the answer you want, recurse to smaller subproblems, cache.
+You learned the three lenses on Day 114. Today's job is to prove —
+on a problem you'd swear is greedy — that *greedy is the wrong
+lens*. The wrongness lands faster than any textbook explanation.
 
-Today's tour visits the alternative: **bottom-up DP** (also called
-tabulation). Same problem, same recurrence — opposite direction.
+## The problem
 
-## Stop 1 — the top-down version (refresher)
-
-```python
-from functools import cache
-
-@cache
-def fib(n):
-    if n <= 1:
-        return n
-    return fib(n - 1) + fib(n - 2)
+```
+Given a list of coin denominations (positive ints) and a target amount,
+return the MINIMUM number of coins that sum to target. Each coin can
+be used unlimited times. If target can't be made, return -1.
 ```
 
-You ask for `fib(40)`. The cache fills with answers in whatever order
-the recursion stumbles into. By the time the top-level call returns,
-every subproblem 0..40 is computed exactly once.
+US coins (`[1, 5, 10, 25]`, target 30) → easy: a quarter and a nickel,
+2 coins. Greedy works: take the largest coin that doesn't overshoot,
+repeat.
 
-## Stop 2 — the same thing, bottom-up
+## The trap
 
-```python
-def fib(n):
-    if n <= 1:
-        return n
-    table = [0, 1] + [0] * (n - 1)
-    for i in range(2, n + 1):
-        table[i] = table[i - 1] + table[i - 2]
-    return table[n]
+Now try `[1, 4, 5]` with target `8`.
+
+Greedy says: take 5 (largest ≤ 8), now we need 3, take 1, take 1, take 1.
+That's **4 coins**: `[5, 1, 1, 1]`.
+
+But the right answer is **2 coins**: `[4, 4]`.
+
+Greedy was wrong. Not by an off-by-one — by a factor of 2. And there
+was no way to *patch* the greedy algorithm to detect this case at
+the moment of choosing. Once you took the 5, the remaining 3 had no
+better option; the mistake was upstream.
+
+This is the deep lesson Day 114 promised: **greedy correctness is a
+proof obligation, not an instinct.** When the proof doesn't go
+through, you fall through to the next lens.
+
+## Why it falls through to DP
+
+Re-read the problem with DP eyes:
+
+```
+min_coins(target) = 1 + min(min_coins(target - c) for c in coins
+                              if target - c >= 0)
 ```
 
-You **iterate**. You **fill a table** in dependency order. By the
-time you reach index 40, you've explicitly computed 2, 3, ... 39
-already. No recursion, no implicit cache.
+`min_coins(8)` with coins `[1, 4, 5]`:
+- try 1: `1 + min_coins(7)` — needs to recurse
+- try 4: `1 + min_coins(4)` — needs to recurse
+- try 5: `1 + min_coins(3)` — needs to recurse
 
-This shape — a table indexed by problem size, filled in order — is
-**tabulation**.
+Now trace `min_coins(7)`:
+- try 1: `1 + min_coins(6)` — needs `min_coins(6)`
+- try 4: `1 + min_coins(3)` — **same min_coins(3) we just saw**
+- try 5: `1 + min_coins(2)`
 
-## Stop 3 — the trade-offs
+The same subproblem (`min_coins(3)`) shows up under two different
+parents. Trace deeper and `min_coins(2)`, `min_coins(1)`, `min_coins(0)`
+get hit dozens of times across branches. **Subproblems overlap →
+DP.**
 
-| | Top-down (memoization) | Bottom-up (tabulation) |
-|---|---|---|
-| Code length | shorter | longer |
-| Mental model | follow the recurrence | think about fill order |
-| Stack | recursion depth (Python ≤ 1000) | none |
-| Wasted work | computes only needed states | computes the whole table |
-| Easy to "shrink memory" | hard | easy (often O(1) space) |
-| Best when | recurrence is easy to state | full table will be filled anyway |
-
-**Key insight:** for fib, almost every subproblem is needed, so
-tabulation isn't wasteful. But for problems where you only touch a
-small part of the state space, top-down is faster — it computes
-exactly what's needed.
-
-## Stop 4 — the space optimization that's hard top-down, easy bottom-up
-
-Look back at the bottom-up `fib`. At iteration i, you only need
-`table[i-1]` and `table[i-2]`. You don't need `table[0..i-3]` ever
-again. So:
+## The DP solution
 
 ```python
-def fib(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+def min_coins(coins: list[int], target: int) -> int:
+    INF = float("inf")
+    dp = [INF] * (target + 1)
+    dp[0] = 0
+    for t in range(1, target + 1):
+        for c in coins:
+            if t - c >= 0 and dp[t - c] + 1 < dp[t]:
+                dp[t] = dp[t - c] + 1
+    return dp[target] if dp[target] != INF else -1
 ```
 
-O(1) space. Two variables instead of a whole array. The bottom-up
-version made this "rolling" optimization obvious; the top-down
-version hides it.
+`dp[t]` is the minimum coins for amount `t`. Each `t` is computed
+exactly once. O(target × len(coins)) time, O(target) space. For
+`coins=[1,4,5], target=8`: `dp = [0,1,2,3,1,1,2,3,2]`. Answer: 2.
 
-This trick — keeping only the most recent slice of the table —
-applies to most 1D DPs (next day) and even some 2D DPs (day after).
+## What today exercises
 
-## Stop 5 — when each one wins in practice
+- **Recognize when greedy is provably wrong.** The fluency drill
+  shows you 4 coin sets; you say which support greedy and which
+  don't. The diagnose helper points at the failure case for the
+  wrong answers.
+- **Write the DP recurrence**, then the iterative tabulation
+  (rung 3 + 4).
+- **Apply** (rung 5): given an arbitrary coin set, output BOTH the
+  greedy answer and the DP answer side by side. Watch the gap close
+  to zero on US coins, open up on adversarial sets. The visual
+  proof is the lesson.
 
-- **Reach for top-down (`@cache`)** when the recurrence is the easy
-  part. You write it the way you'd describe it on a whiteboard;
-  Python handles the rest.
-- **Reach for bottom-up** when:
-  - Recursion depth would be a problem (long chains, like > 1000).
-  - You want to space-optimize.
-  - The fill order is obvious and you want maximum speed.
+## Pattern Catalog
 
-A good rule: **prototype top-down. Optimize bottom-up.** First,
-get a correct, slow-ish solution with `@cache` — that proves the
-recurrence works. Then, if perf matters, rewrite as a tabulated
-loop.
+`bytelings patterns P-28` — memoize-recursive. The top-down DP form
+of today's solution. The iterative `dp` array is the bottom-up
+form (called *tabulation*).
 
-## WHEN this matters
+## Why this lens, not greedy
 
-For interview problems and most production code, top-down is fine.
-You'll hit bottom-up when:
+For greedy to be correct on coin change, the coin set must satisfy
+the *matroid* property — every "remove the largest, recurse" path
+is optimal. US coins satisfy it. `[1, 4, 5]` doesn't: removing 5
+from 8 leaves 3, but the optimal solution doesn't include 5 at all.
+Without that algebraic property, greedy has no anchor.
 
-- Building competitive systems (HFT, game engines) where
-  microsecond perf and predictable memory matter.
-- Processing huge inputs where Python's recursion limit is a
-  blocker.
-- Showing off in code review.
+You won't memorize "matroid." You'll memorize: **whenever a problem
+asks for an optimum AND the input includes adversarially-chosen
+parameters, distrust greedy.** Try DP first.
 
 ## Now: open `fluency.py`
 
-Convert a top-down recursion (climb stairs) into a bottom-up loop.
+Five coin-set problems. For each, mark "greedy" or "needs DP" and
+the diagnostic will tell you which assumption broke.

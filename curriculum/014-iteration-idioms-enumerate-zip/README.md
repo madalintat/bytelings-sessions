@@ -1,7 +1,7 @@
 ---
-day: day-014-iteration-idioms-enumerate-zip
+day: 014-iteration-idioms-enumerate-zip
 phase: phase-1-python-core
-module: module-03-lists-and-bigo
+module: module-03-lists-and-counting
 style: pain
 ---
 # Day 14 — The C-style `for i in range(len(...))` smell

@@ -1,7 +1,7 @@
 ---
-day: day-018-dict-basics
+day: 018-dict-basics
 phase: phase-1-python-core
-module: module-04-dicts-sets-hashing
+module: module-04-hashing-dicts-sets-and-bigo
 style: story
 ---
 # Day 18 — The phonebook your boss won't stop adding to

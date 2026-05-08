@@ -1,5 +1,5 @@
 ---
-day: day-041-async-pitfalls-and-patterns
+day: 041-async-pitfalls-and-patterns
 phase: phase-2-pythonic-tools
 module: module-07-async-await
 style: detective

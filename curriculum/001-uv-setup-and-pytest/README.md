@@ -1,5 +1,5 @@
 ---
-day: day-001-uv-setup-and-pytest
+day: 001-uv-setup-and-pytest
 phase: phase-1-python-core
 module: module-01-setup-and-values
 style: story

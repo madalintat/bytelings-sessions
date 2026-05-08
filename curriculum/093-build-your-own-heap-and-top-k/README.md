@@ -1,10 +1,10 @@
 ---
-day: day-092-build-your-own-heap-and-top-k
+day: 093-build-your-own-heap-and-top-k
 phase: phase-4-data-structures
 module: module-19-heaps-and-hash-tables
 style: build-it
 ---
-# Day 92 — A heap, from scratch
+# Day 93 — A heap, from scratch
 
 Pretend `heapq` doesn't exist. You're going to write the two
 operations that make a heap a heap: **sift-up** (after inserting at

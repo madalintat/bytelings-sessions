@@ -1,5 +1,5 @@
 ---
-day: day-031-project-day-3-test-and-ship
+day: 031-project-day-3-test-and-ship
 phase: phase-1-python-core
 module: phase-1-project-contacts-manager
 style: story

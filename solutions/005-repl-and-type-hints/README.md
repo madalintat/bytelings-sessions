@@ -1,5 +1,5 @@
 ---
-day: day-005-repl-and-type-hints
+day: 005-repl-and-type-hints
 phase: phase-1-python-core
 module: module-01-setup-and-values
 style: tour

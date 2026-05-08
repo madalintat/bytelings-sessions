@@ -1,5 +1,5 @@
 ---
-day: day-036-why-async-event-loop-intuition
+day: 036-why-async-event-loop-intuition
 phase: phase-2-pythonic-tools
 module: module-07-async-await
 style: metaphor

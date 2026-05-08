@@ -1,5 +1,5 @@
 ---
-day: day-030-project-day-2-build-core
+day: 030-project-day-2-build-core
 phase: phase-1-python-core
 module: phase-1-project-contacts-manager
 style: story

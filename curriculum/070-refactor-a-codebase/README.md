@@ -1,5 +1,5 @@
 ---
-day: day-070-refactor-a-codebase
+day: 070-refactor-a-codebase
 phase: phase-3-quality-production
 module: module-13-refactor-in-context
 style: detective

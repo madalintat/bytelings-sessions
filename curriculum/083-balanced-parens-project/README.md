@@ -1,5 +1,5 @@
 ---
-day: day-083-balanced-parens-project
+day: 083-balanced-parens-project
 phase: phase-4-data-structures
 module: module-16-stacks-queues-deques
 style: story

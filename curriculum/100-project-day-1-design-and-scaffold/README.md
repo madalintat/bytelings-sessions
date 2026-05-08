@@ -1,10 +1,10 @@
 ---
-day: day-096-project-day-1-design-and-scaffold
+day: 100-project-day-1-design-and-scaffold
 phase: phase-4-data-structures
 module: phase-4-project-tiny-database
 style: story
 ---
-# Day 96 — Project Day 1: design and scaffold
+# Day 100 — Project Day 1: design and scaffold
 
 You're building a tiny in-memory database. Today is design day.
 Don't write the implementation yet — write the *interface*, write

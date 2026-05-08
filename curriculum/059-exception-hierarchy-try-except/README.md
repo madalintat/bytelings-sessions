@@ -1,5 +1,5 @@
 ---
-day: day-059-exception-hierarchy-try-except
+day: 059-exception-hierarchy-try-except
 phase: phase-3-quality-production
 module: module-11-errors-eafp-debugging
 style: tour

@@ -1,5 +1,5 @@
 ---
-day: day-003-booleans-truthiness-none
+day: 003-booleans-truthiness-none
 phase: phase-1-python-core
 module: module-01-setup-and-values
 style: compare

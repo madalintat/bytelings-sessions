@@ -1,5 +1,5 @@
 ---
-day: day-108-sliding-window
+day: 108-sliding-window
 phase: phase-5-algorithms
 module: module-22-two-pointer-sliding-window-prefix
 style: pain

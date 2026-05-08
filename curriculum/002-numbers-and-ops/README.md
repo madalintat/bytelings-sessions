@@ -1,5 +1,5 @@
 ---
-day: day-002-numbers-and-ops
+day: 002-numbers-and-ops
 phase: phase-1-python-core
 module: module-01-setup-and-values
 style: pain

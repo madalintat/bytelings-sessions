@@ -1,110 +1,119 @@
 ---
-day: day-129-capstone-day-2-scaffold
+day: 129-capstone-day-2-scaffold
 phase: phase-6-packaging-ast-capstone
 module: capstone
 style: build-it
 ---
-# Capstone Day 2 — Scaffold the project
+# Capstone Day 2 — Scaffold + 2 more rules
 
-You have a design. Today you create the bones: a `pyproject.toml`,
-a `src/` layout, an empty CLI entry point that runs and prints help.
-By tonight you'll be able to type:
+Yesterday: project name, 5-rule shortlist, design doc, `bare-except`
+end-to-end. Today: a real Python package skeleton + two more rules
+running in tests.
 
-```bash
-uv run habit --help
-```
+## Today's deliverables
 
-and see your tool respond. No real functionality yet — that's days 3-4.
+By end-of-day:
 
-## What you're building (concrete)
+1. **A `uv init` project** at `~/code/<your-name>-lint/` (or wherever
+   you keep work):
+   ```
+   <your-name>-lint/
+     pyproject.toml
+     src/<your_pkg>/
+       __init__.py
+       linter.py             ← Linter(ast.NodeVisitor) lives here
+       rules.py              ← @register-decorated rule functions
+       cli.py                ← console-script entrypoint
+     tests/
+       fixtures/             ← intentionally-violating .py files
+       test_rules.py
+   ```
 
-A standard `src/` layout package:
+2. **Test harness wired up**: `pytest` runs from repo root, finds
+   `tests/`, fails on any rule that doesn't catch its fixture.
 
-```text
-day-129-capstone-day-2-scaffold/
-├── pyproject.toml          # name, version, deps, [project.scripts]
-├── src/
-│   └── habit/
-│       ├── __init__.py     # __version__ = "0.1.0"
-│       ├── cli.py          # def main() -> int: parses args, prints help
-│       ├── core.py         # empty stub for tomorrow's logic
-│       └── storage.py      # empty stub for JSON load/save
-└── tests/
-    └── test_cli.py         # confirms `--help` runs and exits 0
-```
+3. **Two more rules implemented + tested**: pick from yesterday's
+   shortlist. Suggested for today: `mutable-default-argument` and
+   `function-too-long`.
 
-The `src/` layout matters. It forces you to install your package
-(even just editably with `uv sync`) before tests can import it. That
-catches "tests pass because they accidentally imported the dev tree"
-bugs early.
+4. **A fixture file per rule**: `tests/fixtures/bare_except.py`,
+   `tests/fixtures/mutable_default.py`, etc. Each contains exactly
+   one violation of its rule (and nothing else, so a false positive
+   is easy to spot).
 
-## pyproject.toml — the minimum
+## The rule-registration pattern (use this)
 
-```toml
-[project]
-name = "habit"
-version = "0.1.0"
-description = "Track tiny daily habits."
-requires-python = ">=3.12"
-dependencies = ["click>=8.1"]
-
-[project.scripts]
-habit = "habit.cli:main"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/habit"]
-```
-
-The `[tool.hatch.build.targets.wheel]` line tells hatchling where the
-package lives — it's needed because the package is in `src/habit`,
-not `./habit`. Without it the wheel would be empty.
-
-## The CLI shell
-
-`cli.py` for today is just enough to be a real command:
+Single visitor, dispatch by AST node type, rules opt in:
 
 ```python
-import click
+# rules.py
+import ast
+from typing import Callable
 
-@click.group()
-@click.version_option()
-def main():
-    """Track tiny daily habits."""
+_REGISTRY: dict[type, list[Callable]] = {}
 
-@main.command()
-def list():
-    """List all habits and their streaks."""
-    click.echo("(no habits yet — try `habit done <name>`)")
+def rule_for(node_type: type):
+    def decorator(fn):
+        _REGISTRY.setdefault(node_type, []).append(fn)
+        return fn
+    return decorator
+
+@rule_for(ast.Try)
+def bare_except(node: ast.Try, ctx) -> None:
+    for handler in node.handlers:
+        if handler.type is None:
+            ctx.findings.append(Finding(handler, "bare-except",
+                "use `except <ExceptionType>:` not bare `except:`"))
+
+@rule_for(ast.FunctionDef)
+def mutable_default(node: ast.FunctionDef, ctx) -> None:
+    for default in node.args.defaults:
+        if isinstance(default, (ast.List, ast.Dict, ast.Set)):
+            ctx.findings.append(Finding(default, "mutable-default-argument",
+                "default arg is mutable; use None and create inside"))
 ```
 
-You add a `done` and `reset` placeholder too, both printing "TODO".
-Real behavior arrives tomorrow.
+The Linter visitor's job becomes a 5-line dispatch:
 
-## Substituting your own project?
+```python
+class Linter(ast.NodeVisitor):
+    def __init__(self) -> None:
+        self.findings: list[Finding] = []
+    def visit(self, node: ast.AST) -> None:
+        for rule_fn in _REGISTRY.get(type(node), []):
+            rule_fn(node, self)
+        self.generic_visit(node)
+```
 
-The scaffold is the same. Rename `habit` to whatever you picked.
-Adjust dependencies in `[project]` (drop `click` if you'd rather use
-`argparse`; add `rich` if you want pretty output). Keep `src/`
-layout, keep one `[project.scripts]` entry.
+## What "tested" means
 
-## Today's deliverable
+For each rule, two test shapes:
 
-When you're done:
+```python
+def test_bare_except_flags_the_violation():
+    findings = run_linter(FIXTURE_DIR / "bare_except.py")
+    assert any(f.rule == "bare-except" for f in findings)
 
-- [ ] `uv sync` succeeds (it'll install your local package)
-- [ ] `uv run habit --help` prints help text
-- [ ] `uv run habit list` prints something
-- [ ] `uv run pytest tests/` passes (the help-runs test below)
+def test_bare_except_does_not_false_positive():
+    findings = run_linter(FIXTURE_DIR / "no_violations.py")
+    assert not any(f.rule == "bare-except" for f in findings)
+```
 
-The starter files are real, working code. They are what you'd write
-yourself. You'll edit them — and tomorrow you'll start replacing the
-TODOs with real logic.
+The second test (no false positives on a clean file) is the one
+beginners skip and the one that matters most.
 
-## Next
+## Reference
 
-Tomorrow: build the storage layer + the `done` command. By tomorrow
-night, `habit done meditate` will actually save something to disk.
+`docs/capstones/linter.md` has the full rule menu, AST-node hints
+per rule, and the day-by-day plan you're following.
+
+## Tomorrow
+
+Day 130: hit the 5-rule minimum. Refactor the visitor if needed.
+
+## Now: code
+
+Open your editor. The `Patterns: P-30 (ast-walker-visitor)` line is
+your daily compass — every rule visits AST nodes. Print
+`bytelings patterns P-30` if you want the canonical example fresh
+in your head before you start.

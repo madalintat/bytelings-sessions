@@ -1,5 +1,5 @@
 ---
-day: day-009-encoding-bytes-vs-str
+day: 009-encoding-bytes-vs-str
 phase: phase-1-python-core
 module: module-02-strings-deep
 style: detective

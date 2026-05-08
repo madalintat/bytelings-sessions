@@ -1,5 +1,5 @@
 ---
-day: day-080-stack-from-list
+day: 080-stack-from-list
 phase: phase-4-data-structures
 module: module-16-stacks-queues-deques
 style: build-it

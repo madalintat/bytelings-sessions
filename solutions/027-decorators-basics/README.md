@@ -1,5 +1,5 @@
 ---
-day: day-027-decorators-basics
+day: 027-decorators-basics
 phase: phase-1-python-core
 module: module-05-functions-closures-decorators
 style: build-it

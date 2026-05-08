@@ -1,5 +1,5 @@
 ---
-day: day-011-string-parsing-patterns
+day: 011-string-parsing-patterns
 phase: phase-1-python-core
 module: module-02-strings-deep
 style: story

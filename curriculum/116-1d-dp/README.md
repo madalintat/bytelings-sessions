@@ -1,113 +1,112 @@
 ---
-day: day-116-1d-dp
+day: 116-knapsack-dp-shines
 phase: phase-5-algorithms
 module: module-24-dp-greedy-backtracking
 style: build-it
 ---
-# Day 116 — Build a 1D DP from scratch
+# Day 116 — 0/1 knapsack: when DP is the *first* lens to reach for
 
-You've seen `@cache`. Now build the table by hand.
+Day 115 showed you DP after greedy failed. Today's problem is one
+where DP is the *first* tool to grab. Recognizing why is the lesson —
+the implementation is the easy part.
 
-A **1D DP** is one where the state is described by one integer: a
-position in an array, a length, an amount. The table is a single
-list, and each entry is computed from a small fixed number of
-earlier entries. Pretend Python doesn't ship `functools.cache` —
-build the table directly.
+## The problem
 
-## The recipe (memorize this)
-
-Every 1D DP problem has the same skeleton:
-
-1. **Define the state.** "Let `dp[i]` be the answer for the
-   subproblem of size i / ending at index i / using the first i
-   items."
-2. **Write the recurrence.** "`dp[i]` is X in terms of `dp[i-1]`,
-   `dp[i-2]`, ..." Write this on paper before you write code.
-3. **Set the base cases.** What's `dp[0]`, `dp[1]`?
-4. **Choose fill order.** Almost always left-to-right, because each
-   `dp[i]` depends on smaller indices.
-5. **Return `dp[n]`** (or wherever the answer lives).
-
-Five lines on a sticky note. The art is in step 1: choosing the
-state. Get that wrong and the rest collapses.
-
-## Worked example: longest increasing subsequence (LIS)
-
-Given `[10, 9, 2, 5, 3, 7, 101, 18]`, the longest strictly increasing
-subsequence is `[2, 3, 7, 101]`, length 4.
-
-**State:** `dp[i]` = the length of the LIS ending exactly at index i.
-(Crucially: ending *at* i, not "in the first i elements." Subtle but
-load-bearing.)
-
-**Recurrence:**
 ```
-dp[i] = 1 + max(dp[j] for j < i if arr[j] < arr[i],   default 0)
+You have N items, each with a weight w_i and a value v_i. You have a
+knapsack with capacity W. Pick a subset of items (each item taken at
+most ONCE — the "0/1" part) that fits within W and MAXIMIZES total
+value.
 ```
 
-In words: "to end at i, look at every earlier index j whose value
-is smaller; the best LIS ending at i is 1 plus the best LIS ending
-at the best such j."
+Example: items `[(w=1, v=1), (w=3, v=4), (w=4, v=5), (w=5, v=7)]`,
+capacity `7`. Best subset: items 2 and 4 (`w=3+5=8`? no, over) →
+items 2 and 3 (`w=3+4=7, v=4+5=9`). Pick the third item too? No,
+weight already at capacity. Optimum: `9`.
 
-**Base:** `dp[0] = 1` (a single element is a length-1 sequence).
+## Why your first instinct says greedy
 
-**Code:**
-```python
-def lis(arr):
-    if not arr:
-        return 0
-    n = len(arr)
-    dp = [1] * n
-    for i in range(1, n):
-        for j in range(i):
-            if arr[j] < arr[i]:
-                dp[i] = max(dp[i], dp[j] + 1)
-    return max(dp)
+The natural greedy: sort items by *value-per-weight ratio*, take in
+order. Item 4 has v/w = 1.4, item 3 has 1.25, item 2 has 1.33,
+item 1 has 1.0. Greedy picks: item 4 (w=5, v=7), can't fit item 2 next
+(would be 8), tries item 3 (would be 9, over), tries item 1 (w=6, v=8).
+Greedy answer: **8**. But the true optimum is **9**.
+
+Greedy fails because *0/1* makes the choice non-divisible. (For
+*fractional* knapsack — where you can take 0.5 of an item — greedy
+*does* work, see Day 119.)
+
+## The DP recognition signal
+
+State: "the best value achievable using the first `i` items with
+remaining capacity `w`." Two choices at each item:
+
+- **Skip item i**: best value is `dp[i-1][w]` — same `w`, one fewer item considered.
+- **Take item i** (only if `w_i <= w`): `dp[i-1][w - w_i] + v_i`.
+
+```
+dp[i][w] = max(
+    dp[i-1][w],                                # skip
+    dp[i-1][w - w_i] + v_i if w_i <= w else 0  # take
+)
 ```
 
-O(n²). There's a clever O(n log n) version using binary search; the
-recipe stays the same, only the inner loop gets smarter.
+This is the DP signal in three words: **same subproblem, two choices**.
+Both branches reduce to `dp[i-1][...]` — the same shape, smaller `i`.
+Subproblems clearly overlap (you'll trace `dp[2][3]` from many parents).
 
-## A simpler example: max subarray sum (Kadane's algorithm)
+## What "DP shines" means
 
-Given `[-2, 1, -3, 4, -1, 2, 1, -5, 4]`, the contiguous subarray with
-the largest sum is `[4, -1, 2, 1]` summing to 6.
-
-**State:** `dp[i]` = the largest sum of a subarray ending exactly
-at index i.
-
-**Recurrence:**
-```
-dp[i] = max(arr[i], dp[i-1] + arr[i])
-```
-
-"Either start fresh at i (sum = arr[i]) or extend the best subarray
-ending at i-1." Either you keep the running tail or you reset.
+The implementation is mechanical:
 
 ```python
-def kadane(arr):
-    best = cur = arr[0]
-    for x in arr[1:]:
-        cur = max(x, cur + x)
-        best = max(best, cur)
-    return best
+def knapsack(items: list[tuple[int, int]], capacity: int) -> int:
+    n = len(items)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        w_i, v_i = items[i - 1]
+        for w in range(capacity + 1):
+            dp[i][w] = dp[i - 1][w]
+            if w_i <= w:
+                dp[i][w] = max(dp[i][w], dp[i - 1][w - w_i] + v_i)
+    return dp[n][capacity]
 ```
 
-O(n) time, O(1) space (we rolled the table into one variable).
+O(n × capacity) time and space. The optimization to a single 1-D
+array (since each row only reads the previous row) is a polish step
+the rungs walk you through.
 
-## WHEN you reach for 1D DP
+## What's "shining"
 
-Trigger phrases:
+The reason DP is celebrated isn't elegance — it's that **the same
+recurrence pattern recurs across hundreds of "find the best X"
+problems**. Once you've written the knapsack DP, you've prepared
+yourself for: longest common subsequence, edit distance, matrix
+chain multiplication, partition equal subset sum, minimum path sum,
+and a dozen others. They're all `dp[i][j] = combine(dp[i-1][j], dp[i][j-1], …)`.
 
-- "Maximum/minimum **ending at**, **using up to**, **of length N**."
-- "Number of ways to reach **the i-th** something."
-- "Longest/shortest **subsequence** of an array."
+## Today's exercises
 
-Real-world hits: stock-trading optimal-day problems, run-length
-analytics, climbing/path-counting puzzles, basic DNA pattern length
-problems, dynamic resource allocation along time.
+- **Fluency**: trace the DP table for the example above by hand, fill
+  the missing cells. The diagnose helper points at the cell where
+  you took an item that didn't fit.
+- **Guided**: implement the 2-D version using the recurrence above.
+- **Solo**: optimize to a 1-D array. Constraint: only one row alive
+  at a time.
+- **Apply**: a small CLI that reads items + capacity from a file and
+  prints both the optimum *and the chosen items* — backtracking
+  through the DP table.
+
+## Pattern Catalog
+
+`bytelings patterns P-28` — memoize-recursive. The top-down form
+of today's `dp[i][w]`.
+
+## Why this lens, today
+
+The problem has the three classic DP signals: (a) optimization (max
+value), (b) state with discrete dimensions (item index, remaining
+capacity), (c) overlapping subproblems. When all three line up, DP
+is the lens. Don't write the brute-force first; write the recurrence.
 
 ## Now: open `fluency.py`
-
-A bottom-up max-subarray-sum (Kadane's) with the recurrence written
-backward. Fix it.

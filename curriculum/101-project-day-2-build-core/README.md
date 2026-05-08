@@ -1,10 +1,10 @@
 ---
-day: day-097-project-day-2-build-core
+day: 101-project-day-2-build-core
 phase: phase-4-data-structures
 module: phase-4-project-tiny-database
 style: story
 ---
-# Day 97 — Project Day 2: build the core
+# Day 101 — Project Day 2: build the core
 
 Yesterday you stubbed the `Table`. Today you implement it. The
 interface tests from Day 1 should all be green by end of session.

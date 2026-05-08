@@ -1,5 +1,5 @@
 ---
-day: day-081-queue-and-why-list-queue-is-slow
+day: 081-queue-and-why-list-queue-is-slow
 phase: phase-4-data-structures
 module: module-16-stacks-queues-deques
 style: pain

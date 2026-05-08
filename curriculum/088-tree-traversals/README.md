@@ -1,7 +1,7 @@
 ---
-day: day-088-tree-traversals
+day: 088-tree-traversals
 phase: phase-4-data-structures
-module: module-18-trees-and-bst
+module: module-18-trees-recursion-bst
 style: trace
 ---
 # Day 88 — Trace this: which traversal gives which order?

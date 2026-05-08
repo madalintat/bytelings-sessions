@@ -1,5 +1,5 @@
 ---
-day: day-111-bfs
+day: 111-bfs
 phase: phase-5-algorithms
 module: module-23-graphs
 style: trace

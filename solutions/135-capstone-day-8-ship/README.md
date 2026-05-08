@@ -1,158 +1,120 @@
 ---
-day: day-135-capstone-day-8-ship
+day: 135-capstone-day-8-graduation
 phase: phase-6-packaging-ast-capstone
 module: capstone
 style: story
 ---
-# Capstone Day 8 — Ship
+# Capstone Day 8 — Graduation: real-world PR + friend-install
 
-Day 135. The last day. Today you build the wheel, install the tool
-globally, and write the README.
+You published yesterday. That's not graduation. Graduation is when
+*someone other than you uses the thing*. Two checks today, neither
+optional. After both, you've shipped a tool, not finished a course.
 
-## What "ship" means here
+## Today's deliverables (both required)
 
-You don't have to publish to PyPI. (You can if you want — the steps
-are at the end.) "Shipping" for this curriculum means:
+### 1. The friend-install check
 
-1. The package builds. `uv build` produces `dist/habit-0.1.0.whl`
-   without errors.
-2. The tool installs globally with one command.
-3. There's a README that someone could read in 60 seconds and know
-   what your tool does, how to install it, and how to use it.
-4. You can git-clone the repo on a fresh machine, run two commands,
-   and have a working tool.
+Send the install command to one human you know:
 
-## Step 1 — Build the wheel
+> "Hey — I built a small Python linter for the bytelings capstone
+> and I want to verify it installs cleanly on a machine that isn't
+> mine. Could you run:
+> 
+> ```
+> uv tool install <your-name>-lint
+> <your-name>-lint .
+> ```
+> 
+> in any Python project directory and tell me what happens? It
+> should print findings (or nothing if your code is clean) and exit.
+> 5 minutes max. Thanks."
 
-```bash
-uv build
-```
+Document their reply in your capstone repo's README. If it failed
+on their machine (Python version too old, install permission, path
+issue), you have *real software-shipping homework today* — fix it
+and re-publish. Bump version to 0.1.1.
 
-Output:
+This step is what separates a "personal project" from a published
+tool. The first install on someone else's machine will surface 1-2
+things you couldn't have caught yourself.
 
-```text
-Building source distribution...
-Building wheel...
-Successfully built dist/habit-0.1.0.tar.gz
-Successfully built dist/habit-0.1.0-py3-none-any.whl
-```
+### 2. The real-world PR
 
-A wheel (`.whl`) is a zip file with a specific structure. You can
-literally `unzip dist/habit-0.1.0-py3-none-any.whl -d /tmp/look` and
-poke around. You'll see your `habit/` package, a `METADATA` file
-with everything from your `pyproject.toml`, and a `RECORD` file with
-hashes of every file shipped.
+Pick one open-source Python repo. Small is fine — bigger isn't
+better.
 
-## Step 2 — Install globally
+- Search GitHub: language=Python, stars > 50, < 5k LOC, recent
+  commits. Avoid huge codebases (your linter is small; a big repo
+  will drown it in findings).
+- Run your linter on it. Pick **one** real finding — something
+  that's genuinely a small bug or quality issue, not a stylistic
+  nit you could argue either way.
+- Open a PR with that single fix. The PR description should
+  acknowledge the linter (if natural — don't be promotional, be
+  technical):
+  > "While running a small linter I'm building, I found a
+  > `mutable-default-argument` here. The current code doesn't hit
+  > the bug today (no callers retain the default), but switching to
+  > `None`-then-init avoids the future trap."
 
-```bash
-uv tool install .
-```
+Link the PR in your capstone README, regardless of merge outcome.
+The point is "I opened a real PR upstream because of code I built,"
+not "I got a PR merged."
 
-This puts `habit` on your `PATH`. From any directory, in any shell,
-you type `habit list` and it works. `uv tool` keeps each installed
-tool in its own venv so they don't fight.
+## The graduation README
 
-To uninstall later: `uv tool uninstall habit`.
-
-## Step 3 — Write the README
-
-Put a `README.md` next to your `pyproject.toml`. The shape that works:
+Update your project README with both artifacts:
 
 ```markdown
-# habit
+## Graduation log
 
-Track tiny daily habits from the command line. Single JSON file,
-zero dependencies you don't already have.
-
-## Install
-
-    uv tool install habit
-
-## Use
-
-    habit done meditate         # mark today done
-    habit list                  # see streaks
-    habit list --sort streak    # longest streaks first
-    habit recent                # last 14 days as a grid
-    habit reset meditate --yes  # wipe one habit
-
-Data lives in `~/.config/habit/data.json`. Override with `HABIT_DATA`.
-
-## Why
-
-I wanted a habit tracker that lives in my terminal next to git, not in
-a separate app. So I wrote one in 8 days.
+- Friend-install verification: <Date>. <Friend's name> ran
+  `uv tool install <your-name>-lint` on <macOS/Linux/Windows> and
+  got <output summary or "clean exit">.
+- Real-world PR: <link to PR>. Found a `mutable-default-argument`
+  in <project name>. <Status: open / merged / closed>.
 ```
 
-That's the entire README. Short. Useful. Done. **Don't** put a
-"Contributing" section, a code-of-conduct link, or a roadmap. This is
-your tool. If you change your mind about the format next week, you'll
-edit the JSON by hand.
+Commit this. Tag `v0.1.1` if you fixed any issues from the
+friend-install. Push.
 
-## Step 4 — Commit and push
+## What you just did
 
-```bash
-git add .
-git commit -m "ship habit v0.1.0"
-git push
-```
+You built a tool from scratch in 8 days. It uses every concept from
+the curriculum:
 
-Now anyone with your repo URL can:
+- **AST + visitor** (Module 26) — the spine of every rule
+- **Packaging + console-scripts** (Module 25) — the wheel
+- **Hash tables, scope stacks** (Modules 19) — unused-import
+- **DFS** (Module 23) — the visitor's traversal
+- **pyproject.toml + tomllib** (Module 25) — configuration
+- **pytest fixtures** (Module 12) — your test suite
+- **Strings deep + regex** (Module 2) — output formatting
+- **Type hints** (Modules 1 + 8) — the public API
+- **Refactoring as investigation** (Module 13) — every rule you
+  added forced you to look at your visitor's shape
 
-```bash
-git clone <your-repo>
-cd habit
-uv tool install .
-```
-
-That's the whole shipping story for a personal tool.
-
-## Optional: publish to PyPI
-
-If you want strangers to be able to `uv tool install habit-yourname`:
-
-```bash
-# Register on https://pypi.org first.
-uv publish
-```
-
-You'll need to pick a unique name (`habit` is taken — try
-`habit-yourname` or `habits-cli`). Update `[project].name` in
-`pyproject.toml`, rebuild, then publish.
-
-For most personal tools, **the git repo is the distribution**. You
-don't need PyPI to ship.
-
-## Concepts you're using today
-
-- **Packaging (M25)** — `uv build`, the wheel format, install entry
-  points.
-- **Reading docs (M13)** — your README is documentation; write it
-  the way you wish other tools wrote theirs.
-- **Versioning** — bump `__version__` to `0.1.0` if you haven't.
-  When you change something, bump it.
-
-## Today's deliverable
-
-- [ ] `uv build` produces a `.whl` file
-- [ ] `uv tool install .` succeeds; `habit --help` works in any dir
-- [ ] `README.md` exists and answers what/install/use
-- [ ] `__version__` is `0.1.0` (or whatever you settled on)
-- [ ] Tests still pass
-- [ ] Final commit pushed
-
-The starter has the day 7 code plus a `README.md` template.
+It's published. It's installable. Someone other than you ran it.
+You opened a real PR with it. That's the package. That's
+graduation.
 
 ## What's next (after the curriculum)
 
-You finished. Take a moment.
+- **Use your linter on every Python project you touch for a year.**
+  Real production wear is what tells you which rules actually help
+  vs. which ones nag.
+- **Add the rules YOU keep wishing existed.** That's how
+  open-source maintenance starts.
+- **Open issues on `astral-sh/ruff` or `pycqa/flake8`** when their
+  rules don't match your taste. You now know the AST machinery; you
+  can read those codebases. Some of those issues turn into PRs you
+  can land.
+- **Keep shipping.** You finished a 135-day curriculum. The point
+  was never the curriculum — it was the capability. The capability
+  is yours now.
 
-The skills you built across 135 days don't expire. The instinct to
-reach for a generator instead of a list, the habit of `try/except` at
-the boundary, the AST you can now read — those don't go away.
+## Now
 
-Pick something *new* to build with them. A second tool. A
-contribution to an open-source project. A rewrite of something at
-work that's been bothering you. Whatever it is — shorter than 135
-days. Use what you've got.
+Send that friend the install command. Pick that open-source repo.
+
+You're ready.

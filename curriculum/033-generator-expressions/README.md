@@ -1,5 +1,5 @@
 ---
-day: day-033-generator-expressions
+day: 033-generator-expressions
 phase: phase-2-pythonic-tools
 module: module-06-comprehensions-iterators-generators
 style: compare

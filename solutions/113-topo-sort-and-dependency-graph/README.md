@@ -1,5 +1,5 @@
 ---
-day: day-113-topo-sort-and-dependency-graph
+day: 113-topo-sort-and-dependency-graph
 phase: phase-5-algorithms
 module: module-23-graphs
 style: story

@@ -1,5 +1,5 @@
 ---
-day: day-032-list-dict-set-comprehensions
+day: 032-list-dict-set-comprehensions
 phase: phase-2-pythonic-tools
 module: module-06-comprehensions-iterators-generators
 style: pain

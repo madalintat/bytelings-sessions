@@ -1,5 +1,5 @@
 ---
-day: day-058-project-day-3-test-and-ship
+day: 058-project-day-3-test-and-ship
 phase: phase-2-pythonic-tools
 module: phase-2-project-async-snapshotter
 style: story

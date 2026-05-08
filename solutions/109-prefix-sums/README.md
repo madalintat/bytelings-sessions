@@ -1,5 +1,5 @@
 ---
-day: day-109-prefix-sums
+day: 109-prefix-sums
 phase: phase-5-algorithms
 module: module-22-two-pointer-sliding-window-prefix
 style: build-it

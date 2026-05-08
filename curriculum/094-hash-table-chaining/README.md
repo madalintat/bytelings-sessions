@@ -1,10 +1,10 @@
 ---
-day: day-093-hash-table-chaining
+day: 094-hash-table-chaining
 phase: phase-4-data-structures
 module: module-19-heaps-and-hash-tables
 style: build-it
 ---
-# Day 93 — A hash table, from scratch (chaining edition)
+# Day 94 — A hash table, from scratch (chaining edition)
 
 Pretend `dict` doesn't exist. You have a list, indexed by integer
 positions. You want to look up "alice" -> 31 in O(1). The trick:

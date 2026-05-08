@@ -1,5 +1,5 @@
 ---
-day: day-062-systematic-debugging-mindset
+day: 062-systematic-debugging-mindset
 phase: phase-3-quality-production
 module: module-11-errors-eafp-debugging
 style: story

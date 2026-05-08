@@ -1,5 +1,5 @@
 ---
-day: day-053-pathlib-and-file-io
+day: 053-pathlib-and-file-io
 phase: phase-2-pythonic-tools
 module: module-10-files-paths-json-csv-toml
 style: story

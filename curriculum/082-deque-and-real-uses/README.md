@@ -1,5 +1,5 @@
 ---
-day: day-082-deque-and-real-uses
+day: 082-deque-and-real-uses
 phase: phase-4-data-structures
 module: module-16-stacks-queues-deques
 style: tour

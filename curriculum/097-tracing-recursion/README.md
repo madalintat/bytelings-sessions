@@ -1,10 +1,10 @@
 ---
-day: day-100-tracing-recursion
+day: 097-tracing-recursion
 phase: phase-5-algorithms
-module: module-20-recursion
+module: module-20-recursion-tail
 style: trace
 ---
-# Day 100 — Trace this: predict every return value
+# Day 97 — Trace this: predict every return value
 
 Yesterday you learned the *shape* of recursion. Today you trace it.
 

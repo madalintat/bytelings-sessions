@@ -1,5 +1,5 @@
 ---
-day: day-065-mocks-and-monkeypatch
+day: 065-mocks-and-monkeypatch
 phase: phase-3-quality-production
 module: module-12-testing-with-pytest
 style: pain

@@ -1,5 +1,5 @@
 ---
-day: day-054-json-csv-toml
+day: 054-json-csv-toml
 phase: phase-2-pythonic-tools
 module: module-10-files-paths-json-csv-toml
 style: tour

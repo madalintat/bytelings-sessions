@@ -1,5 +1,5 @@
 ---
-day: day-052-contextlib-and-decorator-context-managers
+day: 052-contextlib-and-decorator-context-managers
 phase: phase-2-pythonic-tools
 module: module-09-classes-dunders-context-managers
 style: tour

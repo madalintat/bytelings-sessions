@@ -1,5 +1,5 @@
 ---
-day: day-025-scope-legb-and-closures
+day: 025-scope-legb-and-closures
 phase: phase-1-python-core
 module: module-05-functions-closures-decorators
 style: trace

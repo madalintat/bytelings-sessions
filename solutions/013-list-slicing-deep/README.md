@@ -1,7 +1,7 @@
 ---
-day: day-013-list-slicing-deep
+day: 013-list-slicing-deep
 phase: phase-1-python-core
-module: module-03-lists-and-bigo
+module: module-03-lists-and-counting
 style: trace
 ---
 # Day 13 — Predict each slice
