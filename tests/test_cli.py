@@ -127,3 +127,99 @@ def test_reset_restores_files_from_solutions(
     result = cli_runner.invoke(cli, ["reset", "001-uv-setup"])
     assert result.exit_code == 0
     assert work.read_text() == "# pristine fluency\n"
+
+
+def test_solution_command_shows_file_with_yes(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    """--yes skips the prompt and prints the file."""
+    sol = tmp_path / "solutions" / "001-uv-setup"
+    sol.mkdir(parents=True)
+    (sol / "fluency.py").write_text("# revealed-fluency-content\n")
+
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "2", "--yes"]
+    )
+    assert result.exit_code == 0
+    assert "revealed-fluency-content" in result.output
+
+
+def test_solution_command_default_h_does_not_print(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    """At the friction prompt, hitting Enter (default 'h') skips the reveal."""
+    sol = tmp_path / "solutions" / "001-uv-setup"
+    sol.mkdir(parents=True)
+    (sol / "fluency.py").write_text("# DO-NOT-LEAK\n")
+
+    # Empty stdin → click.prompt returns the default ('h').
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "2"], input="\n"
+    )
+    assert result.exit_code == 0
+    assert "DO-NOT-LEAK" not in result.output
+    assert "hint" in result.output.lower()
+
+
+def test_solution_command_n_does_not_print(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    sol = tmp_path / "solutions" / "001-uv-setup"
+    sol.mkdir(parents=True)
+    (sol / "fluency.py").write_text("# DO-NOT-LEAK-EITHER\n")
+
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "2"], input="n\n"
+    )
+    assert result.exit_code == 0
+    assert "DO-NOT-LEAK-EITHER" not in result.output
+
+
+def test_solution_command_y_prints(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    sol = tmp_path / "solutions" / "001-uv-setup"
+    sol.mkdir(parents=True)
+    (sol / "solo.py").write_text("# leaked-solo\n")
+
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "4"], input="y\n"
+    )
+    assert result.exit_code == 0
+    assert "leaked-solo" in result.output
+
+
+def test_solution_command_unknown_day_errors(
+    cli_runner: CliRunner, fake_curriculum: Path
+):
+    result = cli_runner.invoke(
+        cli, ["solution", "no-such-day", "--rung", "2", "--yes"]
+    )
+    assert result.exit_code != 0
+    assert "no such day" in result.output.lower()
+
+
+def test_solution_command_missing_solution_file_errors(
+    cli_runner: CliRunner, fake_curriculum: Path
+):
+    """Day exists but solutions/<slug>/ doesn't have the rung file."""
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "3", "--yes"]
+    )
+    assert result.exit_code != 0
+    assert "no solution file" in result.output.lower() or "solutions" in result.output.lower()
+
+
+def test_solution_command_v1_slug_back_compat(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    """Old day-001-uv-setup slug should resolve via find_day."""
+    sol = tmp_path / "solutions" / "001-uv-setup"
+    sol.mkdir(parents=True)
+    (sol / "apply.py").write_text("# leaked-apply\n")
+
+    result = cli_runner.invoke(
+        cli, ["solution", "day-001-uv-setup", "--rung", "5", "--yes"]
+    )
+    assert result.exit_code == 0
+    assert "leaked-apply" in result.output

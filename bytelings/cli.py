@@ -396,6 +396,78 @@ def patterns(pattern_id: str | None) -> None:
     ui.console.print(f"[dim]Days that exercise it:[/dim] {days_str}")
 
 
+_RUNG_FILENAMES = {
+    1: "README.md",
+    2: "fluency.py",
+    3: "guided.py",
+    4: "solo.py",
+    5: "apply.py",
+}
+
+
+@cli.command()
+@click.argument("day_slug")
+@click.option(
+    "--rung", "-r", "rung", type=click.IntRange(1, 5), required=True,
+    help="Which rung to reveal (1=README, 2=fluency, 3=guided, 4=solo, 5=apply).",
+)
+@click.option(
+    "--yes", "-y", is_flag=True,
+    help="Skip the friction prompt. Useful in scripts; not recommended for learners.",
+)
+def solution(day_slug: str, rung: int, yes: bool) -> None:
+    """Reveal a rung's pristine file from the solutions/ mirror, gated by a prompt.
+
+    The friction prompt is the point: a learner has to *decide* to look.
+    Default at the prompt is `h` (re-read the hint instead).
+
+    NOTE: in v0.3, the solutions/ mirror holds the STARTER copy of every
+    rung (what `bytelings reset` restores). A separate solved-content
+    tree is on the roadmap. For now this command shows you the original
+    rung as scaffolded — useful when you've deleted the docstring or
+    the helpful hint by accident, less useful as "show me the answer."
+    """
+    day = locator.find_day(day_slug)
+    if day is None:
+        raise click.ClickException(f"No such day: {day_slug!r}")
+    fname = _RUNG_FILENAMES[rung]
+    src = Path("solutions") / day.slug / fname
+    if not src.is_file():
+        raise click.ClickException(
+            f"No solution file at {src}. Run `bytelings init` to scaffold "
+            "solutions/, or check the day slug."
+        )
+
+    if not yes:
+        ui.console.print(
+            f"\n[bold yellow]You're about to read the rung-{rung} file for "
+            f"{day.slug}.[/bold yellow]\n"
+            "This is the highest-friction door — once you read it, the "
+            "discovery is gone.\n"
+        )
+        choice = click.prompt(
+            "  [Y]es show me  /  [n]o I'll keep trying  /  [h]int instead",
+            default="h",
+            show_default=True,
+            type=click.Choice(["y", "Y", "n", "N", "h", "H"], case_sensitive=False),
+        ).lower()
+        if choice == "h":
+            ui.console.print(
+                f"\n[dim]Skipping reveal. Try [cyan]bytelings hint {day.slug}[/cyan] "
+                "for the concept page instead.[/dim]"
+            )
+            return
+        if choice == "n":
+            ui.console.print(
+                "\n[dim]Good. Keep going. The discovery is the lesson.[/dim]"
+            )
+            return
+        # Fall through on 'y'/'Y'.
+
+    ui.header(f"{day.slug} — Rung {rung} ({fname})")
+    ui.console.print(src.read_text())
+
+
 @cli.command(name="phase-project")
 def phase_project() -> None:
     """Open the README for the current phase project (if at a boundary)."""
