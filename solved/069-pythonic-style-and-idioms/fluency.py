@@ -8,7 +8,7 @@ Each function rewritten with the idiomatic Python pattern:
 
 
 def indexed(items: list[str]) -> list[tuple[int, str]]:
-    """Pair each item with its index. Use enumerate, not range(len(...))."""
+    """Pair each item with its index using enumerate."""
     return list(enumerate(items))
 
 
@@ -18,5 +18,5 @@ def squares(xs: list[int]) -> list[int]:
 
 
 def is_empty(name: str) -> bool:
-    """True if name is empty. Use truthiness, not == ""."""
+    """True if name is empty (truthiness test)."""
     return not name

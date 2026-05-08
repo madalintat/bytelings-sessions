@@ -13,10 +13,7 @@ def _is_refunded(order: dict) -> bool:
 
 def analyze_orders(orders: list[dict]) -> dict:
     """Summarize orders, separating refunded from non-refunded revenue."""
-    count = 0
-    refunded_count = 0
-    revenue = 0
-    refunded_amount = 0
+    count = refunded_count = revenue = refunded_amount = 0
     for order in orders:
         if _is_refunded(order):
             refunded_count += 1
@@ -24,9 +21,5 @@ def analyze_orders(orders: list[dict]) -> dict:
         else:
             count += 1
             revenue += order["total"]
-    return {
-        "count": count,
-        "refunded_count": refunded_count,
-        "revenue": revenue,
-        "refunded_amount": refunded_amount,
-    }
+    return {"count": count, "refunded_count": refunded_count,
+            "revenue": revenue, "refunded_amount": refunded_amount}

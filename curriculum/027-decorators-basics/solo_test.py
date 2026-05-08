@@ -16,7 +16,7 @@ def test_immediate_success():
         return "ok"
 
     assert f() == "ok"
-    assert f.successes == 2
+    assert f.successes == 1
     assert f.failures == 0
 
 

@@ -35,6 +35,14 @@ class Aggregate:
     levels: Counter = field(default_factory=Counter)
     top_paths: Counter = field(default_factory=Counter)
 
+    def merge(self, other: "Aggregate") -> "Aggregate":
+        return Aggregate(
+            parsed=self.parsed + other.parsed,
+            skipped=self.skipped + other.skipped,
+            levels=self.levels + other.levels,
+            top_paths=self.top_paths + other.top_paths,
+        )
+
 
 def parse_line(line: str) -> LogRecord:
     s = line.strip()

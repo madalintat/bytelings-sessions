@@ -22,7 +22,8 @@ def test_no_pair():
 
 
 def test_negative_target():
-    assert ex.pair_sum([-3, -1, 2, 4], 1) == (1, 2)
+    # Two valid pairs sum to 1: (-3, 4) at (0, 3) and (-1, 2) at (1, 2).
+    assert ex.pair_sum([-3, -1, 2, 4], 1) in {(0, 3), (1, 2)}
 
 
 def test_empty():

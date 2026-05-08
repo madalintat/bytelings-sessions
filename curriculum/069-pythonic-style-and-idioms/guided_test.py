@@ -23,7 +23,8 @@ def test_count_levels_basic():
 
 def test_count_levels_empty_or_blank():
     assert ex.count_levels([]) == {}
-    assert ex.count_levels(["nowhitespace"]) == {}
+    assert ex.count_levels([""]) == {}
+    assert ex.count_levels(["   "]) == {}
 
 
 def test_percentages_basic():

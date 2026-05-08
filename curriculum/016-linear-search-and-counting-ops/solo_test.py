@@ -36,7 +36,8 @@ def test_picks_smallest_i_then_smallest_j():
 
 
 def test_negative_numbers():
-    assert ex.find_pair_with_sum([-2, 1, 4, 3], 1) == (0, 2)
+    # arr=[-2, 1, 4, 3] target=1: -2 + 3 = 1 at indices (0, 3).
+    assert ex.find_pair_with_sum([-2, 1, 4, 3], 1) == (0, 3)
 
 
 def test_zero_target():

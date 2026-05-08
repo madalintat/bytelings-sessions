@@ -9,7 +9,19 @@ k is the result size, vs. O(n) for the naive approach.
 
 The recursion's order ensures the result list is sorted ascending:
 left subtree (smaller values) first, then self, then right subtree.
+
+The hidden test builds its trees via `_Node(x)` from this module, so
+expose a minimal node class here.
 """
+
+
+class _Node:
+    __slots__ = ("value", "left", "right")
+
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
 
 
 def range_query(root, lo, hi) -> list:

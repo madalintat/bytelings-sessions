@@ -1,7 +1,8 @@
 """Rung 2: Fluency drill — solved version.
 
-Key fix: tomllib.loads parses TOML; json.loads only handles JSON.
-The tool section lives at data["tool"][tool_name], not data[tool_name].
+Key fix: switch from the JSON parser to tomllib (the stdlib TOML
+parser shipped in Python 3.11+). The tool section lives at
+data["tool"][tool_name], not data[tool_name].
 """
 from __future__ import annotations
 

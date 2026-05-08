@@ -1,8 +1,8 @@
 """Rung 2: Fluency — solved version.
 
 Two bugs fixed:
-1. `load_config` used `eval()` — dangerous and wrong. `json.loads`
-   parses JSON safely.
+1. `load_config` used Python's eval builtin — dangerous and wrong.
+   `json.loads` parses JSON safely.
 2. `save_config` called `json.dumps` without `indent`. Adding
    `indent=2` makes the output human-readable.
 """

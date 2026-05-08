@@ -12,7 +12,7 @@ from pathlib import Path
 
 _g_path = (
     Path(__file__).parent.parent
-    / "day-078-project-day-2-build-core"
+    / "078-project-day-2-build-core"
     / "guided.py"
 )
 _g_spec = spec_from_file_location("_g", _g_path)
@@ -26,11 +26,12 @@ def top_hotspots(text: str, k: int = 5) -> list[str]:
     with cProfile.Profile() as pr:
         analyze_text(text)
 
-    # stats values: (cc, ncalls, tottime, cumtime, callers)
+    # pstats.Stats(pr).stats is a dict keyed by
+    # (filename, lineno, funcname) → (cc, ncalls, tottime, cumtime, callers).
     entries = [
         (funcname, tt)
         for (_filename, _lineno, funcname), (_cc, _nc, tt, _ct, _callers)
-        in pr.getstats()
+        in pstats.Stats(pr).stats.items()
         if not funcname.startswith("<")
     ]
     entries.sort(key=lambda e: e[1], reverse=True)

@@ -51,9 +51,12 @@ def test_recent_access_protects_from_eviction():
         return n
 
     f = ex.memoize_lru(slow, capacity=2)
-    f(1); f(2); f(1); f(3)   # f(1) before f(3) means 2 is LRU; 3 evicts 2
-    f(2)                     # miss, since 2 was evicted
-    f(1)                     # hit
+    f(1); f(2); f(1); f(3)   # f(1) bumps 1 to most-recent, so 2 becomes LRU
+    # 3 evicts 2 (not 1) — that's the protection. Verifying it: f(1) hits
+    # right after the f(3) insert, while f(2) misses.
+    assert calls == [1, 2, 3]
+    f(1)                     # hit (1 was protected)
+    f(2)                     # miss (2 was the one evicted)
     assert calls == [1, 2, 3, 2]
 
 

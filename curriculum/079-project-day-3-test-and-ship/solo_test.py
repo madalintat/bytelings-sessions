@@ -25,7 +25,7 @@ def test_make_files_lines_parse(tmp_path):
     from importlib.util import module_from_spec, spec_from_file_location
     parser_path = (
         Path(__file__).parent.parent
-        / "day-078-project-day-2-build-core"
+        / "078-project-day-2-build-core"
         / "guided.py"
     )
     spec = spec_from_file_location("_p", parser_path)

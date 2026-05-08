@@ -73,6 +73,13 @@ class BST:
         """Remove x. Return True if removed, False otherwise."""
         removed = [False]
 
+        def _del_min(node):
+            """Remove leftmost from `node`'s subtree; return new root."""
+            if node.left is None:
+                return node.right
+            node.left = _del_min(node.left)
+            return node
+
         def _del(node):
             if node is None:
                 return None
@@ -86,14 +93,15 @@ class BST:
                     return node.right
                 if node.right is None:
                     return node.left
-                # Two children: replace value with in-order successor's,
-                # then delete the successor from the right subtree.
+                # Two children: copy in-order successor's value into this
+                # node, then drop the successor (the leftmost of the right
+                # subtree) — _del_min targets that node directly so we
+                # don't re-search for `x`, which is no longer present.
                 succ = node.right
                 while succ.left is not None:
                     succ = succ.left
                 node.value = succ.value
-                node.right = _del(node.right)
-                removed[0] = True  # ensure flag set even in recursive sub-call
+                node.right = _del_min(node.right)
             return node
 
         self.root = _del(self.root)
@@ -110,9 +118,15 @@ class BST:
         return _h(self.root)
 
     def is_skewed(self) -> bool:
-        """True if height is more than 2 * floor(log2(n)) + 1."""
+        """True if height is more than 2 * floor(log2(n)).
+
+        A perfectly balanced tree has height ≈ log2(n) (edges); a fully
+        skewed chain has height n - 1. The 2x threshold catches chains
+        and near-chains while leaving balanced and slightly-unbalanced
+        trees alone.
+        """
         n = self._size
         if n == 0:
             return False
         ideal = math.floor(math.log2(n))
-        return self.height() > 2 * ideal + 1
+        return self.height() > 2 * ideal

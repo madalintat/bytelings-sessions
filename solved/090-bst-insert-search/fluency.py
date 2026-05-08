@@ -31,3 +31,12 @@ def bst_insert(root: Optional[TreeNode], x) -> TreeNode:
     elif x > root.value:
         root.right = bst_insert(root.right, x)
     return root
+
+
+def bst_contains(root: Optional[TreeNode], x) -> bool:
+    """Return True if x is in the BST rooted at `root`."""
+    while root is not None:
+        if x == root.value:
+            return True
+        root = root.left if x < root.value else root.right
+    return False

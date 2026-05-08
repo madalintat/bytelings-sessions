@@ -22,7 +22,7 @@ def min_subarray_len(arr: list[int], target: int) -> int:
     best = math.inf
     for right, x in enumerate(arr):
         running += x
-        while running >= target:
+        while left <= right and running >= target:
             best = min(best, right - left + 1)
             running -= arr[left]
             left += 1

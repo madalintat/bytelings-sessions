@@ -28,7 +28,7 @@ from pathlib import Path
 # Serial analyze_paths from yesterday.
 _serial_path = (
     Path(__file__).parent.parent
-    / "day-078-project-day-2-build-core"
+    / "078-project-day-2-build-core"
     / "solo.py"
 )
 _serial_spec = spec_from_file_location("_serial", _serial_path)

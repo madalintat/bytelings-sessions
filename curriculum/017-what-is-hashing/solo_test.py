@@ -56,8 +56,8 @@ def test_collision_bucket():
 
 def test_no_builtin_set_used():
     """We're rolling our own — don't cheat with Python's set/dict for storage."""
-    import inspect
-    src = inspect.getsource(ex.TinySet)
-    # Heuristic: ban set( and dict( and {} as storage backbones.
-    # (still allowed: hash(...), tuples, lists.)
+    # inspect.getsource(ex.TinySet) breaks on dynamically-loaded modules
+    # whose __module__ contains hyphens (our _NAME above), so read the
+    # source file directly.
+    src = (_HERE / "solo.py").read_text()
     assert "set(" not in src, "Don't use Python's built-in set for storage"

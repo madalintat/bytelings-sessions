@@ -7,10 +7,15 @@ The round-trip property decode(encode(s)) == s holds for all str.
 
 
 def encode(text: str) -> str:
-    """Percent-encode any non-alphanumeric byte."""
+    """Percent-encode any non-ASCII-alphanumeric byte.
+
+    `ch.isalnum()` treats `é` as a letter (it is), but URL-style
+    percent-encoding only passes through ASCII alnums; anything else
+    becomes %XX bytes. Adding `ch.isascii()` enforces that.
+    """
     out = []
     for ch in text:
-        if ch.isalnum():
+        if ch.isalnum() and ch.isascii():
             out.append(ch)
         else:
             for byte in ch.encode("utf-8"):

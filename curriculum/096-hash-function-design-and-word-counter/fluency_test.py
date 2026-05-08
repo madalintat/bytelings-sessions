@@ -20,8 +20,8 @@ def test_djb2_distinguishes_permutations():
 
 
 def test_djb2_known_value_a():
-    # h = 5381*33 + ord('a') = 177682
-    assert ex.djb2("a") == 177682
+    # h = 5381*33 + ord('a') = 177573 + 97 = 177670
+    assert ex.djb2("a") == 177670
 
 
 def test_djb2_in_32_bit_range():

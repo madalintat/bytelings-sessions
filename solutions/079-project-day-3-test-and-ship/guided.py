@@ -20,7 +20,7 @@ from pathlib import Path
 # Import yesterday's analyze_text + Aggregate.
 _g_path = (
     Path(__file__).parent.parent
-    / "day-078-project-day-2-build-core"
+    / "078-project-day-2-build-core"
     / "guided.py"
 )
 _g_spec = spec_from_file_location("_g", _g_path)
