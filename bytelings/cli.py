@@ -143,7 +143,8 @@ def init(target: Path, force: bool) -> None:
             shutil.copy2(f, target / fname)
             shipped.append(fname)
 
-    ui.console.print(f"[bold green]✔ Created ./{target}/[/bold green]")
+    display_target = target if target.is_absolute() else Path("./") / target
+    ui.console.print(f"[bold green]✔ Created {display_target}/[/bold green]")
     if sol_src is not None:
         ui.console.print("  solutions/ mirror copied (used by `bytelings reset`)")
     if solved_src is not None:
@@ -263,7 +264,7 @@ def done() -> None:
     if rung == progress_mod.TOTAL_RUNGS:
         ui.banner_day_complete(day.slug, p.streak_days)
     else:
-        ui.banner_pass(f"Rung {rung} marked done")
+        ui.banner_marked_done(f"Rung {rung}")
 
 
 @cli.command(name="next")
@@ -290,27 +291,27 @@ def reset(day_slug: str) -> None:
     """
     p = progress_mod.load()
     day = locator.find_day(day_slug)
-    canonical = day.slug if day is not None else day_slug
+    if day is None:
+        raise click.ClickException(f"Day not found: {day_slug}")
 
-    if canonical in p.completed_days:
-        p.completed_days.remove(canonical)
+    if day.slug in p.completed_days:
+        p.completed_days.remove(day.slug)
     if day_slug in p.completed_days:  # also handle if user passed v1 slug
         p.completed_days.remove(day_slug)
-    if p.current_day in (canonical, day_slug):
+    if p.current_day in (day.slug, day_slug):
         p.current_rung = 1
         p.completed_rungs_today = []
     progress_mod.save(p)
 
-    if day is not None:
-        sol_dir = Path("solutions") / day.slug
-        if sol_dir.is_dir():
-            for fname in locator.RUNG_FILES:
-                src = sol_dir / fname
-                if src.is_file():
-                    shutil.copy2(src, day.path / fname)
-            click.echo(f"Reset {day.slug}: progress cleared + files restored.")
-            return
-    click.echo(f"Reset {day_slug}.")
+    sol_dir = Path("solutions") / day.slug
+    if sol_dir.is_dir():
+        for fname in locator.RUNG_FILES:
+            src = sol_dir / fname
+            if src.is_file():
+                shutil.copy2(src, day.path / fname)
+        click.echo(f"Reset {day.slug}: progress cleared + files restored.")
+    else:
+        click.echo(f"Reset {day.slug}: progress cleared (no solutions/ mirror).")
 
 
 @cli.command()

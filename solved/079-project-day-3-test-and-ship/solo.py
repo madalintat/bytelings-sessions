@@ -3,24 +3,25 @@
 make_files drops n_files synthetic .log files into tmp_path.
 triple runs both serial and parallel analyzers, returning the two
 aggregates and a bool indicating whether they match.
+
+The cross-day imports go through _byte.load_rung so any helpers
+defined inside the loaded modules can be picklable across processes
+(needed because the parallel path forks workers).
 """
 import random
 from datetime import datetime, timedelta
-from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
-_serial_path = (
-    Path(__file__).parent.parent
-    / "078-project-day-2-build-core"
-    / "solo.py"
-)
-_serial_spec = spec_from_file_location("_serial", _serial_path)
-_serial = module_from_spec(_serial_spec)
-_serial_spec.loader.exec_module(_serial)
+from _byte import load_rung
 
-_par_spec = spec_from_file_location("_par", Path(__file__).parent / "guided.py")
-_par = module_from_spec(_par_spec)
-_par_spec.loader.exec_module(_par)
+_serial = load_rung(
+    Path(__file__).parent.parent / "078-project-day-2-build-core" / "solo.py",
+    "_bytelings_d078_solo",
+)
+_par = load_rung(
+    Path(__file__).parent / "guided.py",
+    "_bytelings_d079_guided_via_solo",
+)
 
 analyze_paths = _serial.analyze_paths
 analyze_paths_parallel = _par.analyze_paths_parallel

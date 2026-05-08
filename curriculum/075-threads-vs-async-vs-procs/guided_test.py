@@ -1,14 +1,13 @@
 """Tests for rung 3."""
-import importlib.util
 from pathlib import Path
 
 import pytest
 
+from _byte import load_rung
+
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_3"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "guided.py")
-ex = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(ex)
+ex = load_rung(_HERE / "guided.py", _NAME)
 
 
 def double(x):

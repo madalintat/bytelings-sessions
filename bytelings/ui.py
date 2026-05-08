@@ -42,6 +42,12 @@ def banner_pass(rung_label: str, hint: str = "") -> None:
     console.print(Panel(text, border_style="green"))
 
 
+def banner_marked_done(rung_label: str) -> None:
+    """Like banner_pass but says 'marked done' (used by `bytelings done`)."""
+    text = Text.from_markup(f"[bold green]✔ {rung_label} marked done[/bold green]")
+    console.print(Panel(text, border_style="green"))
+
+
 def banner_fail(message: str, hint: str = "") -> None:
     text = Text.from_markup("[bold red]✘ Tests failing[/bold red]\n\n")
     text.append(message)

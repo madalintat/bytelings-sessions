@@ -3,15 +3,14 @@
 We don't impose a perf bound here because it's environment-dependent;
 the structural check verifies you switched the executor.
 """
-import importlib.util
 import inspect
 from pathlib import Path
 
+from _byte import load_rung
+
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
-ex = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(ex)
+ex = load_rung(_HERE / "fluency.py", _NAME)
 
 
 def test_correctness():

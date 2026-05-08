@@ -1,15 +1,13 @@
-"""Rung 5 tests — write these yourself using pytest's monkeypatch fixture.
+"""Rung 5 tests — monkeypatch in action.
 
-The function under test (`is_production_env`) is in apply.py. It
-reads `os.environ["APP_ENV"]` and returns one of three values.
+Three plain tests for `is_production_env` (in apply.py) cover the
+three branches of os.environ["APP_ENV"]: production, staging, unset.
+Each uses pytest's `monkeypatch` fixture to set or unset APP_ENV
+without touching the real environment, so tests stay isolated.
 
-Your job: cover all three branches WITHOUT touching the real
-environment. Use `monkeypatch.setenv("APP_ENV", "<value>")` to set,
-and `monkeypatch.delenv("APP_ENV", raising=False)` to remove.
-
-These tests are STARTERS — they all currently fail with
-NotImplementedError. Replace the bodies. The `_byte.diagnose` helper
-gives you targeted teaching messages on common wrong answers.
+The two `*_with_diagnose` tests below show the same scenarios with
+the `_byte.diagnose` helper layered on top — when the assertion fails,
+the learner gets a teaching message instead of a generic string diff.
 
 Run:
     uv run pytest apply_test.py -v
@@ -29,27 +27,23 @@ _spec.loader.exec_module(ex)
 
 
 def test_returns_production_when_env_is_production(monkeypatch: pytest.MonkeyPatch):
-    # TODO: monkeypatch.setenv APP_ENV=production, then call
-    # ex.is_production_env() and check it returns "production".
-    raise NotImplementedError
+    monkeypatch.setenv("APP_ENV", "production")
+    assert ex.is_production_env() == "production"
 
 
 def test_returns_staging_when_env_is_staging(monkeypatch: pytest.MonkeyPatch):
-    # TODO: monkeypatch APP_ENV=staging, assert "staging".
-    raise NotImplementedError
+    monkeypatch.setenv("APP_ENV", "staging")
+    assert ex.is_production_env() == "staging"
 
 
 def test_returns_unknown_when_env_is_unset(monkeypatch: pytest.MonkeyPatch):
-    # TODO: monkeypatch.delenv APP_ENV (raising=False so the test passes
-    # even if APP_ENV happened to not be set in the real environment).
-    # Then assert "unknown".
-    raise NotImplementedError
+    monkeypatch.delenv("APP_ENV", raising=False)
+    assert ex.is_production_env() == "unknown"
 
 
-# ----- below: the diagnostic-flavored versions of the same tests, but
-# already filled in. They show the diagnose pattern in action. The
-# learner doesn't have to write these — they're the "correct" reference,
-# kept here to demonstrate the helper. -----
+# ----- below: the same three scenarios but with the `diagnose` helper
+# wrapped around each. Compare the two styles to see what diagnose
+# adds: targeted teaching messages on common wrong answers. -----
 
 
 def test_production_with_diagnose(monkeypatch: pytest.MonkeyPatch):
