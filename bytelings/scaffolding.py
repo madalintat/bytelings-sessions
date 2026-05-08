@@ -27,20 +27,20 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "010-regex-essentials",
         "011-string-parsing-patterns",
     ]),
-    ("phase-1-python-core", "module-03-lists-and-bigo", [
+    ("phase-1-python-core", "module-03-lists-and-counting", [
         "012-list-basics",
         "013-list-slicing-deep",
         "014-iteration-idioms-enumerate-zip",
         "015-list-methods-and-mutation",
         "016-linear-search-and-counting-ops",
-        "017-bigo-notation-intro",
     ]),
-    ("phase-1-python-core", "module-04-dicts-sets-hashing", [
+    ("phase-1-python-core", "module-04-hashing-dicts-sets-and-bigo", [
+        "017-what-is-hashing",
         "018-dict-basics",
         "019-set-operations",
         "020-defaultdict-and-counter",
-        "021-what-is-hashing",
-        "022-dict-vs-list-decision",
+        "021-dict-vs-list-decision",
+        "022-bigo-notation-intro",
     ]),
     ("phase-1-python-core", "module-05-functions-closures-decorators", [
         "023-defining-and-calling-functions",
@@ -108,7 +108,7 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "065-mocks-and-monkeypatch",
         "066-property-based-testing-intro",
     ]),
-    ("phase-3-quality-production", "module-13-reading-refactoring-style", [
+    ("phase-3-quality-production", "module-13-refactor-in-context", [
         "067-reading-code-you-didnt-write",
         "068-refactoring-katas",
         "069-pythonic-style-and-idioms",
@@ -141,30 +141,32 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "085-doubly-linked-list",
         "086-lru-cache-project",
     ]),
-    ("phase-4-data-structures", "module-18-trees-and-bst", [
+    ("phase-4-data-structures", "module-18-trees-recursion-bst", [
         "087-binary-tree-basics",
         "088-tree-traversals",
-        "089-bst-insert-search",
-        "090-bst-delete-and-balance",
+        # Recursion is taught FORMALLY here, before BST insert/delete
+        # need it on Days 90/91.
+        "089-base-and-recursive-cases",
+        "090-bst-insert-search",
+        "091-bst-delete-and-balance",
     ]),
     ("phase-4-data-structures", "module-19-heaps-and-hash-tables", [
-        "091-heap-invariant-and-heapq",
-        "092-build-your-own-heap-and-top-k",
-        "093-hash-table-chaining",
-        "094-hash-table-open-addressing",
-        "095-hash-function-design-and-word-counter",
-    ]),
-    ("phase-4-data-structures", "phase-4-project-tiny-database", [
-        "096-project-day-1-design-and-scaffold",
-        "097-project-day-2-build-core",
-        "098-project-day-3-test-and-ship",
+        "092-heap-invariant-and-heapq",
+        "093-build-your-own-heap-and-top-k",
+        "094-hash-table-chaining",
+        "095-hash-table-open-addressing",
+        "096-hash-function-design-and-word-counter",
     ]),
     # ---------- PHASE 5 — Algorithms (22+3=25 days) ----------
-    ("phase-5-algorithms", "module-20-recursion", [
-        "099-base-and-recursive-cases",
-        "100-tracing-recursion",
-        "101-recursion-vs-iteration",
-        "102-stack-depth-and-python-limits",
+    ("phase-5-algorithms", "module-20-recursion-tail", [
+        "097-tracing-recursion",
+        "098-recursion-vs-iteration",
+        "099-stack-depth-and-python-limits",
+    ]),
+    ("phase-4-data-structures", "phase-4-project-tiny-database", [
+        "100-project-day-1-design-and-scaffold",
+        "101-project-day-2-build-core",
+        "102-project-day-3-test-and-ship",
     ]),
     ("phase-5-algorithms", "module-21-searching-sorting", [
         "103-binary-search-and-variants",
@@ -363,52 +365,71 @@ if __name__ == "__main__":
 '''
 
 
-def scaffold_day(
-    day_dir: Path, day_slug: str, phase: str, module: str
-) -> None:
-    day_dir.mkdir(parents=True, exist_ok=True)
-    files = {
-        "concept.md": CONCEPT_PLACEHOLDER.format(
-            day_slug=day_slug, phase=phase, module=module
-        ),
-        "02_fluency.py": FLUENCY_PLACEHOLDER.format(day_slug=day_slug),
-        "02_fluency_test.py": FLUENCY_TEST_PLACEHOLDER.format(
-            day_slug=day_slug
-        ),
-        "03_guided.py": GUIDED_PLACEHOLDER.format(day_slug=day_slug),
-        "03_guided_test.py": GUIDED_TEST_PLACEHOLDER.format(
-            day_slug=day_slug
-        ),
-        "04_solo.py": SOLO_PLACEHOLDER.format(day_slug=day_slug),
-        "04_solo_test.py": SOLO_TEST_PLACEHOLDER.format(day_slug=day_slug),
-        "05_apply.py": APPLY_PLACEHOLDER.format(day_slug=day_slug),
+def _new_filenames() -> dict[str, str]:
+    """Map placeholder constants to their v2 filenames."""
+    return {
+        "README.md": CONCEPT_PLACEHOLDER,
+        "fluency.py": FLUENCY_PLACEHOLDER,
+        "fluency_test.py": FLUENCY_TEST_PLACEHOLDER,
+        "guided.py": GUIDED_PLACEHOLDER,
+        "guided_test.py": GUIDED_TEST_PLACEHOLDER,
+        "solo.py": SOLO_PLACEHOLDER,
+        "solo_test.py": SOLO_TEST_PLACEHOLDER,
+        "apply.py": APPLY_PLACEHOLDER,
     }
-    for name, content in files.items():
-        target = day_dir / name
-        if not target.exists():
-            target.write_text(content)
-    starter = day_dir / ".starter"
-    starter.mkdir(exist_ok=True)
-    for name, content in files.items():
-        snap = starter / name
-        if not snap.exists():
-            snap.write_text(content)
 
 
-def scaffold_module(phase: str, module: str, day_slugs: list[str]) -> None:
-    module_dir = CURRICULUM_ROOT / phase / module
-    module_dir.mkdir(parents=True, exist_ok=True)
-    for slug in day_slugs:
-        day_slug = f"day-{slug}"
-        scaffold_day(module_dir / day_slug, day_slug, phase, module)
+def scaffold_day(
+    day_dir: Path, sol_dir: Path, day_slug: str, phase: str, module: str
+) -> None:
+    """Create curriculum/<slug>/ + solutions/<slug>/ from placeholders."""
+    day_dir.mkdir(parents=True, exist_ok=True)
+    sol_dir.mkdir(parents=True, exist_ok=True)
+    for name, template in _new_filenames().items():
+        content = template.format(day_slug=day_slug, phase=phase, module=module)
+        for target_dir in (day_dir, sol_dir):
+            target = target_dir / name
+            if not target.exists():
+                target.write_text(content)
 
 
-def scaffold_all() -> None:
+def scaffold_all(root: Path = Path(".")) -> list[tuple[str, str, str, int]]:
+    """Walk SKELETON; produce curriculum/ and solutions/. Return manifest seed.
+
+    Returns a list of (slug, phase, module, day_number) tuples that the
+    caller can hand to bytelings.info_toml.dump for info.toml.
+    """
+    curriculum = root / "curriculum"
+    solutions = root / "solutions"
+    manifest: list[tuple[str, str, str, int]] = []
     for phase, module, day_slugs in SKELETON:
-        scaffold_module(phase, module, day_slugs)
+        for slug in day_slugs:
+            day_number = int(slug.split("-")[0])
+            scaffold_day(
+                day_dir=curriculum / slug,
+                sol_dir=solutions / slug,
+                day_slug=slug,
+                phase=phase,
+                module=module,
+            )
+            manifest.append((slug, phase, module, day_number))
+    return manifest
 
 
 if __name__ == "__main__":
-    scaffold_all()
-    total = sum(len(d) for _, _, d in SKELETON)
-    print(f"Scaffolded {total} days.")
+    from .info_toml import DayEntry, dump as dump_info_toml
+    manifest = scaffold_all()
+    entries = [
+        DayEntry(
+            slug=slug,
+            path=f"curriculum/{slug}",
+            day_number=n,
+            phase=phase,
+            module=module,
+            old_slug=f"day-{slug}",
+            patterns=[],
+        )
+        for slug, phase, module, n in manifest
+    ]
+    dump_info_toml(entries, Path("curriculum") / "info.toml")
+    print(f"Scaffolded {len(manifest)} days + info.toml.")

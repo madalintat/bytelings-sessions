@@ -1,6 +1,6 @@
 [project]
 name = "bytelings"
-version = "0.1.7"
+version = "0.2.0"
 description = "Small daily exercises to make you fluent at writing and reading code. Python first; C, C++, Rust, and Go on the roadmap."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -52,14 +52,20 @@ packages = ["bytelings"]
 # `bytelings init` can copy them into a user's working directory after install.
 [tool.hatch.build.targets.wheel.force-include]
 "curriculum" = "bytelings/_curriculum"
+"solutions" = "bytelings/_solutions"
+"solved" = "bytelings/_solved"
 "scaffold" = "bytelings/_scaffold"
 
 [tool.hatch.build.targets.sdist]
 include = [
     "bytelings/**",
     "curriculum/**",
+    "solutions/**",
+    "solved/**",
     "scaffold/**",
     "tests/**",
+    "scripts/**",
+    "docs/**",
     "README.md",
     "LICENSE",
     "pyproject.toml",

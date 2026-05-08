@@ -7,18 +7,19 @@ from bytelings import progress as prog
 
 def test_load_returns_default_when_file_missing(tmp_progress_path: Path):
     p = prog.load(tmp_progress_path)
-    assert p.version == 1
+    assert p.version == 2
     assert p.current_rung == 1
     assert p.completed_days == []
     assert p.streak_days == 0
+    assert p.patterns_seen == []
     assert p.started_at  # auto-set
 
 
 def test_save_then_load_roundtrip(tmp_progress_path: Path):
     p = prog.Progress(
-        version=1,
+        version=2,
         started_at="2026-05-08T10:00:00+00:00",
-        current_day="day-001-uv-setup-and-pytest",
+        current_day="001-uv-setup-and-pytest",
         current_rung=2,
         completed_days=[],
         completed_rungs_today=[1],
@@ -26,10 +27,39 @@ def test_save_then_load_roundtrip(tmp_progress_path: Path):
         longest_streak=0,
         last_active_date="2026-05-08",
         notes_path="progress/notes/",
+        patterns_seen=["P-01"],
     )
     prog.save(p, tmp_progress_path)
     loaded = prog.load(tmp_progress_path)
     assert loaded == p
+
+
+def test_load_migrates_v1_progress(tmp_progress_path: Path):
+    """A v1 progress.json (no patterns_seen, version=1) auto-migrates to v2 on load."""
+    import json
+    tmp_progress_path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_progress_path.write_text(json.dumps({
+        "version": 1,
+        "started_at": "2026-01-01T00:00:00+00:00",
+        "current_day": "day-007-string-methods-and-fstrings",
+        "current_rung": 2,
+        "completed_days": ["day-001-uv-setup-and-pytest"],
+        "completed_rungs_today": [1],
+        "streak_days": 1,
+        "longest_streak": 1,
+        "last_active_date": "2026-01-01",
+        "notes_path": "progress/notes/",
+    }))
+    p = prog.load(tmp_progress_path)
+    assert p.version == 2
+    # current_day kept as v1 slug; locator.py handles back-compat at lookup time.
+    assert p.current_day == "day-007-string-methods-and-fstrings"
+    assert p.completed_days == ["day-001-uv-setup-and-pytest"]
+    assert p.patterns_seen == []
+    # Migration was persisted to disk.
+    saved = json.loads(tmp_progress_path.read_text())
+    assert saved["version"] == 2
+    assert saved["patterns_seen"] == []
 
 
 def test_save_is_atomic(tmp_progress_path: Path):

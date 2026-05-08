@@ -16,4 +16,5 @@ dependencies = [
 # otherwise collect ~1500 intentionally-broken curriculum tests.
 python_files = ["*_test.py", "test_*.py"]
 addopts = "-q --import-mode=importlib"
-norecursedirs = [".starter", ".venv", "__pycache__", ".git", "progress", "curriculum"]
+norecursedirs = [".starter", ".venv", "__pycache__", ".git", "progress", "curriculum", "solutions"]
+

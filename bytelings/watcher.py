@@ -206,13 +206,13 @@ def _wait_for_uv_sync(is_day_one: bool) -> bool:
 
 
 def _show_concept_blocking(day) -> None:
-    """Print a day's concept.md to the regular terminal and wait for a key."""
-    concept = day.path / "concept.md"
+    """Print a day's README.md to the regular terminal and wait for a key."""
+    concept = day.path / "README.md"
     ui.header(f"Concept: {day.slug}")
     if concept.is_file():
         ui.console.print(concept.read_text())
     else:
-        ui.console.print(f"[dim]No concept.md for {day.slug}[/dim]")
+        ui.console.print(f"[dim]No README.md for {day.slug}[/dim]")
     ui.console.print("\n[dim](press any key to return)[/dim]")
     _wait_any_key()
 
@@ -304,7 +304,7 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
         else:
             ui.banner_pass(
                 "Rung 1: Read the concept",
-                "(auto-completed — open concept.md whenever you want to refer back)",
+                "(auto-completed — open README.md whenever you want to refer back)",
             )
 
     rung = locator.rung_for(p, rungs)
@@ -317,7 +317,11 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
 
     def on_save(_path: str) -> None:
         nonlocal p, rung, rungs, day
-        if rung.test_file is None:
+        # Apply rungs declare apply_test.py as optional in _RUNG_SPECS;
+        # many days don't ship one. Treat a declared-but-missing test
+        # file the same as test_file=None — "no automated tests."
+        no_tests = rung.test_file is None or not rung.test_file.exists()
+        if no_tests:
             runner.set_message(
                 f"[bold]Rung {rung.number}:[/bold] no automated tests.\n\n"
                 "Run [cyan]bytelings done[/cyan] to advance.",
@@ -375,8 +379,8 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
     runner.start()
     try:
         # Initial run so the body shows real status, not the idle hint.
-        if rung.test_file is not None:
-            on_save(str(rung.file))
+        # on_save handles the no-test-file case internally.
+        on_save(str(rung.file))
 
         with _cbreak_stdin() as keys_active:
             while True:
@@ -390,13 +394,7 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
                 if key == "q":
                     break
                 if key == "r":
-                    if rung.test_file is not None:
-                        on_save(str(rung.file))
-                    else:
-                        runner.set_message(
-                            f"[bold]Rung {rung.number}:[/bold] no automated tests.",
-                            border="cyan",
-                        )
+                    on_save(str(rung.file))
                 elif key == "h":
                     with runner.paused():
                         _show_concept_blocking(day)

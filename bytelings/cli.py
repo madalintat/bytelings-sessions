@@ -46,36 +46,42 @@ Run [cyan]bytelings init[/cyan] to create a [cyan]./bytelings/[/cyan] project fo
 """
 
 
-def _curriculum_source() -> Path:
-    """Locate the bundled curriculum inside the installed package.
+def _bundled_dir(name: str, *, required: bool = False) -> Path | None:
+    """Locate a bundled top-level directory (curriculum/, solutions/, scaffold/).
 
-    Falls back to the repo's `curriculum/` for editable / dev installs.
+    Checks the installed wheel's `bytelings/_<name>/` first, then falls
+    back to the repo's `<name>/` for editable / dev installs. Returns
+    None if missing; if `required`, raises a click error instead.
     """
-    bundled = resources.files("bytelings") / "_curriculum"
+    bundled = resources.files("bytelings") / f"_{name}"
     if bundled.is_dir():
         return Path(str(bundled))
-    repo_curriculum = Path(__file__).resolve().parent.parent / "curriculum"
-    if repo_curriculum.is_dir():
-        return repo_curriculum
-    raise click.ClickException(
-        "Could not locate the bundled curriculum. Reinstall bytelings or "
-        "run from the repo root."
-    )
+    repo = Path(__file__).resolve().parent.parent / name
+    if repo.is_dir():
+        return repo
+    if required:
+        raise click.ClickException(
+            f"Could not locate {name}/. Reinstall bytelings or run from the repo root."
+        )
+    return None
+
+
+def _curriculum_source() -> Path:
+    src = _bundled_dir("curriculum", required=True)
+    assert src is not None  # required=True raises on miss
+    return src
 
 
 def _scaffold_source() -> Path | None:
-    """Locate the bundled student scaffold (pyproject.toml + uv.lock).
+    return _bundled_dir("scaffold")
 
-    Returns None if no scaffold is bundled (older installs).
-    Falls back to the repo's `scaffold/` for editable / dev installs.
-    """
-    bundled = resources.files("bytelings") / "_scaffold"
-    if bundled.is_dir():
-        return Path(str(bundled))
-    repo_scaffold = Path(__file__).resolve().parent.parent / "scaffold"
-    if repo_scaffold.is_dir():
-        return repo_scaffold
-    return None
+
+def _solutions_source() -> Path | None:
+    return _bundled_dir("solutions")
+
+
+def _solved_source() -> Path | None:
+    return _bundled_dir("solved")
 
 
 @click.group(invoke_without_command=True)
@@ -119,6 +125,14 @@ def init(target: Path, force: bool) -> None:
         shutil.rmtree(target)
     shutil.copytree(src, target / "curriculum")
 
+    sol_src = _solutions_source()
+    if sol_src is not None:
+        shutil.copytree(sol_src, target / "solutions")
+
+    solved_src = _solved_source()
+    if solved_src is not None:
+        shutil.copytree(solved_src, target / "solved")
+
     scaffold_src = _scaffold_source()
     shipped: list[str] = []
     if scaffold_src is not None:
@@ -130,6 +144,10 @@ def init(target: Path, force: bool) -> None:
             shipped.append(fname)
 
     ui.console.print(f"[bold green]✔ Created ./{target}/[/bold green]")
+    if sol_src is not None:
+        ui.console.print("  solutions/ mirror copied (used by `bytelings reset`)")
+    if solved_src is not None:
+        ui.console.print("  solved/ mirror copied (used by `bytelings solution`)")
     if shipped:
         ui.console.print(f"  shipped: {', '.join(shipped)}")
     ui.console.print(
@@ -193,7 +211,7 @@ def run(day_slug: str | None) -> None:
         return
     rungs = locator.rungs_of(day)
     rung = locator.rung_for(p, rungs)
-    if rung.test_file is None:
+    if rung.test_file is None or not rung.test_file.exists():
         click.echo(f"Rung {rung.number} has no automated tests.")
         return
     result = watcher.run_pytest(rung.test_file)
@@ -215,9 +233,9 @@ def hint(day_slug: str | None) -> None:
     if day is None:
         click.echo(f"Day not found: {day_slug}" if day_slug else "No day to hint.")
         return
-    concept = day.path / "concept.md"
+    concept = day.path / "README.md"
     if not concept.is_file():
-        click.echo(f"No concept.md for {day.slug}.")
+        click.echo(f"No README.md for {day.slug}.")
         return
     ui.header(f"Concept: {day.slug}")
     ui.console.print(concept.read_text())
@@ -263,14 +281,35 @@ def next_cmd() -> None:
 @cli.command()
 @click.argument("day_slug")
 def reset(day_slug: str) -> None:
-    """Reset progress for a specific day."""
+    """Reset progress + restore pristine files for a specific day.
+
+    Progress: clears day from completed and resets rung state if current.
+    Files: copies from solutions/<slug>/ over the working curriculum/<slug>/
+    files, so the learner gets a fresh starter. v1 slugs are accepted —
+    locator.find_day handles the back-compat lookup.
+    """
     p = progress_mod.load()
-    if day_slug in p.completed_days:
+    day = locator.find_day(day_slug)
+    canonical = day.slug if day is not None else day_slug
+
+    if canonical in p.completed_days:
+        p.completed_days.remove(canonical)
+    if day_slug in p.completed_days:  # also handle if user passed v1 slug
         p.completed_days.remove(day_slug)
-    if p.current_day == day_slug:
+    if p.current_day in (canonical, day_slug):
         p.current_rung = 1
         p.completed_rungs_today = []
     progress_mod.save(p)
+
+    if day is not None:
+        sol_dir = Path("solutions") / day.slug
+        if sol_dir.is_dir():
+            for fname in locator.RUNG_FILES:
+                src = sol_dir / fname
+                if src.is_file():
+                    shutil.copy2(src, day.path / fname)
+            click.echo(f"Reset {day.slug}: progress cleared + files restored.")
+            return
     click.echo(f"Reset {day_slug}.")
 
 
@@ -314,6 +353,118 @@ def list() -> None:
         marker = "[green]✔[/green]" if d.slug in completed else "[dim]○[/dim]"
         line = f"{marker} {d.slug}  [dim]({d.module})[/dim]"
         ui.console.print(line)
+
+
+@cli.command()
+@click.argument("pattern_id", required=False)
+def patterns(pattern_id: str | None) -> None:
+    """List the Pattern Catalog or show one entry by ID.
+
+    Usage:
+        bytelings patterns          # list all
+        bytelings patterns P-07     # show one
+    """
+    from . import patterns as p_module
+
+    if pattern_id is None:
+        for p in p_module.PATTERNS:
+            head = p.description.split(".")[0]
+            ui.console.print(f"[cyan]{p.id}[/cyan] [bold]{p.name}[/bold] — {head}.")
+        ui.console.print(
+            f"\n[dim]({len(p_module.PATTERNS)} patterns. "
+            "`bytelings patterns P-NN` for one entry.)[/dim]"
+        )
+        return
+
+    p = p_module.by_id(pattern_id)
+    if p is None:
+        raise click.ClickException(f"No pattern with id {pattern_id!r}.")
+    ui.console.print(f"[bold cyan]{p.id} — {p.name}[/bold cyan]\n")
+    ui.console.print(p.description + "\n")
+    ui.console.print("[dim]Canonical:[/dim]")
+    for line in p.canonical.splitlines():
+        ui.console.print(f"    {line}")
+    ui.console.print(f"\n[dim]When to reach for it:[/dim] {p.when}")
+    days_str = ", ".join(str(d) for d in p.days) if p.days else "(none yet)"
+    ui.console.print(f"[dim]Days that exercise it:[/dim] {days_str}")
+
+
+# Derive {rung_number: source_filename} from locator's canonical specs.
+# Reveal targets are the source files, never the test files.
+_RUNG_FILENAMES = {n: src for n, src, _, _ in locator._RUNG_SPECS}
+
+
+@cli.command()
+@click.argument("day_slug")
+@click.option(
+    "--rung", "-r", "rung", type=click.IntRange(1, 5), required=True,
+    help="Which rung to reveal (1=README, 2=fluency, 3=guided, 4=solo, 5=apply).",
+)
+@click.option(
+    "--yes", "-y", is_flag=True,
+    help="Skip the friction prompt. Useful in scripts; not recommended for learners.",
+)
+def solution(day_slug: str, rung: int, yes: bool) -> None:
+    """Reveal a rung's solved (or starter) file, gated by a friction prompt.
+
+    Lookup order:
+      1. solved/<slug>/<rung>.py  — the canonical answer (when authored)
+      2. solutions/<slug>/<rung>.py  — the pristine starter (always present)
+
+    The friction prompt is the point: a learner has to *decide* to look.
+    Default at the prompt is `h` (re-read the hint instead).
+
+    Solved-content authoring is incremental. Days with no solved/ entry
+    fall back to the starter — still useful when a learner has deleted
+    a docstring or hint by accident.
+    """
+    day = locator.find_day(day_slug)
+    if day is None:
+        raise click.ClickException(f"No such day: {day_slug!r}")
+    fname = _RUNG_FILENAMES[rung]
+
+    solved_src = Path("solved") / day.slug / fname
+    starter_src = Path("solutions") / day.slug / fname
+    if solved_src.is_file():
+        src = solved_src
+        kind = "solved"
+    elif starter_src.is_file():
+        src = starter_src
+        kind = "starter"
+    else:
+        raise click.ClickException(
+            f"No solution file at {solved_src} or {starter_src}. "
+            "Run `bytelings init` to scaffold, or check the day slug."
+        )
+
+    if not yes:
+        ui.console.print(
+            f"\n[bold yellow]You're about to read the rung-{rung} file for "
+            f"{day.slug}.[/bold yellow]\n"
+            "This is the highest-friction door — once you read it, the "
+            "discovery is gone.\n"
+        )
+        choice = click.prompt(
+            "  [Y]es show me  /  [n]o I'll keep trying  /  [h]int instead",
+            default="h",
+            show_default=True,
+            type=click.Choice(["y", "Y", "n", "N", "h", "H"], case_sensitive=False),
+        ).lower()
+        if choice == "h":
+            ui.console.print(
+                f"\n[dim]Skipping reveal. Try [cyan]bytelings hint {day.slug}[/cyan] "
+                "for the concept page instead.[/dim]"
+            )
+            return
+        if choice == "n":
+            ui.console.print(
+                "\n[dim]Good. Keep going. The discovery is the lesson.[/dim]"
+            )
+            return
+        # Fall through on 'y'/'Y'.
+
+    ui.header(f"{day.slug} — Rung {rung} ({fname}) — {kind}")
+    ui.console.print(src.read_text())
 
 
 @cli.command(name="phase-project")

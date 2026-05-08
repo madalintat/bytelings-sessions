@@ -1,9 +1,10 @@
-"""Walk the curriculum tree and identify days, rungs, and current location."""
+"""Walk the v2 curriculum (info.toml-driven) and identify days, rungs."""
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
 
+from .info_toml import DayEntry, load as load_info_toml
 from .progress import Progress
 
 CURRICULUM_ROOT = Path("curriculum")
@@ -15,10 +16,11 @@ class Day:
     path: Path
     phase: str
     module: str
+    old_slug: str = ""
 
     @property
     def number(self) -> int:
-        return int(self.slug.split("-")[1])
+        return int(self.slug.split("-")[0])
 
 
 @dataclass(frozen=True)
@@ -30,48 +32,48 @@ class Rung:
 
 
 _RUNG_SPECS = [
-    (1, "concept.md", None, "Read the concept"),
-    (2, "02_fluency.py", "02_fluency_test.py", "Fluency drill"),
-    (3, "03_guided.py", "03_guided_test.py", "Guided implement"),
-    (4, "04_solo.py", "04_solo_test.py", "Solo implement"),
-    (5, "05_apply.py", None, "Apply"),
+    (1, "README.md", None, "Read the concept"),
+    (2, "fluency.py", "fluency_test.py", "Fluency drill"),
+    (3, "guided.py", "guided_test.py", "Guided implement"),
+    (4, "solo.py", "solo_test.py", "Solo implement"),
+    # Apply rung's test_file is optional — see watcher.py:on_save, which
+    # treats a declared-but-missing apply_test.py as "no automated tests."
+    (5, "apply.py", "apply_test.py", "Apply"),
 ]
 
+# Single source of truth for the v2 rung-filename inventory. Anything
+# that needs "the 8 files that live in a day folder" derives from here.
+RUNG_FILES: tuple[str, ...] = tuple(
+    f
+    for _, src, test, _ in _RUNG_SPECS
+    for f in ((src,) + ((test,) if test else ()))
+)
 
-def _phase_dirs(root: Path):
-    for d in sorted(root.glob("phase-*")):
-        if d.is_dir():
-            yield d
 
-
-def _container_dirs(phase_dir: Path):
-    """Yield module/, phase-project/, and capstone/ container dirs in a phase."""
-    for sub in sorted(phase_dir.iterdir()):
-        if sub.is_dir() and not sub.name.startswith(("__", ".")):
-            yield sub
+def _entries(root: Path) -> list[DayEntry]:
+    return load_info_toml(root / "info.toml")
 
 
 def all_days(root: Path = CURRICULUM_ROOT) -> list[Day]:
-    """Return every day folder in chronological (day-number) order."""
-    days: list[Day] = []
-    for phase_dir in _phase_dirs(root):
-        for container in _container_dirs(phase_dir):
-            for day_dir in sorted(container.glob("day-*")):
-                if not day_dir.is_dir():
-                    continue
-                days.append(Day(
-                    slug=day_dir.name,
-                    path=day_dir,
-                    phase=phase_dir.name,
-                    module=container.name,
-                ))
+    """Return every day from info.toml in chronological (day-number) order."""
+    days = [
+        Day(
+            slug=e.slug,
+            path=root / e.slug,
+            phase=e.phase,
+            module=e.module,
+            old_slug=e.old_slug,
+        )
+        for e in _entries(root)
+    ]
     days.sort(key=lambda d: d.number)
     return days
 
 
 def find_day(slug: str, root: Path = CURRICULUM_ROOT) -> Day | None:
+    """Find a day by new slug OR old slug (v1 backwards-compat)."""
     for day in all_days(root):
-        if day.slug == slug:
+        if day.slug == slug or day.old_slug == slug:
             return day
     return None
 
@@ -92,7 +94,7 @@ def first_unfinished_day(
     p: Progress, root: Path = CURRICULUM_ROOT
 ) -> Day | None:
     for day in all_days(root):
-        if day.slug not in p.completed_days:
+        if day.slug not in p.completed_days and day.old_slug not in p.completed_days:
             return day
     return None
 
@@ -100,17 +102,14 @@ def first_unfinished_day(
 def current_or_next_day(
     p: Progress, root: Path = CURRICULUM_ROOT
 ) -> Day | None:
-    """Locate the day to work on: current_day if set & exists, else first unfinished.
-
-    Single source of `all_days()` so both lookups share one tree walk.
-    """
+    """Locate the day to work on. Honors v1 slugs in progress.json."""
     days = all_days(root)
     if p.current_day:
         for d in days:
-            if d.slug == p.current_day:
+            if d.slug == p.current_day or d.old_slug == p.current_day:
                 return d
     for d in days:
-        if d.slug not in p.completed_days:
+        if d.slug not in p.completed_days and d.old_slug not in p.completed_days:
             return d
     return None
 
