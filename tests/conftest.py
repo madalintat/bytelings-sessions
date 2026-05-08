@@ -13,21 +13,34 @@ def tmp_progress_path(tmp_path: Path) -> Path:
 
 @pytest.fixture
 def fake_curriculum(tmp_path: Path) -> Path:
-    """Build a tiny fake curriculum tree under tmp_path/curriculum."""
-    root = tmp_path / "curriculum"
-    p1 = root / "phase-1-python-core" / "module-01-setup-and-values"
-    p1.mkdir(parents=True)
-    for n, slug in [(1, "uv-setup"), (2, "numbers"), (3, "booleans")]:
-        d = p1 / f"day-{n:03d}-{slug}"
+    """Build a tiny fake v2 curriculum tree under tmp_path."""
+    from bytelings import info_toml
+
+    curriculum = tmp_path / "curriculum"
+    curriculum.mkdir()
+    entries = []
+    for n, slug_part in [(1, "uv-setup"), (2, "numbers"), (3, "booleans")]:
+        slug = f"{n:03d}-{slug_part}"
+        d = curriculum / slug
         d.mkdir()
-        (d / "concept.md").write_text(f"# Day {n}\n")
-        for r in (2, 3, 4):
-            (d / f"0{r}_x.py").write_text("")
-            (d / f"0{r}_x_test.py").write_text(
+        (d / "README.md").write_text(f"# Day {n}\n")
+        (d / "apply.py").write_text("")
+        for kind in ("fluency", "guided", "solo"):
+            (d / f"{kind}.py").write_text("")
+            (d / f"{kind}_test.py").write_text(
                 "def test_ok():\n    assert True\n"
             )
-        (d / "05_apply.py").write_text("")
-    return root
+        entries.append(info_toml.DayEntry(
+            slug=slug,
+            path=f"curriculum/{slug}",
+            day_number=n,
+            phase="phase-1-python-core",
+            module="module-01-setup-and-values",
+            old_slug=f"day-{slug}",
+            patterns=[],
+        ))
+    info_toml.dump(entries, curriculum / "info.toml")
+    return curriculum
 
 
 @pytest.fixture
