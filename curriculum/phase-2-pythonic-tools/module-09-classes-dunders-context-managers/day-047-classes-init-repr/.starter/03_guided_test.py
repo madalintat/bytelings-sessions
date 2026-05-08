@@ -12,19 +12,19 @@ _spec.loader.exec_module(ex)
 
 
 def test_basic():
-    u = ex.User("Mada", 30)
-    assert u.name == "Mada"
+    u = ex.User("Bytelinger", 30)
+    assert u.name == "Bytelinger"
     assert u.age == 30
 
 
 def test_repr():
-    u = ex.User("Mada", 30)
-    assert repr(u) == "User(name='Mada', age=30)"
+    u = ex.User("Bytelinger", 30)
+    assert repr(u) == "User(name='Bytelinger', age=30)"
 
 
 def test_negative_age_raises():
     with pytest.raises(ValueError):
-        ex.User("Mada", -1)
+        ex.User("Bytelinger", -1)
 
 
 def test_empty_name_raises():

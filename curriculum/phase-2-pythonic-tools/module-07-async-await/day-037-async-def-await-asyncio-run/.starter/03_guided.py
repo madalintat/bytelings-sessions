@@ -16,8 +16,8 @@ async def greet_after(name: str, delay: float) -> str:
     """Sleep, then return a greeting.
 
     >>> import asyncio
-    >>> asyncio.run(greet_after("Mada", 0.0))
-    'Hello, Mada!'
+    >>> asyncio.run(greet_after("Bytelinger", 0.0))
+    'Hello, Bytelinger!'
     """
     # TODO: await asyncio.sleep(delay) and then return the formatted string.
     raise NotImplementedError

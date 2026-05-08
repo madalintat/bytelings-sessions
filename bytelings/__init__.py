@@ -1,2 +1,2 @@
-"""swe — the swe-skills runner."""
-__version__ = "0.0.1"
+"""bytelings — small daily exercises to make you fluent at code."""
+__version__ = "0.1.6"

@@ -11,9 +11,9 @@ _spec.loader.exec_module(ex)
 
 def test_basic(tmp_path):
     p = tmp_path / "users.csv"
-    p.write_text("id,name\n1,Mada\n2,Alex\n")
+    p.write_text("id,name\n1,Bytelinger\n2,Alex\n")
     assert ex.load_users(p) == [
-        {"id": 1, "name": "Mada"},
+        {"id": 1, "name": "Bytelinger"},
         {"id": 2, "name": "Alex"},
     ]
 

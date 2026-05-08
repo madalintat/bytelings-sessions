@@ -38,10 +38,30 @@ glue between three things:
    project's venv automatically. No `source venv/bin/activate` ritual.
 
 For this whole curriculum, you'll use `bytelings` (the watcher) to
-drive your day. Right now, you'll use `uv run pytest` to confirm
-tests pass.
+drive your day. It runs the right tests for the rung you're on,
+every time you save.
 
-## Now: open `02_fluency.py`
+## Rung 1: run `uv sync`
+
+That's literally it. Open a terminal in this folder and run:
+
+```bash
+uv sync
+```
+
+Now in *another* terminal (or split pane), start the watcher:
+
+```bash
+bytelings
+```
+
+The watcher will see your `.venv`, mark Rung 1 done, and move you
+straight to Rung 2.
+
+> If you start the watcher *before* `uv sync`, it'll wait for you
+> and pick up the `.venv` the moment it appears. No restart needed.
+
+## Then: open `02_fluency.py`
 
 You'll fix two tiny things. The watcher will tell you when they're
 right. Don't worry — you can't break anything.

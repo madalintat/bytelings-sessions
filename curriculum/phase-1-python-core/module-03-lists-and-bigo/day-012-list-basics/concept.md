@@ -12,7 +12,7 @@ underneath.
 ```python
 people = ["Alice", "Bob", "Carol"]
 people.append("Dave")          # 1
-people.insert(0, "Mada")       # 2
+people.insert(0, "Bytelinger")       # 2
 first = people[0]              # 3
 last  = people[-1]             # 4
 people[1] = "Bobby"            # 5  (lists are mutable!)

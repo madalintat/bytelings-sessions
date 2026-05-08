@@ -17,9 +17,9 @@ class User:
         return isinstance(other, User) and self.id == other.id
 
 cache = {}
-u = User(1, "Mada")
+u = User(1, "Bytelinger")
 cache[u] = "first time"
-print(cache[User(1, "Mada")])
+print(cache[User(1, "Bytelinger")])
 ```
 
 It crashes with `KeyError: User(...)`. They swear `__eq__` is right —
@@ -45,7 +45,7 @@ defined in a class that doesn't define `__hash__`.
 
 Try the code in a REPL: `cache[u]` succeeds at write-time but fails on
 lookup. Why? Because `__hash__` *was* still inherited from `object` —
-the default hash is based on `id(self)`. The two `User(1, "Mada")`
+the default hash is based on `id(self)`. The two `User(1, "Bytelinger")`
 instances are different objects, so they hash to different buckets.
 Equal but unequal hashes. Lookup fails.
 

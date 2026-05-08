@@ -10,7 +10,7 @@ _spec.loader.exec_module(ex)
 
 
 def test_greet_basic():
-    assert ex.greet("Mada") == "Hello, Mada!"
+    assert ex.greet("Bytelinger") == "Hello, Bytelinger!"
 
 
 def test_greet_empty():

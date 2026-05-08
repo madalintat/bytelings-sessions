@@ -11,7 +11,9 @@ dependencies = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["curriculum"]
+# No default testpaths: the watcher always invokes pytest on a specific
+# rung's test file, and a bare `uv run pytest` from the project root would
+# otherwise collect ~1500 intentionally-broken curriculum tests.
 python_files = ["*_test.py", "test_*.py"]
 addopts = "-q --import-mode=importlib"
-norecursedirs = [".starter", ".venv", "__pycache__", ".git", "progress"]
+norecursedirs = [".starter", ".venv", "__pycache__", ".git", "progress", "curriculum"]

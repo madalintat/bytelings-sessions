@@ -35,7 +35,10 @@ def _today_iso() -> str:
 def load(path: Path = DEFAULT_PROGRESS_PATH) -> Progress:
     """Return Progress from disk, or a fresh default if the file is missing."""
     if not path.exists():
-        return Progress(started_at=_now_iso(), last_active_date=_today_iso())
+        # last_active_date stays empty until the first day actually completes.
+        # Otherwise mark_day_complete sees today == today and skips the streak
+        # bump, leaving the very first completion at 0.
+        return Progress(started_at=_now_iso(), last_active_date="")
     return Progress(**json.loads(path.read_text()))
 
 

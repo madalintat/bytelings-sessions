@@ -25,7 +25,7 @@ contacts = {
 
 contacts["Maria"]               # '415-555-0103'  — O(1) lookup
 contacts["Bob"] = "555-9999"    # update — O(1)
-contacts["Mada"] = "415-555-0144"   # add — O(1)
+contacts["Bytelinger"] = "415-555-0144"   # add — O(1)
 "Alice" in contacts             # True — O(1)
 del contacts["Bob"]             # remove — O(1)
 len(contacts)                   # how many keys

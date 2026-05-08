@@ -12,8 +12,8 @@ _spec.loader.exec_module(ex)
 
 def test_load_basic(tmp_path):
     p = tmp_path / "config.json"
-    p.write_text('{"name": "Mada", "n": 7}')
-    assert ex.load_config(p) == {"name": "Mada", "n": 7}
+    p.write_text('{"name": "Bytelinger", "n": 7}')
+    assert ex.load_config(p) == {"name": "Bytelinger", "n": 7}
 
 
 def test_save_and_load_roundtrip(tmp_path):

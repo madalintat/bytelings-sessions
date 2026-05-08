@@ -1,11 +1,11 @@
 [project]
 name = "bytelings"
-version = "0.1.5"
+version = "0.1.6"
 description = "Small daily exercises to make you fluent at writing and reading code. Python first; C, C++, Rust, and Go on the roadmap."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 keywords = ["learning", "education", "exercises", "rustlings", "python", "c", "rust", "go"]
-authors = [{name = "Mada"}]
+authors = [{name = "bytelings"}]
 license = {text = "MIT"}
 classifiers = [
     "Development Status :: 4 - Beta",

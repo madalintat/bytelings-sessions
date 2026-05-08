@@ -12,16 +12,16 @@ _spec.loader.exec_module(ex)
 
 
 def test_greet_default():
-    assert ex.greet("Mada") == "Hello, Mada!"
+    assert ex.greet("Bytelinger") == "Hello, Bytelinger!"
 
 
 def test_greet_with_keyword():
-    assert ex.greet("Mada", greeting="Hi") == "Hi, Mada!"
+    assert ex.greet("Bytelinger", greeting="Hi") == "Hi, Bytelinger!"
 
 
 def test_greet_greeting_is_kw_only():
     with pytest.raises(TypeError):
-        ex.greet("Mada", "Hi")  # positional should fail
+        ex.greet("Bytelinger", "Hi")  # positional should fail
 
 
 def test_clamp():

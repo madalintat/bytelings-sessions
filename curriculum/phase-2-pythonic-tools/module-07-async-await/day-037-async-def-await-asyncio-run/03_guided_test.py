@@ -16,7 +16,7 @@ def test_is_async():
 
 
 def test_basic():
-    assert asyncio.run(ex.greet_after("Mada", 0.0)) == "Hello, Mada!"
+    assert asyncio.run(ex.greet_after("Bytelinger", 0.0)) == "Hello, Bytelinger!"
 
 
 def test_empty_name():

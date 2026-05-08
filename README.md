@@ -110,8 +110,14 @@ After every phase, a **3-day project** combines everything you just learned: con
 | `bytelings list` | Every day with ✔ / ○ markers. |
 | `bytelings hint [DAY]` | Re-read the concept page anytime. |
 | `bytelings run [DAY]` | Run the current rung's tests once, no watch. |
-| `bytelings reset DAY` | Start a day over. |
+| `bytelings start DAY` | Jump to a specific day (slug or number). |
+| `bytelings reset DAY` | Start a day over (re-do its rungs). |
 | `bytelings init` | Scaffold the curriculum (just once, at the start). |
+
+The intended path is linear — Day 1 → 2 → 3 — because each day builds
+on the last. If you really need to jump (you're cherry-picking, or you
+already know Day 5 cold), `bytelings start 7` will move you there.
+Your streak only grows on consecutive completed days.
 
 ---
 

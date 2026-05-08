@@ -16,9 +16,9 @@ _spec.loader.exec_module(_solo)
 
 
 FRIENDS = {
-    "Mada":   ["Anna", "Vlad"],
-    "Anna":   ["Mada", "Bea", "Tom"],
-    "Vlad":   ["Mada", "Tom"],
+    "Bytelinger":   ["Anna", "Vlad"],
+    "Anna":   ["Bytelinger", "Bea", "Tom"],
+    "Vlad":   ["Bytelinger", "Tom"],
     "Bea":    ["Anna", "Sue"],
     "Tom":    ["Anna", "Vlad", "Carl"],
     "Sue":    ["Bea", "Carl"],
@@ -27,7 +27,7 @@ FRIENDS = {
 
 
 def main() -> None:
-    pairs = [("Mada", "Sue"), ("Mada", "Carl"), ("Vlad", "Bea")]
+    pairs = [("Bytelinger", "Sue"), ("Bytelinger", "Carl"), ("Vlad", "Bea")]
     for a, b in pairs:
         path = _solo.shortest_path(FRIENDS, a, b)
         if path:

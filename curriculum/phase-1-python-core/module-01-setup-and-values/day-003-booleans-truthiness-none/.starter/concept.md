@@ -30,7 +30,7 @@ Both compile. Both run. They behave **differently** when `name == ""`:
 
 | Input | A says | B says |
 |---|---|---|
-| `"Mada"` | "Hi, Mada" | "Hi, Mada" |
+| `"Bytelinger"` | "Hi, Bytelinger" | "Hi, Bytelinger" |
 | `None` | "Hi, stranger" | "Hi, stranger" |
 | `""` | "Hi, stranger" | "Hi, " |
 

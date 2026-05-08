@@ -275,6 +275,33 @@ def reset(day_slug: str) -> None:
 
 
 @cli.command()
+@click.argument("day_slug_or_number")
+def start(day_slug_or_number: str) -> None:
+    """Jump the watcher to a specific day. Pass the slug or the day number.
+
+    Examples: `bytelings start day-007-string-methods-and-fstrings`
+              `bytelings start 7`
+    """
+    days = locator.all_days()
+    if not days:
+        raise click.ClickException("No curriculum scaffolded. Run `bytelings init` first.")
+    target = None
+    if day_slug_or_number.isdigit():
+        n = int(day_slug_or_number)
+        target = next((d for d in days if d.number == n), None)
+    else:
+        target = next((d for d in days if d.slug == day_slug_or_number), None)
+    if target is None:
+        raise click.ClickException(f"No such day: {day_slug_or_number}")
+    p = progress_mod.load()
+    p.current_day = target.slug
+    p.current_rung = 1
+    p.completed_rungs_today = []
+    progress_mod.save(p)
+    click.echo(f"Now on {target.slug}. Run `bytelings` to start the watcher.")
+
+
+@cli.command()
 def list() -> None:
     """List every day in the curriculum with completion markers."""
     p = progress_mod.load()

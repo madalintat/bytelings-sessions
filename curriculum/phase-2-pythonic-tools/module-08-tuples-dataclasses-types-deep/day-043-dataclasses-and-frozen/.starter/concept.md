@@ -18,9 +18,9 @@ class User:
     email: str = ""
     tags: list[str] = field(default_factory=list)
 
-u = User(id=1, name="Mada")
-print(u)             # User(id=1, name='Mada', email='', tags=[])
-print(u == User(id=1, name="Mada"))   # True
+u = User(id=1, name="Bytelinger")
+print(u)             # User(id=1, name='Bytelinger', email='', tags=[])
+print(u == User(id=1, name="Bytelinger"))   # True
 u.tags.append("admin")
 print(u.tags)        # ['admin']
 ```
@@ -45,13 +45,13 @@ would be shared across every instance — the classic mutable-default
 bug. `field(default_factory=list)` says "call `list()` for each new
 instance," giving everyone their own.
 
-`u = User(id=1, name="Mada")` — the synthesized `__init__` accepts
+`u = User(id=1, name="Bytelinger")` — the synthesized `__init__` accepts
 fields by position or by keyword.
 
 `print(u)` — the synthesized `__repr__` is the constructor call you
 would have written. Hugely useful in logs and tests.
 
-`u == User(id=1, name="Mada")` — the synthesized `__eq__` compares
+`u == User(id=1, name="Bytelinger")` — the synthesized `__eq__` compares
 field-by-field. Two dataclasses are equal if every field is equal.
 
 ## `frozen=True`: when mutation is a bug, not a feature

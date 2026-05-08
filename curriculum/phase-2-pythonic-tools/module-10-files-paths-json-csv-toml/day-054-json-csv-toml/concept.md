@@ -75,7 +75,7 @@ with open("users.csv") as f:
 with open("out.csv", "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["name", "email"])
-    w.writerows([("Mada", "m@x"), ("Alex", "a@x")])
+    w.writerows([("Bytelinger", "m@x"), ("Alex", "a@x")])
 ```
 
 The `newline=""` on writes is **important** — without it, you get

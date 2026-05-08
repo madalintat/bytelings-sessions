@@ -12,8 +12,8 @@ _spec.loader.exec_module(ex)
 
 def test_describe_runtime():
     """At runtime, types don't enforce — output should still be normal."""
-    user = {"id": 1, "name": "Mada"}
-    assert ex.describe("medium", user) == "Mada (medium)"
+    user = {"id": 1, "name": "Bytelinger"}
+    assert ex.describe("medium", user) == "Bytelinger (medium)"
 
 
 def test_user_is_typeddict():
