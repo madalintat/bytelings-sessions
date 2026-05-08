@@ -215,9 +215,9 @@ def hint(day_slug: str | None) -> None:
     if day is None:
         click.echo(f"Day not found: {day_slug}" if day_slug else "No day to hint.")
         return
-    concept = day.path / "concept.md"
+    concept = day.path / "README.md"
     if not concept.is_file():
-        click.echo(f"No concept.md for {day.slug}.")
+        click.echo(f"No README.md for {day.slug}.")
         return
     ui.header(f"Concept: {day.slug}")
     ui.console.print(concept.read_text())
@@ -263,14 +263,39 @@ def next_cmd() -> None:
 @cli.command()
 @click.argument("day_slug")
 def reset(day_slug: str) -> None:
-    """Reset progress for a specific day."""
+    """Reset progress + restore pristine files for a specific day.
+
+    Progress: clears day from completed and resets rung state if current.
+    Files: copies from solutions/<slug>/ over the working curriculum/<slug>/
+    files, so the learner gets a fresh starter. v1 slugs are accepted —
+    locator.find_day handles the back-compat lookup.
+    """
     p = progress_mod.load()
-    if day_slug in p.completed_days:
+    day = locator.find_day(day_slug)
+    canonical = day.slug if day is not None else day_slug
+
+    if canonical in p.completed_days:
+        p.completed_days.remove(canonical)
+    if day_slug in p.completed_days:  # also handle if user passed v1 slug
         p.completed_days.remove(day_slug)
-    if p.current_day == day_slug:
+    if p.current_day in (canonical, day_slug):
         p.current_rung = 1
         p.completed_rungs_today = []
     progress_mod.save(p)
+
+    if day is not None:
+        sol_dir = Path("solutions") / day.slug
+        if sol_dir.is_dir():
+            for fname in (
+                "README.md", "fluency.py", "fluency_test.py",
+                "guided.py", "guided_test.py",
+                "solo.py", "solo_test.py", "apply.py",
+            ):
+                src = sol_dir / fname
+                if src.is_file():
+                    shutil.copy2(src, day.path / fname)
+            click.echo(f"Reset {day.slug}: progress cleared + files restored.")
+            return
     click.echo(f"Reset {day_slug}.")
 
 

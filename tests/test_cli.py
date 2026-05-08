@@ -105,7 +105,25 @@ def test_reset_day(
     cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
 ):
     cli_runner.invoke(cli, ["done"])
+    # v1 slug should still resolve via find_day's back-compat.
     result = cli_runner.invoke(cli, ["reset", "day-001-uv-setup"])
     assert result.exit_code == 0
     data = json.loads((tmp_path / "progress" / "progress.json").read_text())
+    assert "001-uv-setup" not in data["completed_days"]
     assert "day-001-uv-setup" not in data["completed_days"]
+
+
+def test_reset_restores_files_from_solutions(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    """reset copies pristine content from solutions/<slug>/ over the working files."""
+    sol = tmp_path / "solutions" / "001-uv-setup"
+    sol.mkdir(parents=True)
+    (sol / "fluency.py").write_text("# pristine fluency\n")
+
+    work = tmp_path / "curriculum" / "001-uv-setup" / "fluency.py"
+    work.write_text("# dirty\n")
+
+    result = cli_runner.invoke(cli, ["reset", "001-uv-setup"])
+    assert result.exit_code == 0
+    assert work.read_text() == "# pristine fluency\n"
