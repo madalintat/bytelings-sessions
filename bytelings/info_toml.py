@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import tomllib
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -67,3 +68,32 @@ def dump(entries: list[DayEntry], path: Path) -> None:
         lines.append(f'old_slug = {q(e.old_slug)}\n')
         lines.append(f'patterns = [{patterns}]\n')
     path.write_text("".join(lines))
+
+
+def regenerate_from_skeleton(
+    curriculum: Path,
+    skeleton: list[tuple[str, str, list[str]]],
+    old_slug_fn: Callable[[str], str],
+) -> None:
+    """Rewrite curriculum/info.toml from a SKELETON, preserving patterns.
+
+    Used by the M6 / M11 / future restructure scripts. `old_slug_fn`
+    maps a new slug to the v1 slug a learner's progress.json may
+    still carry, so locator.find_day's back-compat keeps resolving.
+    """
+    existing = {e.slug: e for e in load(curriculum / "info.toml")}
+    entries: list[DayEntry] = []
+    for phase, module, day_slugs in skeleton:
+        for slug in day_slugs:
+            day_number = int(slug.split("-")[0])
+            patterns = existing[slug].patterns if slug in existing else []
+            entries.append(DayEntry(
+                slug=slug,
+                path=f"curriculum/{slug}",
+                day_number=day_number,
+                phase=phase,
+                module=module,
+                old_slug=old_slug_fn(slug),
+                patterns=patterns,
+            ))
+    dump(entries, curriculum / "info.toml")

@@ -36,13 +36,18 @@ _RUNG_SPECS = [
     (2, "fluency.py", "fluency_test.py", "Fluency drill"),
     (3, "guided.py", "guided_test.py", "Guided implement"),
     (4, "solo.py", "solo_test.py", "Solo implement"),
-    # Apply rung's test_file is optional. Most days don't ship one
-    # (apply runs as a script with inline assertions); days whose
-    # concept is "test something" (mocking, monkeypatch, fixtures)
-    # do ship apply_test.py. The watcher treats a missing
-    # apply_test.py as "no automated tests" — see watcher.py:on_save.
+    # Apply rung's test_file is optional — see watcher.py:on_save, which
+    # treats a declared-but-missing apply_test.py as "no automated tests."
     (5, "apply.py", "apply_test.py", "Apply"),
 ]
+
+# Single source of truth for the v2 rung-filename inventory. Anything
+# that needs "the 8 files that live in a day folder" derives from here.
+RUNG_FILES: tuple[str, ...] = tuple(
+    f
+    for _, src, test, _ in _RUNG_SPECS
+    for f in ((src,) + ((test,) if test else ()))
+)
 
 
 def _entries(root: Path) -> list[DayEntry]:

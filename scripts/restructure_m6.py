@@ -57,33 +57,8 @@ def _rotate_tree(base: Path) -> bool:
     return True
 
 
-def _write_info_toml(curriculum: Path) -> None:
-    """Regenerate info.toml from SKELETON, preserving old_slug for moved days."""
-    entries: list[info_toml.DayEntry] = []
-    for phase, module, day_slugs in SKELETON:
-        for slug in day_slugs:
-            day_number = int(slug.split("-")[0])
-            old_slug = NEW_TO_V1_OLD_SLUG.get(slug, f"day-{slug}")
-            entries.append(info_toml.DayEntry(
-                slug=slug,
-                path=f"curriculum/{slug}",
-                day_number=day_number,
-                phase=phase,
-                module=module,
-                old_slug=old_slug,
-                patterns=[],
-            ))
-    # Preserve any patterns already tagged in the existing info.toml.
-    existing = {e.slug: e for e in info_toml.load(curriculum / "info.toml")}
-    enriched = [
-        info_toml.DayEntry(
-            slug=e.slug, path=e.path, day_number=e.day_number,
-            phase=e.phase, module=e.module, old_slug=e.old_slug,
-            patterns=existing[e.slug].patterns if e.slug in existing else e.patterns,
-        )
-        for e in entries
-    ]
-    info_toml.dump(enriched, curriculum / "info.toml")
+def _old_slug_for(new_slug: str) -> str:
+    return NEW_TO_V1_OLD_SLUG.get(new_slug, f"day-{new_slug}")
 
 
 def run(root: Path) -> None:
@@ -94,8 +69,8 @@ def run(root: Path) -> None:
     if not (rotated_c or rotated_s):
         print("Already rotated — nothing to do.")
         return
-    _write_info_toml(curriculum)
-    print(f"M6 rotation complete. info.toml regenerated.")
+    info_toml.regenerate_from_skeleton(curriculum, SKELETON, _old_slug_for)
+    print("M6 rotation complete. info.toml regenerated.")
 
 
 def main() -> None:

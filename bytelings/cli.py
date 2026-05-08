@@ -46,51 +46,38 @@ Run [cyan]bytelings init[/cyan] to create a [cyan]./bytelings/[/cyan] project fo
 """
 
 
-def _curriculum_source() -> Path:
-    """Locate the bundled curriculum inside the installed package.
+def _bundled_dir(name: str, *, required: bool = False) -> Path | None:
+    """Locate a bundled top-level directory (curriculum/, solutions/, scaffold/).
 
-    Falls back to the repo's `curriculum/` for editable / dev installs.
+    Checks the installed wheel's `bytelings/_<name>/` first, then falls
+    back to the repo's `<name>/` for editable / dev installs. Returns
+    None if missing; if `required`, raises a click error instead.
     """
-    bundled = resources.files("bytelings") / "_curriculum"
+    bundled = resources.files("bytelings") / f"_{name}"
     if bundled.is_dir():
         return Path(str(bundled))
-    repo_curriculum = Path(__file__).resolve().parent.parent / "curriculum"
-    if repo_curriculum.is_dir():
-        return repo_curriculum
-    raise click.ClickException(
-        "Could not locate the bundled curriculum. Reinstall bytelings or "
-        "run from the repo root."
-    )
+    repo = Path(__file__).resolve().parent.parent / name
+    if repo.is_dir():
+        return repo
+    if required:
+        raise click.ClickException(
+            f"Could not locate {name}/. Reinstall bytelings or run from the repo root."
+        )
+    return None
+
+
+def _curriculum_source() -> Path:
+    src = _bundled_dir("curriculum", required=True)
+    assert src is not None  # required=True raises on miss
+    return src
 
 
 def _scaffold_source() -> Path | None:
-    """Locate the bundled student scaffold (pyproject.toml + uv.lock).
-
-    Returns None if no scaffold is bundled (older installs).
-    Falls back to the repo's `scaffold/` for editable / dev installs.
-    """
-    bundled = resources.files("bytelings") / "_scaffold"
-    if bundled.is_dir():
-        return Path(str(bundled))
-    repo_scaffold = Path(__file__).resolve().parent.parent / "scaffold"
-    if repo_scaffold.is_dir():
-        return repo_scaffold
-    return None
+    return _bundled_dir("scaffold")
 
 
 def _solutions_source() -> Path | None:
-    """Locate the bundled solutions/ mirror inside the installed package.
-
-    Falls back to the repo's `solutions/` for editable / dev installs.
-    Returns None if neither is present (e.g. v0.1.x install before M1).
-    """
-    bundled = resources.files("bytelings") / "_solutions"
-    if bundled.is_dir():
-        return Path(str(bundled))
-    repo_solutions = Path(__file__).resolve().parent.parent / "solutions"
-    if repo_solutions.is_dir():
-        return repo_solutions
-    return None
+    return _bundled_dir("solutions")
 
 
 @click.group(invoke_without_command=True)
@@ -307,11 +294,7 @@ def reset(day_slug: str) -> None:
     if day is not None:
         sol_dir = Path("solutions") / day.slug
         if sol_dir.is_dir():
-            for fname in (
-                "README.md", "fluency.py", "fluency_test.py",
-                "guided.py", "guided_test.py",
-                "solo.py", "solo_test.py", "apply.py",
-            ):
+            for fname in locator.RUNG_FILES:
                 src = sol_dir / fname
                 if src.is_file():
                     shutil.copy2(src, day.path / fname)
@@ -396,13 +379,9 @@ def patterns(pattern_id: str | None) -> None:
     ui.console.print(f"[dim]Days that exercise it:[/dim] {days_str}")
 
 
-_RUNG_FILENAMES = {
-    1: "README.md",
-    2: "fluency.py",
-    3: "guided.py",
-    4: "solo.py",
-    5: "apply.py",
-}
+# Derive {rung_number: source_filename} from locator's canonical specs.
+# Reveal targets are the source files, never the test files.
+_RUNG_FILENAMES = {n: src for n, src, _, _ in locator._RUNG_SPECS}
 
 
 @cli.command()

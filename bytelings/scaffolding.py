@@ -27,10 +27,6 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "010-regex-essentials",
         "011-string-parsing-patterns",
     ]),
-    # M6 reorder: hashing-first. Big-O moves from end-of-module-03 to
-    # end-of-module-04 (Day 22), so it lands AFTER learners have built
-    # the bucket-list mental model on Day 17 and used dict/set/Counter
-    # in Days 18-20. 'Amortized constant' earns concrete picture.
     ("phase-1-python-core", "module-03-lists-and-counting", [
         "012-list-basics",
         "013-list-slicing-deep",
@@ -39,12 +35,12 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "016-linear-search-and-counting-ops",
     ]),
     ("phase-1-python-core", "module-04-hashing-dicts-sets-and-bigo", [
-        "017-what-is-hashing",          # was 021 — kicks off module 4
-        "018-dict-basics",              # named instance of hashmap from Day 17
+        "017-what-is-hashing",
+        "018-dict-basics",
         "019-set-operations",
         "020-defaultdict-and-counter",
-        "021-dict-vs-list-decision",    # was 022
-        "022-bigo-notation-intro",      # was 017 — lands with worked example
+        "021-dict-vs-list-decision",
+        "022-bigo-notation-intro",
     ]),
     ("phase-1-python-core", "module-05-functions-closures-decorators", [
         "023-defining-and-calling-functions",
@@ -112,13 +108,6 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "065-mocks-and-monkeypatch",
         "066-property-based-testing-intro",
     ]),
-        # M8: Module 13 retargeted as "refactor what YOU wrote in earlier
-    # modules." Days 67-69 each refactor specific prior-module code:
-    #   67 reads/refactors the decorator from Day 27 (Module 5)
-    #   68 reads/refactors the context manager from Day 51 (Module 9)
-    #   69 reads/refactors the test fixture from Day 64 (Module 12)
-    #   70 stays as the meta refactor-a-codebase capstone
-    # Day count + slugs unchanged so progress.json stays valid.
     ("phase-3-quality-production", "module-13-refactor-in-context", [
         "067-reading-code-you-didnt-write",
         "068-refactoring-katas",
@@ -152,34 +141,32 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "085-doubly-linked-list",
         "086-lru-cache-project",
     ]),
-    # M11 reorder: trees + recursion interleave. Recursion-formal pulled
-    # FORWARD into the trees arc (Day 89), so tree-traversals (Day 88)
-    # and BST insert/delete (Days 90/91) lean on a recursion concept the
-    # learner has already been taught.
     ("phase-4-data-structures", "module-18-trees-recursion-bst", [
         "087-binary-tree-basics",
         "088-tree-traversals",
-        "089-base-and-recursive-cases",       # was 099 — recursion FORMAL
-        "090-bst-insert-search",              # was 089
-        "091-bst-delete-and-balance",         # was 090
+        # Recursion is taught FORMALLY here, before BST insert/delete
+        # need it on Days 90/91.
+        "089-base-and-recursive-cases",
+        "090-bst-insert-search",
+        "091-bst-delete-and-balance",
     ]),
     ("phase-4-data-structures", "module-19-heaps-and-hash-tables", [
-        "092-heap-invariant-and-heapq",       # was 091
-        "093-build-your-own-heap-and-top-k",  # was 092
-        "094-hash-table-chaining",            # was 093
-        "095-hash-table-open-addressing",     # was 094
-        "096-hash-function-design-and-word-counter",  # was 095
+        "092-heap-invariant-and-heapq",
+        "093-build-your-own-heap-and-top-k",
+        "094-hash-table-chaining",
+        "095-hash-table-open-addressing",
+        "096-hash-function-design-and-word-counter",
     ]),
     # ---------- PHASE 5 — Algorithms (22+3=25 days) ----------
     ("phase-5-algorithms", "module-20-recursion-tail", [
-        "097-tracing-recursion",              # was 100
-        "098-recursion-vs-iteration",         # was 101
-        "099-stack-depth-and-python-limits",  # was 102
+        "097-tracing-recursion",
+        "098-recursion-vs-iteration",
+        "099-stack-depth-and-python-limits",
     ]),
     ("phase-4-data-structures", "phase-4-project-tiny-database", [
-        "100-project-day-1-design-and-scaffold",  # was 096
-        "101-project-day-2-build-core",            # was 097
-        "102-project-day-3-test-and-ship",         # was 098
+        "100-project-day-1-design-and-scaffold",
+        "101-project-day-2-build-core",
+        "102-project-day-3-test-and-ship",
     ]),
     ("phase-5-algorithms", "module-21-searching-sorting", [
         "103-binary-search-and-variants",
