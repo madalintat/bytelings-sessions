@@ -37,8 +37,9 @@ glue between three things:
 3. **A runner** — `uv run <thing>` makes sure `<thing>` uses *this*
    project's venv automatically. No `source venv/bin/activate` ritual.
 
-For this whole curriculum, you'll use `uv run swe watch` to drive your
-day. Right now, you'll use `uv run pytest` to confirm tests pass.
+For this whole curriculum, you'll use `bytelings` (the watcher) to
+drive your day. Right now, you'll use `uv run pytest` to confirm
+tests pass.
 
 ## Now: open `02_fluency.py`
 

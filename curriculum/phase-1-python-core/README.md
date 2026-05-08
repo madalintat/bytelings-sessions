@@ -30,5 +30,5 @@ dedupes by fuzzy match. Uses every concept from the phase. See
 
 ## How to use this phase
 
-Just `uv run swe watch` and start. Don't look ahead. The map is long
+Just `bytelings` and start. Don't look ahead. The map is long
 but the work is one day at a time.

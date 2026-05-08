@@ -66,4 +66,4 @@ Phase 2 (Pythonic Tools & I/O) starts next: comprehensions,
 generators, async, dataclasses, dunders, files. Most of what we'll
 build on top of Phase 1 is *style* — making correct code Pythonic.
 
-Take a beat. Then `uv run swe today` to start Day 32.
+Take a beat. Then `bytelings today` to start Day 32.
