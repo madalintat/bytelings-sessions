@@ -1,89 +1,97 @@
 ---
-day: day-128-capstone-day-1-pick-and-design
+day: 128-capstone-day-1-pick-and-design
 phase: phase-6-packaging-ast-capstone
 module: capstone
 style: story
 ---
-# Capstone Day 1 — Pick what you're building
+# Capstone Day 1 — Pick your linter, design five rules
 
 You've finished 127 days. The next 8 are different. There are no
-ladder rungs. No hidden tests waiting. Just: build one real thing,
-end-to-end, and ship it.
+ladder rungs. No hidden tests waiting. **One real thing, end-to-end,
+shipped to PyPI under your name, with a download counter.** That's
+graduation.
 
-Today is the design day. **Tomorrow you start scaffolding.** The goal
-of today is to have a one-page design doc and a project name that
-makes you a little proud to type.
+Today is design day. The default capstone project is **a tiny linter**.
 
-## The recommended project: `habit`
+## Why a linter
 
-A small command-line tool for tracking daily habits. Type
-`habit done meditate` and it records you did it today. Type
-`habit list` and it shows your current streaks. Data lives in a
-single JSON file in `~/.config/habit/data.json`.
+The linter is the one capstone shape that exercises every Phase-6
+concept *and* parts of every earlier phase, while producing an
+artifact a stranger can install and run:
 
-It's small. It's useful. You'll actually use it. And it touches every
-phase of the curriculum:
-
-| Phase | Concepts you'll exercise |
+| Concept | Where it lands in the linter |
 |---|---|
-| 1 (core) | strings, lists, dicts, functions, type hints |
-| 2 (tools/IO) | dataclasses, files, JSON, context managers |
-| 3 (quality) | errors, EAFP, pytest, logging |
-| 4 (data structures) | dict-as-index, deque for recent-events log (optional) |
-| 5 (algorithms) | streak calc is a tiny consecutive-days problem |
-| 6 (this phase) | pyproject, console scripts, maybe a tiny lint rule |
+| AST module + NodeVisitor (M26) | the spine — every rule visits AST nodes |
+| Packaging + console-scripts (M25) | `<your-name>-lint` becomes a real `uv tool install` target |
+| Dicts + scope stack (M19) | symbol table for the unused-import rule |
+| DFS over AST (Phase 5) | the visitor IS depth-first traversal |
+| pyproject.toml + tomllib (M25) | per-project rule configuration |
+| Pytest fixtures (M12) | violation fixture files in `tests/fixtures/` |
+| Strings deep + regex (M2) | message formatting and path normalization |
 
-## Or substitute your own
+The artifact is undeniable. "I built a linter that's published,
+installable, and run on a real open-source repo" is a CV line. "I
+finished a curriculum" is not.
 
-You'll spend 8 days on this. If you have a better idea — something
-*you* will actually use — pick that. Good capstone candidates:
-
-- **`toc`** — read a markdown file, print a table of contents from the
-  headings.
-- **`linkcheck`** — async crawl one site and report broken links.
-- **`logslice`** — given a log file and a time window, extract the
-  matching lines and summarize errors.
-- **`ssg`** — a 200-line static site generator that turns a folder of
-  markdown into a folder of HTML.
-- **`pkginfo`** — given a `pyproject.toml`, print a dependency report
-  (the rung 5 from day 124, made real).
-
-Pick something with the same shape as `habit`: one CLI, one local data
-format, two or three subcommands, no networking required for v1.
+Full reference: see `docs/capstones/linter.md` for the complete spec,
+day-by-day plan, and rule menu.
 
 ## Today's deliverable
 
-Write a one-page design in `design.md` (in this day folder). It must
-answer five questions:
+By end-of-day you have:
 
-1. **What does it do?** One paragraph, plain English.
-2. **What are the commands?** List subcommands and their args.
-   `habit done <name>`, `habit list`, `habit reset <name>`.
-3. **What's the data shape?** Sketch the JSON. Don't engineer it —
-   just write something plausible.
-4. **What can go wrong?** List the 3-5 things that will need error
-   handling. (Missing config dir? Corrupt JSON? Habit name with spaces?)
-5. **What's out of scope for v1?** This is the most important
-   question. Write down what you *won't* do. Sync? Charts? Reminders?
-   Multi-user? Cross those off now.
+1. **A project name.** Convention: `<yourgithub>-lint` or
+   `<topic>-lint` (e.g. `pytier-lint`, `picky-lint`, `coverlint`).
+   Pick something you're a little proud to type.
+2. **A 5-rule shortlist** from the menu below. The minimum-viable bar
+   is 5 distinct rules. Pick the ones you *understand the WHY of*,
+   not the easiest to implement.
+3. **A one-page design doc** in your scaffolded repo tomorrow:
+   - The 5 rules in plain English
+   - Output format (one line per finding: `path:line:col: rule-id: message`)
+   - Configuration model (`[tool.<name>-lint]` in `pyproject.toml`)
+   - Exit codes (0 if clean, 1 if findings)
+4. **The visitor sketch.** One Python file with:
+   ```python
+   class Linter(ast.NodeVisitor):
+       def __init__(self) -> None:
+           self.findings: list[Finding] = []
+       def visit_Try(self, node: ast.Try) -> None:
+           # rule 1: bare-except — implement today
+           ...
+   ```
+5. **Rule 1 end-to-end.** Pick the easiest rule on your shortlist
+   (suggest: `bare-except`). Implement it, test on a fixture file
+   you write, see one finding emit. Stop there.
 
-There's a `design.md` template in this folder. Open it, fill it in,
-commit it. Tomorrow you write the `pyproject.toml`.
+## The rule menu (pick 5+)
 
-## A note on scope
+Brief versions; full descriptions in `docs/capstones/linter.md`.
 
-8 days feels like a lot. It isn't. You'll spend day 132 on tests, day
-134 on polish, day 135 on packaging. The actual *building* is days
-129-131 — three days. Plan for that.
+| Rule ID | Catches |
+|---|---|
+| `bare-except` | `except:` without an exception type |
+| `mutable-default-argument` | `def f(x=[])` and friends |
+| `unused-import` | `import os` never referenced (needs scope tracking) |
+| `print-in-non-cli` | `print(...)` outside a `if __name__ == "__main__":` block |
+| `function-too-long` | function body > N lines (configurable) |
+| `class-with-only-static-methods` | "this should be a module" |
+| `nested-loop-depth` | depth > N (configurable) |
+| `single-letter-name` | `for i, j, k, l, m...` (excluding common cases) |
 
-If on day 132 the thing isn't done: **cut features, don't extend
-days**. A shipped tool with three commands beats an unshipped tool
-with seven.
+## Tomorrow
 
-## Next
+Day 129: scaffold the project (`uv init`), set up the test harness,
+add 2 more rules.
 
-Open `design.md`, fill it in. Then peek at `notes.py` to play with the
-data shape in a REPL. There's no test to make pass today — but
-there's also nothing stopping you from running `uv run pytest` here:
-the tiny `test_design.py` will just confirm your `design.md` exists
-and isn't empty.
+## Final reminder before you start
+
+The reason this capstone produces a *published* tool — not just "tests
+pass" — is that "tests pass" is invisible the day after the curriculum
+ends. A wheel on PyPI with one user other than you is the artifact
+that proves you're a software engineer who ships, not a student who
+finished a course.
+
+You don't need 100 users. You need 1 friend who can run
+`uv tool install <your-name>-lint && <your-name>-lint .` on their
+codebase and see findings. Day 135 will check exactly that.
