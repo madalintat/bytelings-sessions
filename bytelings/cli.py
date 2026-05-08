@@ -362,6 +362,40 @@ def list() -> None:
         ui.console.print(line)
 
 
+@cli.command()
+@click.argument("pattern_id", required=False)
+def patterns(pattern_id: str | None) -> None:
+    """List the Pattern Catalog or show one entry by ID.
+
+    Usage:
+        bytelings patterns          # list all
+        bytelings patterns P-07     # show one
+    """
+    from . import patterns as p_module
+
+    if pattern_id is None:
+        for p in p_module.PATTERNS:
+            head = p.description.split(".")[0]
+            ui.console.print(f"[cyan]{p.id}[/cyan] [bold]{p.name}[/bold] — {head}.")
+        ui.console.print(
+            f"\n[dim]({len(p_module.PATTERNS)} patterns. "
+            "`bytelings patterns P-NN` for one entry.)[/dim]"
+        )
+        return
+
+    p = p_module.by_id(pattern_id)
+    if p is None:
+        raise click.ClickException(f"No pattern with id {pattern_id!r}.")
+    ui.console.print(f"[bold cyan]{p.id} — {p.name}[/bold cyan]\n")
+    ui.console.print(p.description + "\n")
+    ui.console.print("[dim]Canonical:[/dim]")
+    for line in p.canonical.splitlines():
+        ui.console.print(f"    {line}")
+    ui.console.print(f"\n[dim]When to reach for it:[/dim] {p.when}")
+    days_str = ", ".join(str(d) for d in p.days) if p.days else "(none yet)"
+    ui.console.print(f"[dim]Days that exercise it:[/dim] {days_str}")
+
+
 @cli.command(name="phase-project")
 def phase_project() -> None:
     """Open the README for the current phase project (if at a boundary)."""
