@@ -363,52 +363,71 @@ if __name__ == "__main__":
 '''
 
 
-def scaffold_day(
-    day_dir: Path, day_slug: str, phase: str, module: str
-) -> None:
-    day_dir.mkdir(parents=True, exist_ok=True)
-    files = {
-        "concept.md": CONCEPT_PLACEHOLDER.format(
-            day_slug=day_slug, phase=phase, module=module
-        ),
-        "02_fluency.py": FLUENCY_PLACEHOLDER.format(day_slug=day_slug),
-        "02_fluency_test.py": FLUENCY_TEST_PLACEHOLDER.format(
-            day_slug=day_slug
-        ),
-        "03_guided.py": GUIDED_PLACEHOLDER.format(day_slug=day_slug),
-        "03_guided_test.py": GUIDED_TEST_PLACEHOLDER.format(
-            day_slug=day_slug
-        ),
-        "04_solo.py": SOLO_PLACEHOLDER.format(day_slug=day_slug),
-        "04_solo_test.py": SOLO_TEST_PLACEHOLDER.format(day_slug=day_slug),
-        "05_apply.py": APPLY_PLACEHOLDER.format(day_slug=day_slug),
+def _new_filenames() -> dict[str, str]:
+    """Map placeholder constants to their v2 filenames."""
+    return {
+        "README.md": CONCEPT_PLACEHOLDER,
+        "fluency.py": FLUENCY_PLACEHOLDER,
+        "fluency_test.py": FLUENCY_TEST_PLACEHOLDER,
+        "guided.py": GUIDED_PLACEHOLDER,
+        "guided_test.py": GUIDED_TEST_PLACEHOLDER,
+        "solo.py": SOLO_PLACEHOLDER,
+        "solo_test.py": SOLO_TEST_PLACEHOLDER,
+        "apply.py": APPLY_PLACEHOLDER,
     }
-    for name, content in files.items():
-        target = day_dir / name
-        if not target.exists():
-            target.write_text(content)
-    starter = day_dir / ".starter"
-    starter.mkdir(exist_ok=True)
-    for name, content in files.items():
-        snap = starter / name
-        if not snap.exists():
-            snap.write_text(content)
 
 
-def scaffold_module(phase: str, module: str, day_slugs: list[str]) -> None:
-    module_dir = CURRICULUM_ROOT / phase / module
-    module_dir.mkdir(parents=True, exist_ok=True)
-    for slug in day_slugs:
-        day_slug = f"day-{slug}"
-        scaffold_day(module_dir / day_slug, day_slug, phase, module)
+def scaffold_day(
+    day_dir: Path, sol_dir: Path, day_slug: str, phase: str, module: str
+) -> None:
+    """Create curriculum/<slug>/ + solutions/<slug>/ from placeholders."""
+    day_dir.mkdir(parents=True, exist_ok=True)
+    sol_dir.mkdir(parents=True, exist_ok=True)
+    for name, template in _new_filenames().items():
+        content = template.format(day_slug=day_slug, phase=phase, module=module)
+        for target_dir in (day_dir, sol_dir):
+            target = target_dir / name
+            if not target.exists():
+                target.write_text(content)
 
 
-def scaffold_all() -> None:
+def scaffold_all(root: Path = Path(".")) -> list[tuple[str, str, str, int]]:
+    """Walk SKELETON; produce curriculum/ and solutions/. Return manifest seed.
+
+    Returns a list of (slug, phase, module, day_number) tuples that the
+    caller can hand to bytelings.info_toml.dump for info.toml.
+    """
+    curriculum = root / "curriculum"
+    solutions = root / "solutions"
+    manifest: list[tuple[str, str, str, int]] = []
     for phase, module, day_slugs in SKELETON:
-        scaffold_module(phase, module, day_slugs)
+        for slug in day_slugs:
+            day_number = int(slug.split("-")[0])
+            scaffold_day(
+                day_dir=curriculum / slug,
+                sol_dir=solutions / slug,
+                day_slug=slug,
+                phase=phase,
+                module=module,
+            )
+            manifest.append((slug, phase, module, day_number))
+    return manifest
 
 
 if __name__ == "__main__":
-    scaffold_all()
-    total = sum(len(d) for _, _, d in SKELETON)
-    print(f"Scaffolded {total} days.")
+    from .info_toml import DayEntry, dump as dump_info_toml
+    manifest = scaffold_all()
+    entries = [
+        DayEntry(
+            slug=slug,
+            path=f"curriculum/{slug}",
+            day_number=n,
+            phase=phase,
+            module=module,
+            old_slug=f"day-{slug}",
+            patterns=[],
+        )
+        for slug, phase, module, n in manifest
+    ]
+    dump_info_toml(entries, Path("curriculum") / "info.toml")
+    print(f"Scaffolded {len(manifest)} days + info.toml.")
