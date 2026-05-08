@@ -151,7 +151,7 @@ path = "curriculum/017-what-is-hashing"
 day_number = 17
 phase = "phase-1-python-core"
 module = "module-04-hashing-dicts-sets-and-bigo"
-old_slug = "day-021-what-is-hashing"
+old_slug = "day-017-what-is-hashing"
 patterns = []
 
 [[day]]
@@ -187,7 +187,7 @@ path = "curriculum/021-dict-vs-list-decision"
 day_number = 21
 phase = "phase-1-python-core"
 module = "module-04-hashing-dicts-sets-and-bigo"
-old_slug = "day-022-dict-vs-list-decision"
+old_slug = "day-021-dict-vs-list-decision"
 patterns = []
 
 [[day]]
@@ -196,7 +196,7 @@ path = "curriculum/022-bigo-notation-intro"
 day_number = 22
 phase = "phase-1-python-core"
 module = "module-04-hashing-dicts-sets-and-bigo"
-old_slug = "day-017-bigo-notation-intro"
+old_slug = "day-022-bigo-notation-intro"
 patterns = []
 
 [[day]]
@@ -780,7 +780,7 @@ slug = "087-binary-tree-basics"
 path = "curriculum/087-binary-tree-basics"
 day_number = 87
 phase = "phase-4-data-structures"
-module = "module-18-trees-and-bst"
+module = "module-18-trees-recursion-bst"
 old_slug = "day-087-binary-tree-basics"
 patterns = []
 
@@ -789,134 +789,134 @@ slug = "088-tree-traversals"
 path = "curriculum/088-tree-traversals"
 day_number = 88
 phase = "phase-4-data-structures"
-module = "module-18-trees-and-bst"
+module = "module-18-trees-recursion-bst"
 old_slug = "day-088-tree-traversals"
 patterns = []
 
 [[day]]
-slug = "089-bst-insert-search"
-path = "curriculum/089-bst-insert-search"
+slug = "089-base-and-recursive-cases"
+path = "curriculum/089-base-and-recursive-cases"
 day_number = 89
 phase = "phase-4-data-structures"
-module = "module-18-trees-and-bst"
+module = "module-18-trees-recursion-bst"
+old_slug = "day-099-base-and-recursive-cases"
+patterns = []
+
+[[day]]
+slug = "090-bst-insert-search"
+path = "curriculum/090-bst-insert-search"
+day_number = 90
+phase = "phase-4-data-structures"
+module = "module-18-trees-recursion-bst"
 old_slug = "day-089-bst-insert-search"
 patterns = []
 
 [[day]]
-slug = "090-bst-delete-and-balance"
-path = "curriculum/090-bst-delete-and-balance"
-day_number = 90
+slug = "091-bst-delete-and-balance"
+path = "curriculum/091-bst-delete-and-balance"
+day_number = 91
 phase = "phase-4-data-structures"
-module = "module-18-trees-and-bst"
+module = "module-18-trees-recursion-bst"
 old_slug = "day-090-bst-delete-and-balance"
 patterns = []
 
 [[day]]
-slug = "091-heap-invariant-and-heapq"
-path = "curriculum/091-heap-invariant-and-heapq"
-day_number = 91
+slug = "092-heap-invariant-and-heapq"
+path = "curriculum/092-heap-invariant-and-heapq"
+day_number = 92
 phase = "phase-4-data-structures"
 module = "module-19-heaps-and-hash-tables"
 old_slug = "day-091-heap-invariant-and-heapq"
 patterns = []
 
 [[day]]
-slug = "092-build-your-own-heap-and-top-k"
-path = "curriculum/092-build-your-own-heap-and-top-k"
-day_number = 92
+slug = "093-build-your-own-heap-and-top-k"
+path = "curriculum/093-build-your-own-heap-and-top-k"
+day_number = 93
 phase = "phase-4-data-structures"
 module = "module-19-heaps-and-hash-tables"
 old_slug = "day-092-build-your-own-heap-and-top-k"
 patterns = []
 
 [[day]]
-slug = "093-hash-table-chaining"
-path = "curriculum/093-hash-table-chaining"
-day_number = 93
+slug = "094-hash-table-chaining"
+path = "curriculum/094-hash-table-chaining"
+day_number = 94
 phase = "phase-4-data-structures"
 module = "module-19-heaps-and-hash-tables"
 old_slug = "day-093-hash-table-chaining"
 patterns = []
 
 [[day]]
-slug = "094-hash-table-open-addressing"
-path = "curriculum/094-hash-table-open-addressing"
-day_number = 94
+slug = "095-hash-table-open-addressing"
+path = "curriculum/095-hash-table-open-addressing"
+day_number = 95
 phase = "phase-4-data-structures"
 module = "module-19-heaps-and-hash-tables"
 old_slug = "day-094-hash-table-open-addressing"
 patterns = []
 
 [[day]]
-slug = "095-hash-function-design-and-word-counter"
-path = "curriculum/095-hash-function-design-and-word-counter"
-day_number = 95
+slug = "096-hash-function-design-and-word-counter"
+path = "curriculum/096-hash-function-design-and-word-counter"
+day_number = 96
 phase = "phase-4-data-structures"
 module = "module-19-heaps-and-hash-tables"
 old_slug = "day-095-hash-function-design-and-word-counter"
 patterns = []
 
 [[day]]
-slug = "096-project-day-1-design-and-scaffold"
-path = "curriculum/096-project-day-1-design-and-scaffold"
-day_number = 96
+slug = "097-tracing-recursion"
+path = "curriculum/097-tracing-recursion"
+day_number = 97
+phase = "phase-5-algorithms"
+module = "module-20-recursion-tail"
+old_slug = "day-100-tracing-recursion"
+patterns = []
+
+[[day]]
+slug = "098-recursion-vs-iteration"
+path = "curriculum/098-recursion-vs-iteration"
+day_number = 98
+phase = "phase-5-algorithms"
+module = "module-20-recursion-tail"
+old_slug = "day-101-recursion-vs-iteration"
+patterns = []
+
+[[day]]
+slug = "099-stack-depth-and-python-limits"
+path = "curriculum/099-stack-depth-and-python-limits"
+day_number = 99
+phase = "phase-5-algorithms"
+module = "module-20-recursion-tail"
+old_slug = "day-102-stack-depth-and-python-limits"
+patterns = []
+
+[[day]]
+slug = "100-project-day-1-design-and-scaffold"
+path = "curriculum/100-project-day-1-design-and-scaffold"
+day_number = 100
 phase = "phase-4-data-structures"
 module = "phase-4-project-tiny-database"
 old_slug = "day-096-project-day-1-design-and-scaffold"
 patterns = []
 
 [[day]]
-slug = "097-project-day-2-build-core"
-path = "curriculum/097-project-day-2-build-core"
-day_number = 97
+slug = "101-project-day-2-build-core"
+path = "curriculum/101-project-day-2-build-core"
+day_number = 101
 phase = "phase-4-data-structures"
 module = "phase-4-project-tiny-database"
 old_slug = "day-097-project-day-2-build-core"
 patterns = []
 
 [[day]]
-slug = "098-project-day-3-test-and-ship"
-path = "curriculum/098-project-day-3-test-and-ship"
-day_number = 98
+slug = "102-project-day-3-test-and-ship"
+path = "curriculum/102-project-day-3-test-and-ship"
+day_number = 102
 phase = "phase-4-data-structures"
 module = "phase-4-project-tiny-database"
 old_slug = "day-098-project-day-3-test-and-ship"
-patterns = []
-
-[[day]]
-slug = "099-base-and-recursive-cases"
-path = "curriculum/099-base-and-recursive-cases"
-day_number = 99
-phase = "phase-5-algorithms"
-module = "module-20-recursion"
-old_slug = "day-099-base-and-recursive-cases"
-patterns = []
-
-[[day]]
-slug = "100-tracing-recursion"
-path = "curriculum/100-tracing-recursion"
-day_number = 100
-phase = "phase-5-algorithms"
-module = "module-20-recursion"
-old_slug = "day-100-tracing-recursion"
-patterns = []
-
-[[day]]
-slug = "101-recursion-vs-iteration"
-path = "curriculum/101-recursion-vs-iteration"
-day_number = 101
-phase = "phase-5-algorithms"
-module = "module-20-recursion"
-old_slug = "day-101-recursion-vs-iteration"
-patterns = []
-
-[[day]]
-slug = "102-stack-depth-and-python-limits"
-path = "curriculum/102-stack-depth-and-python-limits"
-day_number = 102
-phase = "phase-5-algorithms"
-module = "module-20-recursion"
-old_slug = "day-102-stack-depth-and-python-limits"
 patterns = []
 
 [[day]]

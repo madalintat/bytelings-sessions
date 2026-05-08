@@ -152,30 +152,34 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "085-doubly-linked-list",
         "086-lru-cache-project",
     ]),
-    ("phase-4-data-structures", "module-18-trees-and-bst", [
+    # M11 reorder: trees + recursion interleave. Recursion-formal pulled
+    # FORWARD into the trees arc (Day 89), so tree-traversals (Day 88)
+    # and BST insert/delete (Days 90/91) lean on a recursion concept the
+    # learner has already been taught.
+    ("phase-4-data-structures", "module-18-trees-recursion-bst", [
         "087-binary-tree-basics",
         "088-tree-traversals",
-        "089-bst-insert-search",
-        "090-bst-delete-and-balance",
+        "089-base-and-recursive-cases",       # was 099 — recursion FORMAL
+        "090-bst-insert-search",              # was 089
+        "091-bst-delete-and-balance",         # was 090
     ]),
     ("phase-4-data-structures", "module-19-heaps-and-hash-tables", [
-        "091-heap-invariant-and-heapq",
-        "092-build-your-own-heap-and-top-k",
-        "093-hash-table-chaining",
-        "094-hash-table-open-addressing",
-        "095-hash-function-design-and-word-counter",
-    ]),
-    ("phase-4-data-structures", "phase-4-project-tiny-database", [
-        "096-project-day-1-design-and-scaffold",
-        "097-project-day-2-build-core",
-        "098-project-day-3-test-and-ship",
+        "092-heap-invariant-and-heapq",       # was 091
+        "093-build-your-own-heap-and-top-k",  # was 092
+        "094-hash-table-chaining",            # was 093
+        "095-hash-table-open-addressing",     # was 094
+        "096-hash-function-design-and-word-counter",  # was 095
     ]),
     # ---------- PHASE 5 — Algorithms (22+3=25 days) ----------
-    ("phase-5-algorithms", "module-20-recursion", [
-        "099-base-and-recursive-cases",
-        "100-tracing-recursion",
-        "101-recursion-vs-iteration",
-        "102-stack-depth-and-python-limits",
+    ("phase-5-algorithms", "module-20-recursion-tail", [
+        "097-tracing-recursion",              # was 100
+        "098-recursion-vs-iteration",         # was 101
+        "099-stack-depth-and-python-limits",  # was 102
+    ]),
+    ("phase-4-data-structures", "phase-4-project-tiny-database", [
+        "100-project-day-1-design-and-scaffold",  # was 096
+        "101-project-day-2-build-core",            # was 097
+        "102-project-day-3-test-and-ship",         # was 098
     ]),
     ("phase-5-algorithms", "module-21-searching-sorting", [
         "103-binary-search-and-variants",
