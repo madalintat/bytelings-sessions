@@ -18,10 +18,14 @@ def test_load_one_entry(tmp_path: Path):
     )
     entries = info_toml.load(f)
     assert len(entries) == 1
-    assert entries[0].slug == "001-uv-setup-and-pytest"
-    assert entries[0].day_number == 1
-    assert entries[0].old_slug == "day-001-uv-setup-and-pytest"
-    assert entries[0].patterns == []
+    e = entries[0]
+    assert e.slug == "001-uv-setup-and-pytest"
+    assert e.path == "curriculum/001-uv-setup-and-pytest"
+    assert e.day_number == 1
+    assert e.phase == "phase-1-python-core"
+    assert e.module == "module-01-setup-and-values"
+    assert e.old_slug == "day-001-uv-setup-and-pytest"
+    assert e.patterns == []
 
 
 def test_dump_round_trips(tmp_path: Path):
@@ -53,3 +57,22 @@ def test_dump_round_trips(tmp_path: Path):
 
 def test_load_missing_file_returns_empty(tmp_path: Path):
     assert info_toml.load(tmp_path / "no.toml") == []
+
+
+def test_dump_escapes_unsafe_string_chars(tmp_path: Path):
+    """Patterns or other string fields with quotes/backslashes/newlines
+    must round-trip cleanly. Hand-rolled f-string interpolation would
+    break here; json.dumps quoting is the safety net."""
+    e = info_toml.DayEntry(
+        slug="001-tricky",
+        path='curriculum/001-tricky',
+        day_number=1,
+        phase="phase-1-python-core",
+        module="module-01",
+        old_slug="day-001-tricky",
+        patterns=['has "quote"', "has\\backslash", "has\nnewline"],
+    )
+    f = tmp_path / "info.toml"
+    info_toml.dump([e], f)
+    loaded = info_toml.load(f)
+    assert loaded == [e]
