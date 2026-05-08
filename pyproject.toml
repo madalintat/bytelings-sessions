@@ -1,6 +1,6 @@
 [project]
 name = "bytelings"
-version = "0.1.1"
+version = "0.1.2"
 description = "Small daily exercises to make you fluent at writing and reading code. Python first; C, C++, Rust, and Go on the roadmap."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"

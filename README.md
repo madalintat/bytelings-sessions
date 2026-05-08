@@ -1,10 +1,20 @@
-# bytelings
+<p align="center">
+  <img src="https://raw.githubusercontent.com/madalintat/bytelings/main/assets/logo.png" alt="bytelings" width="120" />
+</p>
 
-**Tiny daily exercises that make code feel like a language you actually speak.**
+<h1 align="center">bytelings</h1>
 
-[![PyPI](https://img.shields.io/pypi/v/bytelings.svg?color=blue)](https://pypi.org/project/bytelings/)
-[![Python 3.12](https://img.shields.io/badge/python-3.12-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+<p align="center">
+  <strong>Tiny daily exercises that make code feel like a language you actually speak.</strong>
+</p>
+
+<p align="center">
+  <a href="https://pypi.org/project/bytelings/"><img src="https://img.shields.io/pypi/v/bytelings.svg?color=blue" alt="PyPI"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.12-3776AB.svg?logo=python&logoColor=white" alt="Python 3.12"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
+</p>
+
+---
 
 Hey 👋
 
