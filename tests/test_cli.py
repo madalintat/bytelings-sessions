@@ -223,3 +223,42 @@ def test_solution_command_v1_slug_back_compat(
     )
     assert result.exit_code == 0
     assert "leaked-apply" in result.output
+
+
+def test_solution_command_prefers_solved_over_solutions(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    """When both solved/<slug>/<rung>.py AND solutions/<slug>/<rung>.py exist,
+    solved/ wins. Header marks it as 'solved' vs 'starter'."""
+    starter = tmp_path / "solutions" / "001-uv-setup"
+    starter.mkdir(parents=True)
+    (starter / "fluency.py").write_text("# STARTER-content\n")
+
+    solved = tmp_path / "solved" / "001-uv-setup"
+    solved.mkdir(parents=True)
+    (solved / "fluency.py").write_text("# SOLVED-content\n")
+
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "2", "--yes"]
+    )
+    assert result.exit_code == 0
+    assert "SOLVED-content" in result.output
+    assert "STARTER-content" not in result.output
+    assert "solved" in result.output  # header label
+
+
+def test_solution_command_falls_back_to_starter_when_no_solved(
+    cli_runner: CliRunner, fake_curriculum: Path, tmp_path: Path
+):
+    """No solved/ entry → use solutions/ starter and label it accordingly."""
+    starter = tmp_path / "solutions" / "001-uv-setup"
+    starter.mkdir(parents=True)
+    (starter / "fluency.py").write_text("# only-starter-here\n")
+    # NOTE: deliberately do NOT create solved/
+
+    result = cli_runner.invoke(
+        cli, ["solution", "001-uv-setup", "--rung", "2", "--yes"]
+    )
+    assert result.exit_code == 0
+    assert "only-starter-here" in result.output
+    assert "starter" in result.output  # header label

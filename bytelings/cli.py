@@ -416,26 +416,36 @@ _RUNG_FILENAMES = {
     help="Skip the friction prompt. Useful in scripts; not recommended for learners.",
 )
 def solution(day_slug: str, rung: int, yes: bool) -> None:
-    """Reveal a rung's pristine file from the solutions/ mirror, gated by a prompt.
+    """Reveal a rung's solved (or starter) file, gated by a friction prompt.
+
+    Lookup order:
+      1. solved/<slug>/<rung>.py  — the canonical answer (when authored)
+      2. solutions/<slug>/<rung>.py  — the pristine starter (always present)
 
     The friction prompt is the point: a learner has to *decide* to look.
     Default at the prompt is `h` (re-read the hint instead).
 
-    NOTE: in v0.3, the solutions/ mirror holds the STARTER copy of every
-    rung (what `bytelings reset` restores). A separate solved-content
-    tree is on the roadmap. For now this command shows you the original
-    rung as scaffolded — useful when you've deleted the docstring or
-    the helpful hint by accident, less useful as "show me the answer."
+    Solved-content authoring is incremental. Days with no solved/ entry
+    fall back to the starter — still useful when a learner has deleted
+    a docstring or hint by accident.
     """
     day = locator.find_day(day_slug)
     if day is None:
         raise click.ClickException(f"No such day: {day_slug!r}")
     fname = _RUNG_FILENAMES[rung]
-    src = Path("solutions") / day.slug / fname
-    if not src.is_file():
+
+    solved_src = Path("solved") / day.slug / fname
+    starter_src = Path("solutions") / day.slug / fname
+    if solved_src.is_file():
+        src = solved_src
+        kind = "solved"
+    elif starter_src.is_file():
+        src = starter_src
+        kind = "starter"
+    else:
         raise click.ClickException(
-            f"No solution file at {src}. Run `bytelings init` to scaffold "
-            "solutions/, or check the day slug."
+            f"No solution file at {solved_src} or {starter_src}. "
+            "Run `bytelings init` to scaffold, or check the day slug."
         )
 
     if not yes:
@@ -464,7 +474,7 @@ def solution(day_slug: str, rung: int, yes: bool) -> None:
             return
         # Fall through on 'y'/'Y'.
 
-    ui.header(f"{day.slug} — Rung {rung} ({fname})")
+    ui.header(f"{day.slug} — Rung {rung} ({fname}) — {kind}")
     ui.console.print(src.read_text())
 
 
