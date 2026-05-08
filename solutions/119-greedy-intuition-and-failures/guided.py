@@ -1,27 +1,29 @@
-"""Rung 3: Guided — fractional knapsack (greedy WORKS here).
+"""Rung 3: Guided — activity selection by finish time.
 
-Topic: greedy by ratio.
+Topic: classic greedy — sort by earliest finish, scan greedily.
 
-You have items, each (weight, value). You can take fractions. Given
-a capacity, return the maximum total value you can fit.
+`select_activities` receives a list of (start, finish) tuples and
+returns the maximum-size subset of non-overlapping activities.
 
->>> fractional_knapsack([(10, 60), (20, 100), (30, 120)], 50)
-240.0
-    # take all of items 1 and 2 (10+20 = 30 weight, 60+100 = 160 val),
-    # then 20/30 of item 3 (worth 80). Total 240.
+Ties in finish time can be broken arbitrarily.
 
->>> fractional_knapsack([], 10)
-0.0
->>> fractional_knapsack([(10, 100)], 5)
-50.0     # half of one item
+>>> select_activities([(1, 4), (3, 5), (0, 6), (5, 7)])
+[(1, 4), (5, 7)]
+
+Algorithm:
+  1. Sort by finish time.
+  2. Keep a `last_finish` cursor (start at −∞).
+  3. For each activity in sorted order, take it if start >= last_finish;
+     update last_finish to its finish.
+
+Return the chosen list in finish-time order.
 
 Hints:
-- Sort items by value/weight ratio, descending.
-- Walk through; take as much of each as fits. When an item doesn't
-  fully fit, take a fraction = (remaining capacity / item.weight).
-- Watch zero-weight items (skip or treat carefully).
+- sorted(activities, key=lambda a: a[1])
+- An activity is compatible if start >= last_finish (not strict >):
+  back-to-back activities are allowed.
 """
 
 
-def fractional_knapsack(items: list[tuple[int, int]], capacity: int) -> float:
+def select_activities(activities: list[tuple[int, int]]) -> list[tuple[int, int]]:
     raise NotImplementedError

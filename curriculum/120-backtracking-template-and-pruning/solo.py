@@ -1,29 +1,35 @@
 """Rung 4: Solo.
 
-Topic: classic combinations with pruning.
+Topic: largest rectangle in histogram.
 
-Implement `combinations(n, k)` returning every k-element subset of
-{1, 2, ..., n} as a sorted list of lists.
+Given a list of bar heights, find the area of the largest rectangle
+that can be formed within the bars.
 
->>> combinations(4, 2)
-[[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
->>> combinations(3, 0)
-[[]]
->>> combinations(3, 3)
-[[1, 2, 3]]
+>>> largest_rectangle_in_histogram([2, 1, 5, 6, 2, 3])
+10
 
-Hints:
-- Backtrack starting at value 1, with a `partial` list.
-- For each candidate v from `start` to n: append, recurse with
-  start=v+1, undo.
-- Base case: len(partial) == k → record a copy.
-- Pruning to make this fast: if you'd run out of room — that is, if
-  partial's length plus the remaining range can't reach k — skip.
-  (e.g., if `n - v + 1 < k - len(partial)`, break out.)
+>>> largest_rectangle_in_histogram([2, 4])
+4
 
-Tests in 04_solo_test.py are HIDDEN.
+Lens choice: this problem is best solved with a monotonic stack
+(related to P-27 dfs-with-explicit-stack). A DP approach works but
+uses O(n^2) space for left/right boundary arrays. The stack approach
+is O(n) time and O(n) space.
+
+Algorithm (monotonic stack):
+- Maintain a stack of indices of bars in non-decreasing height order.
+- For each bar i: while the stack is non-empty and heights[stack[-1]] >= heights[i],
+    pop index k; the width of the rectangle with height heights[k] extends
+    from (stack[-1] + 1) to (i - 1).
+- After the loop, drain the stack similarly (treating the right boundary
+  as len(heights)).
+- Track the maximum area seen.
+
+Tests in solo_test.py are HIDDEN.
+
+Patterns: P-27 (dfs-with-explicit-stack).
 """
 
 
-def combinations(n: int, k: int) -> list[list[int]]:
+def largest_rectangle_in_histogram(heights: list[int]) -> int:
     raise NotImplementedError

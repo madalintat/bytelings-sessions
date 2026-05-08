@@ -1160,7 +1160,7 @@ day_number = 129
 phase = "phase-6-packaging-ast-capstone"
 module = "capstone"
 old_slug = "day-129-capstone-day-2-scaffold"
-patterns = []
+patterns = ["P-30"]
 
 [[day]]
 slug = "130-capstone-day-3-build-core"
@@ -1169,7 +1169,7 @@ day_number = 130
 phase = "phase-6-packaging-ast-capstone"
 module = "capstone"
 old_slug = "day-130-capstone-day-3-build-core"
-patterns = []
+patterns = ["P-07", "P-30"]
 
 [[day]]
 slug = "131-capstone-day-4-build-features"
@@ -1178,7 +1178,7 @@ day_number = 131
 phase = "phase-6-packaging-ast-capstone"
 module = "capstone"
 old_slug = "day-131-capstone-day-4-build-features"
-patterns = []
+patterns = ["P-04"]
 
 [[day]]
 slug = "132-capstone-day-5-test"
@@ -1187,7 +1187,7 @@ day_number = 132
 phase = "phase-6-packaging-ast-capstone"
 module = "capstone"
 old_slug = "day-132-capstone-day-5-test"
-patterns = []
+patterns = ["P-13"]
 
 [[day]]
 slug = "133-capstone-day-6-refactor"

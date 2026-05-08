@@ -1,33 +1,32 @@
-"""Rung 4: Solo.
+"""Rung 4: Solo — min coins, top-down memoization.
 
-Topic: bottom-up min path sum on a triangle.
+Topic: same coin-change problem as rung 3, but top-down with @cache.
 
-Given a triangle as a list of lists where row i has length i+1, find
-the minimum path sum from top to bottom. At each step you may move
-to an adjacent number on the row below.
+Hidden tests in solo_test.py — don't peek before solving.
 
-Example triangle:
-       2
-      3 4
-     6 5 7
-    4 1 8 3
+Implement `min_coins_topdown(coins, target) -> int`.
 
-The path 2 -> 3 -> 5 -> 1 sums to 11, which is minimum.
+Contract:
+- Return the minimum number of coins (from `coins`) that sum to
+  `target`. Each coin may be used any number of times.
+- Return -1 if `target` cannot be made.
 
->>> min_path([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]])
-11
+Recurrence:
+    min_coins(0) = 0
+    min_coins(t) = 1 + min(min_coins(t - c) for c in coins if t - c >= 0)
 
-Hints (bottom-up is cleanest here):
-- Start with the last row as your "best below" array.
-- Walk rows in reverse; for each cell (r, c):
-    best[c] = triangle[r][c] + min(best[c], best[c+1])
-- After processing row 0, best[0] is the answer.
-
-Tests in 04_solo_test.py are HIDDEN.
+Use @functools.cache for memoization.  Note that `cache` only works
+on hashable arguments — you'll need to freeze `coins` (e.g. pass it
+as a tuple or put the inner helper inside the function).
 
 Patterns: P-28 (memoize-recursive).
 """
+import functools
 
 
-def min_path(triangle: list[list[int]]) -> int:
+def min_coins_topdown(coins: list[int], target: int) -> int:
+    """Return the minimum number of coins to make target, or -1.
+
+    Uses top-down recursion with @functools.cache.
+    """
     raise NotImplementedError

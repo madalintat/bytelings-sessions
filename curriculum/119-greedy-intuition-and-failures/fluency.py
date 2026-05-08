@@ -1,27 +1,28 @@
-"""Rung 2: Fluency drill — fix the greedy meeting picker.
+"""Rung 2: Fluency drill — greedy or not?
 
-Topic: classic greedy — activity selection.
+Topic: exchange argument as the proof technique.
 
-Each meeting is (start, end). You can attend at most one meeting at
-a time. Return the maximum number of non-overlapping meetings you can
-attend.
+Five problem descriptions below. For each, return "greedy" if the
+greedy approach provably works (an exchange argument goes through),
+or "needs DP" if greedy fails (coin change [1,4,5] counterexample
+or similar).
 
-The classic greedy: sort by EARLIEST END TIME, then pick each meeting
-whose start is >= the end of the last picked meeting.
+Problems:
+  1 — activity selection (maximise non-overlapping intervals, sort by finish)
+  2 — coin change with denominations [1, 4, 5]  (find minimum coins for 8)
+  3 — Huffman coding (build optimal prefix-free code from frequencies)
+  4 — 0/1 knapsack (items cannot be split)
+  5 — fractional knapsack (items CAN be split by weight)
 
-`max_meetings` is sorting by start time — wrong sort. Fix it.
+Two of the five need DP; three are correct with greedy.
+
+TODO: implement `classify` so the tests pass.
 """
 
 
-def max_meetings(meetings: list[tuple[int, int]]) -> int:
-    if not meetings:
-        return 0
-    # TODO: sort by end time, not start time.
-    sorted_m = sorted(meetings, key=lambda m: m[0])
-    count = 0
-    last_end = float("-inf")
-    for start, end in sorted_m:
-        if start >= last_end:
-            count += 1
-            last_end = end
-    return count
+def classify(problem_id: int) -> str:
+    """Return "greedy" or "needs DP" for each of the five problems.
+
+    The exchange argument must hold for "greedy"; otherwise "needs DP".
+    """
+    raise NotImplementedError

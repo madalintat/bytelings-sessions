@@ -1,4 +1,4 @@
-"""HIDDEN tests for rung 4."""
+"""HIDDEN tests for rung 4 — do not peek before solving solo.py."""
 import importlib.util
 from pathlib import Path
 
@@ -9,43 +9,44 @@ ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
 
-def _is_palindrome(s):
-    return s == s[::-1]
+def test_basic_true():
+    assert ex.can_break("leetcode", ["leet", "code"]) is True
 
 
-def test_basic():
-    out = ex.longest_palindrome("babad")
-    assert _is_palindrome(out) and out in {"bab", "aba"}
+def test_applepenapple():
+    assert ex.can_break("applepenapple", ["apple", "pen"]) is True
 
 
-def test_even():
-    assert ex.longest_palindrome("cbbd") == "bb"
+def test_false_catsandog():
+    assert ex.can_break("catsandog", ["cats", "dog", "sand", "and", "cat"]) is False
 
 
-def test_single():
-    assert ex.longest_palindrome("a") == "a"
+def test_empty_string():
+    assert ex.can_break("", ["a"]) is True
 
 
-def test_empty():
-    assert ex.longest_palindrome("") == ""
+def test_single_word():
+    assert ex.can_break("a", ["a"]) is True
 
 
-def test_full_palindrome():
-    assert ex.longest_palindrome("racecar") == "racecar"
+def test_false_no_match():
+    assert ex.can_break("abc", ["ab", "bc"]) is False
 
 
-def test_all_same():
-    assert ex.longest_palindrome("aaaa") == "aaaa"
+def test_reuse_words():
+    assert ex.can_break("aaaa", ["a", "aa"]) is True
 
 
-def test_no_long_palindrome():
-    out = ex.longest_palindrome("abcde")
-    assert _is_palindrome(out)
-    assert len(out) == 1
-
-
-def test_long_input():
-    s = "forgeeksskeegfor"
-    out = ex.longest_palindrome(s)
-    assert _is_palindrome(out)
-    assert len(out) == 10   # "geeksskeeg"
+def test_pathological_fast():
+    """Must complete in well under a second — requires @functools.cache."""
+    import time
+    s = "a" * 30 + "b"
+    words = ["a", "aa", "aaa", "aaaa", "aaaaa"]
+    t0 = time.monotonic()
+    result = ex.can_break(s, words)
+    elapsed = time.monotonic() - t0
+    assert result is False
+    assert elapsed < 1.0, (
+        f"can_break took {elapsed:.2f}s — did you add @functools.cache? "
+        "Without it this case is exponential."
+    )

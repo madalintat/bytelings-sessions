@@ -147,7 +147,7 @@ PATTERNS: tuple[Pattern, ...] = (
             "    counts[word] = counts.get(word, 0) + 1"
         ),
         when="any 'count / group / index / aggregate by Y' question.",
-        days=(18, 19, 20, 35, 65, 95, 113),
+        days=(18, 19, 20, 35, 65, 95, 113, 130),
     ),
     Pattern(
         id="P-08",
@@ -533,7 +533,7 @@ PATTERNS: tuple[Pattern, ...] = (
             "        self.generic_visit(node)"
         ),
         when="any 'analyze code as data' task — linters, refactor tools, codemods.",
-        days=(126, 127, 128, 130, 131, 132),
+        days=(126, 127, 128, 129, 130, 131, 132),
     ),
     Pattern(
         id="P-31",

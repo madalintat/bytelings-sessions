@@ -1,26 +1,37 @@
-"""Rung 3: Guided — Longest Increasing Subsequence (LIS).
+"""Rung 3: Guided — 0/1 knapsack, 2-D DP.
 
-Topic: classic 1D DP with a quadratic recurrence.
+Topic: classic 0/1 knapsack with a 2-D table.
 
-Given a list of ints, return the length of the longest STRICTLY
-increasing subsequence (not necessarily contiguous).
+Given a list of (weight, value) items and a knapsack capacity, return
+the maximum total value achievable without exceeding the capacity.
+Each item can be taken at most once (the "0/1" part).
 
->>> lis([10, 9, 2, 5, 3, 7, 101, 18])
-4    # [2, 3, 7, 101]
->>> lis([])
+>>> knapsack_2d([(1, 1), (3, 4), (4, 5), (5, 7)], 7)
+9
+>>> knapsack_2d([], 10)
 0
->>> lis([5, 5, 5])
-1    # strict — duplicates don't extend
->>> lis([1, 2, 3, 4])
-4
+>>> knapsack_2d([(5, 10)], 4)
+0
+>>> knapsack_2d([(2, 3), (3, 4)], 5)
+7
 
-Hints:
-- dp[i] = length of LIS ending EXACTLY at index i.
-- dp[i] = 1 + max(dp[j] for j < i if arr[j] < arr[i]) if any j; else 1.
-- Final answer: max(dp). Empty array → 0.
-- O(n^2). The O(n log n) version uses binary search but is optional.
+Recurrence (given in the README):
+    dp[0][w] = 0  for all w          (no items → value 0)
+    dp[i][w] = dp[i-1][w]            (skip item i)
+    dp[i][w] = max(dp[i][w],
+                   dp[i-1][w - wi] + vi)  if wi <= w   (take item i)
+
+Build a 2-D list:
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+
+Return dp[n][capacity].
 """
 
 
-def lis(arr: list[int]) -> int:
+def knapsack_2d(items: list[tuple[int, int]], capacity: int) -> int:
+    """Return max value fitting within capacity, 0/1 knapsack.
+
+    items: list of (weight, value) tuples.
+    Uses a 2-D dp table (n+1) x (capacity+1).
+    """
     raise NotImplementedError

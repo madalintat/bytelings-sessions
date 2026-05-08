@@ -1,6 +1,5 @@
 """HIDDEN tests for rung 4."""
 import importlib.util
-import math
 from pathlib import Path
 
 _HERE = Path(__file__).parent
@@ -10,38 +9,37 @@ ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
 
-def _norm(out):
-    return sorted(tuple(c) for c in out)
+def test_canonical():
+    assert ex.largest_rectangle_in_histogram([2, 1, 5, 6, 2, 3]) == 10
 
 
-def test_basic():
-    out = _norm(ex.combinations(4, 2))
-    assert out == [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]
+def test_two_bars():
+    assert ex.largest_rectangle_in_histogram([2, 4]) == 4
 
 
-def test_k_zero():
-    assert ex.combinations(5, 0) == [[]]
+def test_single():
+    assert ex.largest_rectangle_in_histogram([5]) == 5
 
 
-def test_k_eq_n():
-    assert ex.combinations(3, 3) == [[1, 2, 3]]
+def test_empty():
+    assert ex.largest_rectangle_in_histogram([]) == 0
 
 
-def test_k_one():
-    out = _norm(ex.combinations(3, 1))
-    assert out == [(1,), (2,), (3,)]
+def test_descending():
+    assert ex.largest_rectangle_in_histogram([5, 4, 3, 2, 1]) == 9
 
 
-def test_count_matches_n_choose_k():
-    n, k = 6, 3
-    assert len(ex.combinations(n, k)) == math.comb(n, k)
+def test_ascending():
+    assert ex.largest_rectangle_in_histogram([1, 2, 3, 4, 5]) == 9
 
 
-def test_each_is_sorted_ascending():
-    out = ex.combinations(5, 3)
-    for c in out:
-        assert c == sorted(c)
+def test_all_equal():
+    assert ex.largest_rectangle_in_histogram([3, 3, 3, 3]) == 12
 
 
-def test_n_zero():
-    assert ex.combinations(0, 0) == [[]]
+def test_valley():
+    assert ex.largest_rectangle_in_histogram([3, 1, 3]) == 3
+
+
+def test_tall_narrow():
+    assert ex.largest_rectangle_in_histogram([0, 9, 0]) == 9

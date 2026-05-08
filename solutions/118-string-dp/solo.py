@@ -1,33 +1,41 @@
-"""Rung 4: Solo.
+"""Rung 4: Solo — can_break with @functools.cache.
 
-Topic: longest palindromic substring.
+Topic: memoized backtracking, bridging search and DP.
 
-Given a string s, return the longest contiguous substring that's a
-palindrome. If there are ties, return any one with the maximum length.
+Pattern: P-28 (memoize-recursive)
 
->>> longest_palindrome("babad")
-'bab'    # or 'aba'
->>> longest_palindrome("cbbd")
-'bb'
->>> longest_palindrome("a")
-'a'
->>> longest_palindrome("")
-''
+Take the same recursion as can_break_naive but add @functools.cache.
+One decorator turns exponential into O(n²).
 
-Hints:
-- One clean approach: "expand around each center". For each i:
-    - expand around (i, i)   → odd-length palindrome center
-    - expand around (i, i+1) → even-length palindrome center
-  In each, walk lo and hi outward while s[lo] == s[hi].
-- Track the best (lo, hi) seen and slice at the end.
-- O(n^2) time, O(1) extra space. Don't reach for Manacher's; the
-  expand-around-center version is fine here.
+Pathological case — WITHOUT cache this hangs:
+    s = "a" * 30 + "b"
+    words = ["a", "aa", "aaa", "aaaa", "aaaaa"]
+  Each position has 5 word choices, and every path eventually fails
+  on the trailing "b". Without caching, the same suffix is re-explored
+  from every ancestor. With @cache, each position is visited once.
 
-Tests in 04_solo_test.py are HIDDEN.
+>>> can_break("leetcode", ["leet", "code"])
+True
+>>> can_break("catsandog", ["cats","dog","sand","and","cat"])
+False
 
-Patterns: P-28 (memoize-recursive).
+Tests in solo_test.py are HIDDEN — do not peek before solving.
 """
+import functools
 
 
-def longest_palindrome(s: str) -> str:
-    raise NotImplementedError
+def can_break(s: str, words: list[str]) -> bool:
+    """Return True iff s can be segmented into words, using memoization.
+
+    Same shape as can_break_naive, but with @functools.cache on the
+    inner solve() function. Because solve() is keyed on the integer
+    position i, the cache has at most len(s)+1 entries.
+    """
+    word_set = set(words)
+
+    # TODO: decorate solve with @functools.cache
+    def solve(i: int) -> bool:
+        # TODO: same body as can_break_naive
+        raise NotImplementedError
+
+    return solve(0)

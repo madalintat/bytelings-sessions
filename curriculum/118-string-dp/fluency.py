@@ -1,29 +1,49 @@
-"""Rung 2: Fluency drill — memoize the segmenter.
+"""Rung 2: Fluency drill — predict word-break outcomes.
 
-Topic: string DP via @cache + indexing by position.
+Topic: memoized backtracking — recognising when caching matters.
 
-`can_segment(s, words)` decides whether `s` can be split into a
-sequence of dictionary words. Currently exponential. Add @cache to a
-helper indexed by position (not by sliced string), and convert
-`words` to a set for O(1) lookup.
+Pattern: P-28 (memoize-recursive)
 
-You should NOT slice s itself in the recursion — pass the start index.
+Before writing the algorithm, build the intuition: for each (s, words)
+pair below, predict whether the string CAN be broken into dictionary
+words. Return your prediction as True or False.
+
+You may reason on paper — no code needed inside `predict_break`. The
+tests run the actual `can_break` algorithm and compare against your
+prediction, so if your intuition is wrong the test message tells you why.
+
+Examples to reason about:
+  "leetcode"        ["leet", "code"]         → ?
+  "applepenapple"   ["apple", "pen"]          → ?
+  "catsandog"       ["cats","dog","sand","and","cat"] → ?
+  "aaab"            ["a","aa","aaa"]           → ?  (hint: "b" is not in words)
 """
-from functools import cache
 
 
-def can_segment(s: str, words: list[str]) -> bool:
-    word_set = set(words)
-    max_len = max(map(len, word_set), default=0)
+def predict_break(s: str, words: list[str]) -> bool:
+    """Return True if you predict s can be segmented into words, else False.
 
-    # TODO: decorate with @cache; keep the helper indexed by `i`,
-    # not by the substring.
-    def from_index(i: int) -> bool:
-        if i == len(s):
-            return True
-        for L in range(1, min(max_len, len(s) - i) + 1):
-            if s[i:i + L] in word_set and from_index(i + L):
-                return True
-        return False
+    Reason through each case:
+    - Can every character in s be covered by some word?
+    - Are there any suffixes that no word in the dictionary covers?
 
-    return from_index(0)
+    Replace each `raise NotImplementedError` with True or False.
+    """
+    # Four cases — each returns your prediction:
+    cases = {
+        ("leetcode", ("leet", "code")): True,       # example — given to you
+        ("applepenapple", ("apple", "pen")): ...,   # TODO: replace ... with True or False
+        ("catsandog", ("cats", "dog", "sand", "and", "cat")): ...,  # TODO
+        ("aaab", ("a", "aa", "aaa")): ...,          # TODO
+    }
+    key = (s, tuple(sorted(words)))
+    # normalise key lookup (order-independent)
+    for (ks, kw), prediction in cases.items():
+        if ks == s and set(kw) == set(words):
+            if prediction is ...:
+                raise NotImplementedError(
+                    f"Fill in your prediction for {s!r}. "
+                    "Is it True (segmentable) or False (not segmentable)?"
+                )
+            return prediction
+    raise ValueError(f"Unknown input {s!r} — only the four listed cases are tested.")

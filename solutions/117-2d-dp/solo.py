@@ -1,27 +1,35 @@
-"""Rung 4: Solo.
+"""Rung 4: Solo — full N-queens.
 
-Topic: longest common subsequence (LCS).
+Topic: backtracking, enumerate all solutions.
 
-Given two strings a and b, return the length of the longest sequence
-of characters that appears in both, in order, but not necessarily
-contiguous.
+Pattern: P-27 (dfs-with-explicit-stack)
 
->>> lcs_length("abcde", "ace")
-3      # "ace"
->>> lcs_length("abc", "def")
-0
->>> lcs_length("abc", "")
-0
+Implement `n_queens(n)` returning ALL solutions to the N-queens problem.
+Each solution is a list of N column indices, one per row: solution[r]
+is the column of the queen on row r.
 
-Recurrence (classic 2D DP):
-- dp[i][j] = LCS length of a[:i] and b[:j].
-- If a[i-1] == b[j-1]: dp[i][j] = dp[i-1][j-1] + 1
-- Else:                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-- Base: row 0 and col 0 are 0 (empty prefix has LCS 0 with anything).
+>>> n_queens(1)
+[[0]]
+>>> len(n_queens(4))
+2
+>>> len(n_queens(8))
+92
 
-Tests in 04_solo_test.py are HIDDEN.
+Hints:
+- Copy the backtracking template from the README:
+    def solve(state): complete? record. else: for choice: apply/recurse/undo.
+- State: a list `cols` of column indices placed so far.
+- is_complete: len(cols) == n.
+- legal_next_choices: columns 0..n-1 that are safe at row len(cols).
+- undo: cols.pop().
+
+Tests in solo_test.py are HIDDEN — do not peek before solving.
 """
 
 
-def lcs_length(a: str, b: str) -> int:
+def n_queens(n: int) -> list[list[int]]:
+    """Return all N-queens solutions as lists of column-per-row.
+
+    Each inner list has length n; inner_list[r] = column of queen in row r.
+    """
     raise NotImplementedError

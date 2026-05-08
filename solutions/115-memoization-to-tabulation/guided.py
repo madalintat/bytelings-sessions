@@ -1,35 +1,38 @@
-"""Rung 3: Guided — house robber, BOTH ways.
+"""Rung 3: Guided — min coins, bottom-up tabulation.
 
-Topic: solve the same problem two ways.
+Topic: DP recurrence → iterative table.
 
-You're a thief considering a row of houses, each with some non-
-negative amount of money. You can't rob two adjacent houses
-(silent alarms). What's the max money you can steal?
+Given a list of coin denominations (positive ints) and a target
+amount, return the MINIMUM number of coins that sum to target.
+Each coin may be used any number of times.
+Return -1 if target cannot be made.
 
-Implement BOTH:
+Recurrence:
+    dp[0] = 0
+    dp[t] = 1 + min(dp[t - c] for c in coins if t - c >= 0)
 
-`rob_topdown(houses)` — recursive with @cache.
-`rob_bottomup(houses)` — iterative with a table or two rolling vars.
-
-Both must return the same answer.
-
->>> rob_topdown([2, 7, 9, 3, 1])
-12     # 2 + 9 + 1
->>> rob_bottomup([2, 7, 9, 3, 1])
-12
+>>> min_coins_dp([1, 5, 10, 25], 30)
+2
+>>> min_coins_dp([1, 4, 5], 8)
+2
+>>> min_coins_dp([2], 3)
+-1
+>>> min_coins_dp([1], 0)
+0
 
 Hints:
-- Recurrence: best(i) = max(best(i-1), best(i-2) + houses[i])
-- Base: best(-1) = 0, best(0) = houses[0].
-- Top-down can take an index argument; bottom-up fills a table from
-  index 0 up to len(houses) - 1.
+- Create a dp list of length target + 1, initialise everything to
+  infinity (or a large sentinel like target + 1).
+- Set dp[0] = 0.
+- For each t from 1 to target, try every coin c: if t - c >= 0,
+  dp[t] = min(dp[t], dp[t - c] + 1).
+- After the loop, return dp[target] if it's not infinity, else -1.
 """
-from functools import cache
 
 
-def rob_topdown(houses: list[int]) -> int:
-    raise NotImplementedError
+def min_coins_dp(coins: list[int], target: int) -> int:
+    """Return the minimum number of coins to make target, or -1.
 
-
-def rob_bottomup(houses: list[int]) -> int:
+    Uses bottom-up tabulation (no recursion).
+    """
     raise NotImplementedError

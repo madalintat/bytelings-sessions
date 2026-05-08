@@ -1,27 +1,32 @@
-"""Rung 2: Fluency drill — fix the missing undo.
+"""Rung 2: Fluency drill — which lens?
 
-Topic: backtracking template, the apply / undo symmetry.
+Topic: one canonical template per lens (DP / greedy / backtracking),
+recognition signal, proof obligation, failure mode.
 
-`subsets` should return all subsets of `arr` (each as a list). It's
-missing the UNDO step on `partial`, so subtrees see polluted state
-from earlier branches and the output is wrong.
+Eight short problem descriptions. For each, return the set of lenses
+that apply. Two problems are bridge cases that need 2 lenses.
+
+Valid lens names: "dp", "greedy", "backtracking"
+
+Problems:
+  1 — activity selection (maximise non-overlapping intervals)
+  2 — coin change, minimise coins (arbitrary denominations)
+  3 — generate all permutations of a list
+  4 — shortest path in a weighted graph (non-negative weights)
+  5 — word break with memoization (can string be segmented into words)
+  6 — 0/1 knapsack
+  7 — generate all valid parenthesizations of n pairs
+  8 — longest common subsequence of two strings
+
+Two of these require more than one lens.
+
+TODO: implement `pick_lens` so the tests pass.
 """
 
 
-def subsets(arr: list) -> list[list]:
-    out = []
-    partial = []
+def pick_lens(problem_id: int) -> set[str]:
+    """Return the set of applicable lenses for each problem.
 
-    def backtrack(i: int):
-        if i == len(arr):
-            out.append(partial[:])    # snapshot
-            return
-        # choice 1: include arr[i]
-        partial.append(arr[i])
-        backtrack(i + 1)
-        # TODO: undo the append before exploring the "exclude" branch
-        # choice 2: exclude arr[i]
-        backtrack(i + 1)
-
-    backtrack(0)
-    return out
+    Most problems land in exactly one bucket. Bridge cases return 2.
+    """
+    raise NotImplementedError

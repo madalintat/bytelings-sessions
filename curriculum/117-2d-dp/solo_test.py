@@ -1,4 +1,4 @@
-"""HIDDEN tests for rung 4."""
+"""HIDDEN tests for rung 4 — do not peek before solving solo.py."""
 import importlib.util
 from pathlib import Path
 
@@ -9,30 +9,48 @@ ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
 
-def test_basic():
-    assert ex.lcs_length("abcde", "ace") == 3
+def _valid_solution(sol: list[int]) -> bool:
+    n = len(sol)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if sol[i] == sol[j] or abs(i - j) == abs(sol[i] - sol[j]):
+                return False
+    return True
 
 
-def test_disjoint():
-    assert ex.lcs_length("abc", "def") == 0
+def test_n1():
+    assert ex.n_queens(1) == [[0]]
 
 
-def test_one_empty():
-    assert ex.lcs_length("abc", "") == 0
-    assert ex.lcs_length("", "abc") == 0
+def test_n2_empty():
+    assert ex.n_queens(2) == []
 
 
-def test_both_empty():
-    assert ex.lcs_length("", "") == 0
+def test_n3_empty():
+    assert ex.n_queens(3) == []
 
 
-def test_identical():
-    assert ex.lcs_length("hello", "hello") == 5
+def test_n4_count():
+    assert len(ex.n_queens(4)) == 2
 
 
-def test_one_inside_other():
-    assert ex.lcs_length("abc", "ababc") == 3
+def test_n4_all_valid():
+    for sol in ex.n_queens(4):
+        assert _valid_solution(sol), f"Invalid solution: {sol}"
 
 
-def test_long():
-    assert ex.lcs_length("AGGTAB", "GXTXAYB") == 4
+def test_n5_count():
+    assert len(ex.n_queens(5)) == 10
+
+
+def test_n6_count():
+    assert len(ex.n_queens(6)) == 4
+
+
+def test_n8_count():
+    assert len(ex.n_queens(8)) == 92
+
+
+def test_n8_all_valid():
+    for sol in ex.n_queens(8):
+        assert _valid_solution(sol), f"Invalid solution: {sol}"
