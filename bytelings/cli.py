@@ -63,6 +63,21 @@ def _curriculum_source() -> Path:
     )
 
 
+def _scaffold_source() -> Path | None:
+    """Locate the bundled student scaffold (pyproject.toml + uv.lock).
+
+    Returns None if no scaffold is bundled (older installs).
+    Falls back to the repo's `scaffold/` for editable / dev installs.
+    """
+    bundled = resources.files("bytelings") / "_scaffold"
+    if bundled.is_dir():
+        return Path(str(bundled))
+    repo_scaffold = Path(__file__).resolve().parent.parent / "scaffold"
+    if repo_scaffold.is_dir():
+        return repo_scaffold
+    return None
+
+
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx: click.Context) -> None:
@@ -92,6 +107,9 @@ def cli(ctx: click.Context) -> None:
 def init(target: Path, force: bool) -> None:
     """Copy the bundled curriculum into TARGET (default ./curriculum).
 
+    Also drops a pyproject.toml + uv.lock into the parent of TARGET so
+    `uv sync && uv run pytest` work out of the box.
+
     Run this once in an empty directory before your first session.
     """
     src = _curriculum_source()
@@ -102,10 +120,26 @@ def init(target: Path, force: bool) -> None:
             )
         shutil.rmtree(target)
     shutil.copytree(src, target)
-    ui.banner_pass(
-        f"Curriculum copied to ./{target}",
-        f"Next: [cyan]cd {target.parent if target.parent != Path('.') else '.'} "
-        f"&& bytelings[/cyan] to start the watcher.",
+
+    scaffold_src = _scaffold_source()
+    scaffold_dst = target.parent if str(target.parent) != "" else Path(".")
+    shipped: list[str] = []
+    if scaffold_src is not None:
+        for fname in ("pyproject.toml", "uv.lock"):
+            f = scaffold_src / fname
+            if not f.is_file():
+                continue
+            dst = scaffold_dst / fname
+            if dst.exists() and not force:
+                continue
+            shutil.copy2(f, dst)
+            shipped.append(fname)
+
+    ui.console.print(f"[bold green]✔ Curriculum copied to ./{target}[/bold green]")
+    if shipped:
+        ui.console.print(f"  shipped: {', '.join(shipped)}")
+    ui.console.print(
+        "\n[dim]Next:[/dim] [cyan]uv sync && bytelings[/cyan] [dim]to start the watcher.[/dim]"
     )
 
 
