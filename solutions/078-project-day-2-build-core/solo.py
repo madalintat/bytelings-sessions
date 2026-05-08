@@ -21,7 +21,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 # Re-use rung 3's parser + analyzer.
-_g_spec = spec_from_file_location("_g", Path(__file__).parent / "03_guided.py")
+_g_spec = spec_from_file_location("_g", Path(__file__).parent / "guided.py")
 _g = module_from_spec(_g_spec)
 _g_spec.loader.exec_module(_g)
 

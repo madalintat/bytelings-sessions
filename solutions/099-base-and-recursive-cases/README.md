@@ -61,7 +61,7 @@ When you're stuck designing a recursive function, write the base case
 first. Always. Then ask: "given the answer for one-size-smaller, how
 do I build the answer for this size?" That's the whole job.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two recursive functions, each missing exactly one thing — the part
 that stops them. Find it. Make them stop.

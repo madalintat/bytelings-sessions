@@ -7,7 +7,7 @@ import httpx
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -46,7 +46,7 @@ def test_open_client_and_check_uses_async_with():
     # We can't easily exercise open_client_and_check without real network,
     # so we just check by AST that it uses `async with`.
     import ast
-    src = (_HERE / "02_fluency.py").read_text()
+    src = (_HERE / "fluency.py").read_text()
     tree = ast.parse(src)
     fn = next(
         n for n in tree.body

@@ -83,6 +83,6 @@ def chain(*iterables):
 It also forwards `send`, `throw`, and the iterator's return value, but
 99% of the time the loop intuition is enough.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two generator functions to fix — both have the right shape but wrong details.

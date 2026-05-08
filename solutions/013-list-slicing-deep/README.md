@@ -78,7 +78,7 @@ Slicing a list creates a new list with `len(slice)` elements. So
 you need the new list. (For "first n items, but lazily," the answer
 is `itertools.islice` — Phase 2.)
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three slice expressions — including a slice *assignment* — are wrong.
 Patch them.

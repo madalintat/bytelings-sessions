@@ -104,7 +104,7 @@ You can stack parametrize decorators (Cartesian product), and you can
 parametrize fixtures themselves (the same fixture body, run once per
 parameter). But the basic form above is what you'll use 95% of the time.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A test file with five duplicated tests. Collapse them into one
 parametrized test. The tested function is fine.

@@ -6,13 +6,13 @@ Demonstrates `naturals()` (infinite) piped into `take_while` (bails out
 when squares get too big). Lazy all the way through.
 
 Try it:
-    uv run python 05_apply.py 100
+    uv run python apply.py 100
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

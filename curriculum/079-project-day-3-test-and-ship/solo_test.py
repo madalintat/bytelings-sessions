@@ -4,7 +4,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_4"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "04_solo.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "solo.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -26,7 +26,7 @@ def test_make_files_lines_parse(tmp_path):
     parser_path = (
         Path(__file__).parent.parent
         / "day-078-project-day-2-build-core"
-        / "03_guided.py"
+        / "guided.py"
     )
     spec = spec_from_file_location("_p", parser_path)
     p = module_from_spec(spec)

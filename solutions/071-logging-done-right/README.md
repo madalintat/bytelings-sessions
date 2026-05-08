@@ -97,6 +97,6 @@ except Exception:
 Same level as `ERROR`, but the entire traceback is in the log line.
 Future-you, paged at 3 AM, will be grateful.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Convert prints to logger calls at the right levels.

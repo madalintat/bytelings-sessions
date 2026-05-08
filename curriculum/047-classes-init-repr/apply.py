@@ -5,13 +5,13 @@ Tiny CLI: read raw email addresses from stdin, print canonical form
 
 Try it:
     printf '  Test@Example.COM\\nbad-line\\nfoo@bar.org\\n' \\
-      | uv run python 05_apply.py
+      | uv run python apply.py
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

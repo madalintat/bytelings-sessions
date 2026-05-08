@@ -3,20 +3,20 @@
 Tiny CLI: print the largest file in a directory tree, with its size.
 
 Try it:
-    uv run python 05_apply.py /path/to/folder
+    uv run python apply.py /path/to/folder
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("usage: 05_apply.py <folder>")
+        print("usage: apply.py <folder>")
         return
     folder = Path(sys.argv[1])
     if not folder.is_dir():

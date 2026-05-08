@@ -70,6 +70,6 @@ Python `list`. Linked lists are best when you're working at the head.
 We'll fix the slow append by adding a `tail` pointer in tomorrow's
 doubly-linked variant.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A node-walking helper has two off-by-one bugs.

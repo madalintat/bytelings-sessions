@@ -86,7 +86,7 @@ before, in a way that compounds.
 Big-O isn't a number, it's a *prediction shape*. By the end of Phase 4,
 you'll be sketching it without thinking.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Compare two pairs of functions. Pick the faster one *and* say its
 Big-O.

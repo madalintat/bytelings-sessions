@@ -3,7 +3,7 @@
 Time merge_sort vs quick_sort vs Python's built-in sorted() on the
 same random list. Watch the built-in destroy your hand-rolled ones.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 import random
 import time
@@ -11,10 +11,10 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _HERE = Path(__file__).parent
-_solo_spec = spec_from_file_location("_solo", _HERE / "04_solo.py")
+_solo_spec = spec_from_file_location("_solo", _HERE / "solo.py")
 _solo = module_from_spec(_solo_spec)
 _solo_spec.loader.exec_module(_solo)
-_guided_spec = spec_from_file_location("_guided", _HERE / "03_guided.py")
+_guided_spec = spec_from_file_location("_guided", _HERE / "guided.py")
 _guided = module_from_spec(_guided_spec)
 _guided_spec.loader.exec_module(_guided)
 

@@ -86,6 +86,6 @@ API as yesterday's `HashMap`, but now with tombstones for delete.
 After this you'll have built both strategies and can read any hash
 table source with confidence.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two probing helpers, each missing one line.

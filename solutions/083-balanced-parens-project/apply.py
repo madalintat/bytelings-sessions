@@ -3,7 +3,7 @@
 Tiny CLI: a bracket linter for files.
 
 Usage:
-    uv run python 05_apply.py <path>
+    uv run python apply.py <path>
 
 Reads the file, runs check_brackets, and prints either OK or a
 one-line diagnostic with the (line, column) and a caret pointing at
@@ -14,7 +14,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)
@@ -29,7 +29,7 @@ def index_to_line_col(text: str, idx: int) -> tuple[int, int]:
 
 def main() -> None:
     if len(sys.argv) != 2:
-        print("usage: 05_apply.py <path>", file=sys.stderr)
+        print("usage: apply.py <path>", file=sys.stderr)
         sys.exit(2)
     text = Path(sys.argv[1]).read_text()
     problem = _guided.check_brackets(text)

@@ -92,6 +92,6 @@ or want methods on the class.
 - `field(init=False, default=...)` — a field that's NOT in `__init__`
   (set in `__post_init__`).
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A dataclass with the mutable-default bug. Fix it.

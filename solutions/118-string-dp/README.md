@@ -126,6 +126,6 @@ the same prefix or suffix — that's overlap, that's DP.
 If the recursion is tree-shaped without re-visits (parsing JSON,
 walking an AST), it's not DP — it's just recursion.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Same hangs-on-input bug. Add memoization.

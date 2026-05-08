@@ -93,4 +93,4 @@ and it works.
 
 This is what 27 days look like compounded.
 
-Open `02_fluency.py`.
+Open `fluency.py`.

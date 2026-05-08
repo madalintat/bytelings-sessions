@@ -19,7 +19,7 @@ Implement TWO things:
 Hidden tests cover: print not at top-level (in a function) is allowed,
 print as method call ignored, multiple rules firing on one file.
 
-Hint: M001/M002 live in 02_fluency.py and 03_guided.py — reuse them.
+Hint: M001/M002 live in fluency.py and guided.py — reuse them.
 """
 from __future__ import annotations
 import ast
@@ -29,11 +29,11 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _HERE = Path(__file__).parent
-_f = spec_from_file_location("_d127_fluency", _HERE / "02_fluency.py")
+_f = spec_from_file_location("_d127_fluency", _HERE / "fluency.py")
 _fluency = module_from_spec(_f)
 sys.modules["_d127_fluency"] = _fluency
 _f.loader.exec_module(_fluency)
-_g = spec_from_file_location("_d127_guided", _HERE / "03_guided.py")
+_g = spec_from_file_location("_d127_guided", _HERE / "guided.py")
 _guided = module_from_spec(_g)
 sys.modules["_d127_guided"] = _guided
 _g.loader.exec_module(_guided)

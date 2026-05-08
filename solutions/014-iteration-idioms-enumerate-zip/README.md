@@ -87,7 +87,7 @@ for i, line in enumerate(open("file"), start=1):  # 1-based line numbers
 phonebook = dict(zip(names, scores))   # {'alice': 90, 'bob': 85, ...}
 ```
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three loops are using the C-style smell. Convert each to the pythonic
 idiom.

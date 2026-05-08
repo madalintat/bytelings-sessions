@@ -4,14 +4,14 @@ Tiny CLI: read a sentence from stdin and print the vowel count.
 
 This uses count_vowels from rung 4 — your first reuse of your own code.
 
-Try it: echo "hello world" | uv run python 05_apply.py
+Try it: echo "hello world" | uv run python apply.py
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)

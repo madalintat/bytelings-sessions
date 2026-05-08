@@ -4,7 +4,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_3"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "03_guided.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "guided.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -29,12 +29,12 @@ def test_empty_file(tmp_path):
 
 def test_uses_streaming():
     """Source must NOT read the whole file at once via read_text/splitlines."""
-    src = (_HERE / "03_guided.py").read_text()
+    src = (_HERE / "guided.py").read_text()
     assert "splitlines" not in src
     assert "read_text" not in src
 
 
 def test_explicit_encoding():
     """Source must specify encoding='utf-8'."""
-    src = (_HERE / "03_guided.py").read_text()
+    src = (_HERE / "guided.py").read_text()
     assert 'encoding="utf-8"' in src or "encoding='utf-8'" in src

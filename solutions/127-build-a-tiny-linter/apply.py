@@ -2,7 +2,7 @@
 
 A real-feeling lint command:
 
-    uv run python 05_apply.py path/to/file.py [path/to/another.py ...]
+    uv run python apply.py path/to/file.py [path/to/another.py ...]
 
 Prints one line per issue:
 
@@ -19,7 +19,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _HERE = Path(__file__).parent
-_s = spec_from_file_location("_d127_solo", _HERE / "04_solo.py")
+_s = spec_from_file_location("_d127_solo", _HERE / "solo.py")
 _solo = module_from_spec(_s)
 sys.modules["_d127_solo"] = _solo
 _s.loader.exec_module(_solo)
@@ -28,7 +28,7 @@ _s.loader.exec_module(_solo)
 def main() -> int:
     paths = sys.argv[1:]
     if not paths:
-        print("usage: python 05_apply.py <file.py> [file.py ...]")
+        print("usage: python apply.py <file.py> [file.py ...]")
         return 1
     found = 0
     for p in paths:

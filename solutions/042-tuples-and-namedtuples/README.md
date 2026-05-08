@@ -88,6 +88,6 @@ The tuple itself can't change which objects it points at. The objects
 themselves are still whatever they are. Same gotcha as Day 4's
 `a is b`.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function returns a plain tuple where a `NamedTuple` would clarify it.

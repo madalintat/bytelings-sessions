@@ -100,7 +100,7 @@ If you're writing a system where "X must happen before Y," you need
 topo sort. Don't invent your own ordering — implement it once,
 correctly, with a cycle check.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A topo-sort that emits nodes too eagerly — it doesn't decrement
 in-degree on neighbors. Fix it.

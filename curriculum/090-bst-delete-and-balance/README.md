@@ -98,6 +98,6 @@ masquerading as a tree.
 - Apply: a CLI that loads numbers and reports whether the resulting
   tree is healthy or skewed.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two delete attempts; each fails on a different case.

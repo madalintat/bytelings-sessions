@@ -11,7 +11,7 @@ This is a real LRU-cache shape — minus the eviction. You'll add
 eviction tomorrow on Day 86.
 
 Try it:
-    printf "a.com\\nb.com\\na.com\\nc.com\\nb.com\\n" | uv run python 05_apply.py
+    printf "a.com\\nb.com\\na.com\\nc.com\\nb.com\\n" | uv run python apply.py
     -> b.com, c.com, a.com
 """
 import sys
@@ -19,7 +19,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

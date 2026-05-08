@@ -103,6 +103,6 @@ when you iterate to that result, *not* during `.submit`. Wrap
 too. Use them in production paths so a stuck call doesn't wedge the
 pool.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Convert a sequential `for`-loop of "fake API calls" to a thread pool.

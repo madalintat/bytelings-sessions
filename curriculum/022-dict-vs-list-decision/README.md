@@ -92,7 +92,7 @@ That's two indices. Both are fine to build. The trick: build them
 once, share-the-data: each contact dict is one Python object held in
 both indices (Day 4 — same object, two names).
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small choose-your-shape exercises. Pick the right structure and
 implement.

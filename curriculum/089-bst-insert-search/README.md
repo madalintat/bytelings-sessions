@@ -106,6 +106,6 @@ A `BST` class wrapping a root pointer:
 - `__iter__` — yields values in sorted order (inorder traversal).
 - `min()` / `max()` — walk all the way left / all the way right.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two near-correct BST helpers, with the comparisons backwards.

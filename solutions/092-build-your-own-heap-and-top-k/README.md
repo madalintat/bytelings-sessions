@@ -101,6 +101,6 @@ performance bug shows up — "why is my priority queue slow?" — you
 can think about the data structure, not the API. After today, you'll
 read the `heapq` source like a normal Python file.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two heap helpers, each missing one critical detail.

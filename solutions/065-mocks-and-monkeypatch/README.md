@@ -98,6 +98,6 @@ run. Mock only at the **boundaries** of your system: I/O, time,
 randomness, third-party services. Inside the boundary, real code talks
 to real code, and bugs surface where they live.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A test hits the real clock. Make it deterministic.

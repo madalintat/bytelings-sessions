@@ -78,6 +78,6 @@ def rolling_sums(nums: list[int], k: int) -> list[int]:
 running sum. This is the shape you'll reuse for every sliding-window
 algorithm in Phase 5.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two deque idioms to fix.

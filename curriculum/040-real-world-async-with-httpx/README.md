@@ -90,6 +90,6 @@ async with httpx.AsyncClient(transport=transport) as client:
 
 Tomorrow's tests use this pattern.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A status checker that's almost right but uses the wrong client.

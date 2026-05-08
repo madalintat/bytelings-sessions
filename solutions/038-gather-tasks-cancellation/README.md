@@ -87,6 +87,6 @@ the losers. `asyncio.wait_for(coro, timeout)` does exactly this — it
 runs the coroutine, and if it doesn't finish in `timeout` seconds, it
 cancels it and raises `TimeoutError`.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A sequential fetch loop that needs to become a `gather`.

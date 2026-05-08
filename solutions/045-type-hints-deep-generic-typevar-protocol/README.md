@@ -98,6 +98,6 @@ a `sort` function generic over `T`. The type system gets richer as
 you stack pieces, but the building blocks are these three: `TypeVar`,
 `Generic[T]`, `Protocol`.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A `Box` class that's missing its TypeVar and Generic declaration.

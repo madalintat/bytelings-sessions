@@ -98,4 +98,4 @@ it accepts a file path and prints `path:line: CODE message` lines —
 the format every editor's "jump to next problem" hotkey already knows
 how to parse.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`

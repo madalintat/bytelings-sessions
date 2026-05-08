@@ -101,6 +101,6 @@ cache-friendly but has subtler edge cases. Most modern hash tables
 first because the *concept* is clearer; then we'll see why open
 addressing won.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two helpers, each with one wrong line.

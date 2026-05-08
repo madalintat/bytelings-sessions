@@ -79,6 +79,6 @@ the moment you see one of these:
 
 If your data is unsorted and only used once, don't bother — just scan.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A binary search with a classic off-by-one. Find it.

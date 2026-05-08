@@ -73,7 +73,7 @@ fix is to *know* and *state* the encoding when you open the file. The
 worst Python encoding bugs come from the silent default that "happens
 to work" in dev and breaks in prod.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three encode/decode lines are wrong. The detective's case file (the
 tests) tells you the expected output for each.

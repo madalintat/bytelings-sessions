@@ -9,7 +9,7 @@ real shape: a chat feed where the most recent message goes on top, and
 prepend is the natural operation. With a linked list, that's O(1).
 
 Try it:
-    printf "hi\\nhello\\nyo\\n" | uv run python 05_apply.py
+    printf "hi\\nhello\\nyo\\n" | uv run python apply.py
     -> yo
        hello
        hi
@@ -19,7 +19,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

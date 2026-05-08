@@ -94,7 +94,7 @@ prints `C B A`. Same recursion shape; one prints before recursing
 between pre-order and post-order traversal in tree algorithms — same
 trick, fancier name.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two recursive functions print things in a specific order. Read them
 carefully and guess the output. Then run.

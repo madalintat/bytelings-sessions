@@ -90,6 +90,6 @@ Real-world hits: rolling-average analytics, rate-limiting (requests
 in the last 60s), monitoring (max latency in the last N samples), log
 parsing ("longest stretch with no errors"), gene-sequence matching.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A sliding-sum that recomputes every window. Convert it to slide.

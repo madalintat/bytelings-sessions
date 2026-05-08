@@ -68,6 +68,6 @@ search space in half each step. A 200-commit window becomes ~8 builds.
 Combined with a reliable repro (step 1), bisect finds bugs while
 you're still forming your first theory.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 You'll add a regression test that locks in a fix.

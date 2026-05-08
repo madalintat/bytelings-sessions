@@ -8,7 +8,7 @@ Read a Python file path. Print a brief AST report:
 
 Reuses pieces from rungs 3 and 4.
 
-    uv run python 05_apply.py 04_solo.py
+    uv run python apply.py solo.py
 """
 from __future__ import annotations
 import ast
@@ -18,16 +18,16 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 
-_g = spec_from_file_location("_guided", _HERE / "03_guided.py")
+_g = spec_from_file_location("_guided", _HERE / "guided.py")
 _guided = module_from_spec(_g); _g.loader.exec_module(_guided)
 
-_s = spec_from_file_location("_solo", _HERE / "04_solo.py")
+_s = spec_from_file_location("_solo", _HERE / "solo.py")
 _solo = module_from_spec(_s); _s.loader.exec_module(_solo)
 
 
 def main() -> None:
     if len(sys.argv) != 2:
-        print("usage: python 05_apply.py <python-file>")
+        print("usage: python apply.py <python-file>")
         sys.exit(1)
     path = Path(sys.argv[1])
     src = path.read_text(encoding="utf-8")

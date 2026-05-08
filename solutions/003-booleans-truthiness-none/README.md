@@ -61,6 +61,6 @@ x == None       # works but lints flag it
 x is None       # canonical
 ```
 
-## Now: `02_fluency.py`
+## Now: `fluency.py`
 
 Three small predicate functions to fix.

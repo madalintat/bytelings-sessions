@@ -5,7 +5,7 @@ from typing import Generic, TypeVar
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 

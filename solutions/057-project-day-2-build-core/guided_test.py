@@ -6,7 +6,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_3"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "03_guided.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "guided.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -41,7 +41,7 @@ def test_atomic_no_tmp_left(tmp_path):
 
 
 def test_uses_os_replace():
-    src = (_HERE / "03_guided.py").read_text()
+    src = (_HERE / "guided.py").read_text()
     assert "os.replace" in src, "atomic write requires os.replace"
 
 

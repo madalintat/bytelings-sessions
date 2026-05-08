@@ -92,6 +92,6 @@ Sort returned `None`. The detective's rule: **if a method's name is a
 verb and the verb describes *changing* the list, it returns `None`.**
 Use `sorted`, `reversed`, comprehensions, or `+` for new lists.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small bugs around mutation vs return. Fix each.

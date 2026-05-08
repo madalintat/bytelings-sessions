@@ -80,6 +80,6 @@ cursor, a paginated client — implementing `__iter__` and `__next__`
 makes your object work in `for` loops, list comprehensions, `sum`,
 `any`, unpacking, everywhere. You don't add API; you add behavior.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A class is missing one of the two methods. Add it.

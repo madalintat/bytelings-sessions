@@ -93,7 +93,7 @@ event loop stays responsive; the heavy lifting happens off-loop.
 That's an architecture-level decision, not a daily one — keep it
 simple until you have a profile that says you need it.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function picks the WRONG concurrency for a CPU-bound task. Switch
 it from threads to processes (one-line change in

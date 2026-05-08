@@ -61,7 +61,7 @@ straight to Rung 2.
 > If you start the watcher *before* `uv sync`, it'll wait for you
 > and pick up the `.venv` the moment it appears. No restart needed.
 
-## Then: open `02_fluency.py`
+## Then: open `fluency.py`
 
 You'll fix two tiny things. The watcher will tell you when they're
 right. Don't worry — you can't break anything.

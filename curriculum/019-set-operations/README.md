@@ -92,6 +92,6 @@ empty_set = set()     # canonical empty set
 `{1, 2, 3}` is a set literal. `{}` is a dict literal. To make an empty
 set you must write `set()`.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small functions; pick the right structure.

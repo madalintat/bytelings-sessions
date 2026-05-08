@@ -107,7 +107,7 @@ Real-world hits: stock-trading optimal-day problems, run-length
 analytics, climbing/path-counting puzzles, basic DNA pattern length
 problems, dynamic resource allocation along time.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A bottom-up max-subarray-sum (Kadane's) with the recurrence written
 backward. Fix it.

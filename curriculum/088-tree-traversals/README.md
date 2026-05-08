@@ -109,6 +109,6 @@ Phase 5.
 That's the whole conceptual cost. After this day, every "walk a tree
 and do X" problem reduces to "which order, and what's X."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two traversals are mislabeled. Fix the line that moves.

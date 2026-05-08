@@ -100,6 +100,6 @@ hashable.
 | `@dataclass(frozen=True)` | Yes | Yes |
 | `NamedTuple` subclass | Yes | Yes |
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two tiny predict-the-output assertions about the rules above.

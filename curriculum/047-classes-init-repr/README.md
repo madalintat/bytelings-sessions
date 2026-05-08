@@ -79,6 +79,6 @@ who sees a `str`: you, in the debugger, and you, six months from now.
 For pure value bags, dataclass wins. For everything else, the
 hand-written class is still the workhorse.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A `Counter` class that's missing one method — guess which.

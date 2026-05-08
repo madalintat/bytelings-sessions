@@ -81,6 +81,6 @@ for x in range(3):
 A comprehension is a *value*, not an action. If you want a value, reach
 for it. If you want to do a thing N times, write the loop.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two for-loop graveyards to flatten into one-liners.

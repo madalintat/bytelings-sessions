@@ -9,7 +9,7 @@ literally chmod +x and execute them — they're real Python.
 We won't actually chmod (it'd cause cross-platform pain), but you can
 inspect the files in /tmp after running.
 
-    uv run python 05_apply.py
+    uv run python apply.py
 """
 from __future__ import annotations
 import tempfile
@@ -17,7 +17,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _HERE = Path(__file__).parent
-_g = spec_from_file_location("_guided", _HERE / "03_guided.py")
+_g = spec_from_file_location("_guided", _HERE / "guided.py")
 _guided = module_from_spec(_g)
 _g.loader.exec_module(_guided)
 

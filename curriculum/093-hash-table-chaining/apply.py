@@ -10,7 +10,7 @@ Useful for piping out unique log lines without holding everything in
 memory as a sorted list.
 
 Try it:
-    printf "a\\nb\\na\\nc\\nb\\nd\\n" | uv run python 05_apply.py
+    printf "a\\nb\\na\\nc\\nb\\nd\\n" | uv run python apply.py
     -> a
        b
        c
@@ -21,7 +21,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)

@@ -105,6 +105,6 @@ every package manager (resolve install order with topo sort), every
 build system (rebuild graph), and every linter that checks for
 import cycles.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A DFS that infinite-loops on cyclic graphs. Add the visited check.

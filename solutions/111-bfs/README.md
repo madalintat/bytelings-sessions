@@ -116,7 +116,7 @@ This is why BFS is the right tool for:
 For *weighted* shortest paths, you upgrade BFS to Dijkstra. Same
 shape; priority queue instead of plain queue.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A BFS that pushes duplicates — the visited-set check is in the wrong
 place. Fix it.

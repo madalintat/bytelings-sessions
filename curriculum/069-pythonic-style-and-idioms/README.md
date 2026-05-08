@@ -114,6 +114,6 @@ The Zen of Python's "readability counts" lives here. Compare the two
 versions of each idiom above, and ask which one you'd rather read in
 a 4 AM page-out.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small functions written in non-Pythonic style. Rewrite them.

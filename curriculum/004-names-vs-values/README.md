@@ -54,6 +54,6 @@ But `a + [5]` creates a *new* list — addition doesn't mutate `a`. So
 
 This is the source of 80% of "but I didn't change that variable" bugs.
 
-## Now: trace through `02_fluency.py`
+## Now: trace through `fluency.py`
 
 You'll fix a function so it doesn't silently mutate its caller's list.

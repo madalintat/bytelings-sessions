@@ -105,7 +105,7 @@ funcs = [lambda i=i: i for i in range(3)]   # [0, 1, 2]
 Closures are powerful and easy to misuse. Day 27 leverages them to
 build decorators.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small scope/closure puzzles. Make each return what the test
 expects.

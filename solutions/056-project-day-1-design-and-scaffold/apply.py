@@ -4,14 +4,14 @@ This is the project's actual CLI. Today it uses a stub fetcher — Day 57
 swaps in a real httpx-backed one.
 
 Try it:
-    uv run python 05_apply.py http://a http://b http://c
+    uv run python apply.py http://a http://b http://c
 """
 import asyncio
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

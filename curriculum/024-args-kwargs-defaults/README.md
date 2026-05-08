@@ -106,7 +106,7 @@ You'll write `def f(*, ..., **kwargs):` more often than the full
 form. The bare `*` means "everything to my right is keyword-only" —
 the same trick from Day 23.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Detective work: each function has a default-arg or unpacking bug.
 Patch each.

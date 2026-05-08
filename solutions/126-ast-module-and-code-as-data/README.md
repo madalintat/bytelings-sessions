@@ -95,4 +95,4 @@ You'll build helpers that count things in source code: function
 definitions, top-level imports, longest-named variable assigned to.
 Tomorrow you'll wire them into a real linter.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`

@@ -77,7 +77,7 @@ tests still do best. Use both: a small set of tight examples for the
 specific contract, plus a property test or two to catch the surprises
 you didn't think of (empty strings, nulls, huge numbers, unicode).
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two property tests are written but the function has a subtle bug.
 Run them, watch hypothesis shrink the input to a tiny counter-example,

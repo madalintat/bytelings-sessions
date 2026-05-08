@@ -65,7 +65,7 @@ Tab-completion works. `help(thing)` works. `dir(thing)` works.
 For deeper inspection: `uv run python -i your_file.py` runs the file
 *then* drops into REPL with all your names available.
 
-## Now: `02_fluency.py`
+## Now: `fluency.py`
 
 Add the missing type hints. The tests check the *annotations* exist,
 not just the runtime behavior.

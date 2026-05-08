@@ -87,7 +87,7 @@ probing, an "indices" array — see CPython's `Objects/dictobject.c` if
 you're curious). But the model — *hash to a bucket, fall back to a
 linear walk on collision* — is the same.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 You'll fix three small pieces of a `Tiny` hashmap. The tests will
 pinpoint each one.

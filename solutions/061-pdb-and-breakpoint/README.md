@@ -80,7 +80,7 @@ The point isn't the fix. The point is: you didn't *guess*. You
 habit — questioning the code instead of theorizing about it — is the
 single biggest debugging upgrade most engineers ever make.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function with a subtle bug. The test file shows the failure. Use
 `breakpoint()` to find it, fix the function, then remove the

@@ -5,7 +5,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -28,7 +28,7 @@ def test_by_length_empty():
 
 def test_uses_comprehensions():
     """Both bodies must use a comprehension, not a for-loop statement."""
-    src = (_HERE / "02_fluency.py").read_text()
+    src = (_HERE / "fluency.py").read_text()
     tree = ast.parse(src)
     for fn in [n for n in tree.body if isinstance(n, ast.FunctionDef)]:
         for node in ast.walk(fn):

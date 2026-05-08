@@ -5,7 +5,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -32,7 +32,7 @@ def test_any_negative_empty():
 
 def test_no_list_comprehensions():
     """Both bodies must use a generator expression, not a list comp."""
-    src = (_HERE / "02_fluency.py").read_text()
+    src = (_HERE / "fluency.py").read_text()
     tree = ast.parse(src)
     for node in ast.walk(tree):
         assert not isinstance(node, ast.ListComp), (

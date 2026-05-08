@@ -7,7 +7,7 @@ a configurable cap, writes a JSON report.
 
 Try it (with the bundled offline demo):
     printf 'http://demo/ok\\nhttp://demo/big\\nhttp://demo/missing\\n' > /tmp/urls.txt
-    uv run python 05_apply.py /tmp/urls.txt --out /tmp/snaps.json --concurrency 5
+    uv run python apply.py /tmp/urls.txt --out /tmp/snaps.json --concurrency 5
 """
 import argparse
 import asyncio
@@ -16,7 +16,7 @@ from pathlib import Path
 
 import httpx
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

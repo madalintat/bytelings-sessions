@@ -94,7 +94,7 @@ Recursion isn't free in Python. For unbounded-depth data — JSON from
 external systems, file trees, comment threads — assume the worst and
 either bound your input or use the explicit-stack pattern.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function recurses correctly but blows up on deep input. Convert it
 to use an explicit stack.

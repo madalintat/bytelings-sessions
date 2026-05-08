@@ -99,6 +99,6 @@ results = [x async for x in stream()]
 
 This is shorthand for an `async for` loop that builds a list.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A broken async generator + a usage site that uses the wrong loop.

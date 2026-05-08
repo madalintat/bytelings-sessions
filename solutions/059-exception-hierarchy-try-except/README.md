@@ -81,6 +81,6 @@ A tuple of types catches any of them. Bind with `as e` only if you
 actually use `e` — otherwise drop it. `e` goes out of scope when the
 `except` block exits (a deliberate cleanup choice, not a quirk).
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two `except` clauses are too broad. Tighten them.

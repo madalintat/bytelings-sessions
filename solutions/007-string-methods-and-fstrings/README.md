@@ -72,6 +72,6 @@ ones to remember:
 `.join(iter)`, `.find(sub)` (returns `-1` if missing), `.count(sub)`.
 You'll use these *every day*.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small string-method calls are wrong. Patch them.

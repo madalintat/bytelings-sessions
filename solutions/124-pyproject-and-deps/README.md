@@ -80,7 +80,7 @@ click 8.1.7 with this exact hash, and here's the resolved tree of
 every transitive dep." You commit both. `uv sync` reads the lock and
 reproduces the same install on every machine.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 You'll fix two broken bits of `pyproject.toml` parsing using
 `tomllib` (stdlib in 3.11+). Tests expect plain dicts back.

@@ -85,7 +85,7 @@ Today's drill is to *write* `find_first` and `count_matches` from
 scratch. Don't reach for `.index` or `.count` — you'll see how they
 work. Tomorrow we name what we just built: that's Big-O.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small linear-scan helpers. Some are wrong, some are slow. Fix
 both kinds.

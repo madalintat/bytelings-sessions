@@ -93,6 +93,6 @@ for i in range(3):
 Day 25 covered this. The fix is `lambda i=i: i` — bind the value as a
 default argument so each lambda captures its own.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small higher-order helpers and one lambda. Patch them.

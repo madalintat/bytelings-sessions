@@ -97,6 +97,6 @@ context manager is the right shape. You will write your own — for
 test fixtures, for "change directory then change back," for "pause
 the watcher, do a thing, resume."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A class that wants to be a context manager but is missing both methods.

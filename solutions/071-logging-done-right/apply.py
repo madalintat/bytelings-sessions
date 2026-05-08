@@ -3,7 +3,7 @@
 Set up a real logger and run audit() a few times. Output goes to stderr
 with timestamps and levels — exactly what you'd see in production.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 import logging
 from importlib.util import module_from_spec, spec_from_file_location
@@ -15,7 +15,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

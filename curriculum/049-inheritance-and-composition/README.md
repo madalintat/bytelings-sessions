@@ -100,6 +100,6 @@ Reach for composition first. If you find yourself making three or
 four nearly-identical small classes that each redefine the same one
 method, *that's* when inheritance might shorten things — not before.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A small `Logger` written with inheritance. Refactor it to composition.

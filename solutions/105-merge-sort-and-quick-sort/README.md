@@ -87,7 +87,7 @@ mixed input. But the *patterns* (divide-and-conquer, partitioning,
 merging) recur everywhere: parallel processing splits work this way,
 external sorts work this way, MapReduce is "merge sort, distributed."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A merge function with one bug that only shows up on certain inputs.
 Find it.

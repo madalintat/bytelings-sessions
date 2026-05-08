@@ -82,7 +82,7 @@ a comparator would.
 - **External sorts and parallel sorts**: stability is harder to
   preserve in distributed systems; check what you've got.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two attempts at "sort by name, then by age." One uses a tuple key but
 gets the order wrong; one uses two passes but loses stability. Fix

@@ -5,7 +5,7 @@ largest in descending order. The whole stream might be larger than
 memory — but the heap only holds K at a time.
 
 Try it:
-    seq 1 1000000 | shuf | uv run python 05_apply.py 5
+    seq 1 1000000 | shuf | uv run python apply.py 5
     -> 1000000
        999999
        999998
@@ -17,7 +17,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)

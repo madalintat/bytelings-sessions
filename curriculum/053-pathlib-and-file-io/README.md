@@ -106,6 +106,6 @@ When you need a string for a library that doesn't speak `Path`, just
 `str(p)` it. When something hands you a string, wrap it in `Path(s)`.
 The boundary between the two is one function call.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function uses string concatenation for a path. Switch it to `Path`.

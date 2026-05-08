@@ -115,6 +115,6 @@ Greedy is the right tool when:
 Don't reach for greedy on optimization problems with constraints
 that interact ("budget AND weight AND..."). DP, almost always.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A greedy "max meetings" picker that sorts the wrong way. Fix it.

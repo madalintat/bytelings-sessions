@@ -77,6 +77,6 @@ project." The rungs:
 The story holds: same domain, same data shape, building tomorrow's
 foundation today.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A near-complete `LogRecord` with one TODO. Then keep walking up.

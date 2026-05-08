@@ -82,6 +82,6 @@ sortable) collection, *ask*: "Can I move two indices toward each
 other instead?" If the data has any monotonic structure, the answer
 is usually yes — and the runtime drops from n² to n.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A two-pointer reverse is moving the wrong pointer. Find it.

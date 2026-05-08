@@ -47,6 +47,6 @@ For money, never use `float`. Use `int` cents (`1050` instead of
 | `**` | Power: `2 ** 10 == 1024` |
 | `divmod(a, b)` | Returns `(a // b, a % b)` in one shot |
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two broken expressions to fix.

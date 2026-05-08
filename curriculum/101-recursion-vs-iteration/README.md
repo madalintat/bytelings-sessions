@@ -82,7 +82,7 @@ stack cost. So in Python, if a recursion is purely tail-shaped, you'd
 rewrite it as a loop. (We'll see this concretely in tomorrow's
 detective episode.)
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two functions; one is best as iteration, one is best as recursion.
 Both are written the wrong way. Swap each over.

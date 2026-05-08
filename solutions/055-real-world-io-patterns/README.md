@@ -106,6 +106,6 @@ of the time. The 1% where it isn't, you'll know.
 Three small habits. They make the difference between code that's
 fine on your laptop and code that doesn't blow up in production.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A `save_report` function that's missing both atomicity and an encoding.

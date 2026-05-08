@@ -107,6 +107,6 @@ the framework will read."
 - **TypedDict** — modeling a JSON-ish dict you can't dataclass-ify.
 - **Annotated** — passing extra info to a framework that knows about it.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function takes `mode: str` and a `dict`. Tighten the types.

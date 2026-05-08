@@ -85,6 +85,6 @@ For 99% of "I want a list" cases: still use Python's `list` or
 `deque`. The doubly linked list earns its keep when you need to splice
 arbitrary nodes in O(1).
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A `delete` helper has the boundary cases backwards.

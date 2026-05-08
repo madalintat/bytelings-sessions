@@ -98,7 +98,7 @@ Dijkstra (PP5) — runs on top of one of these representations. The
 algorithm is the same; the cost depends entirely on which storage you
 chose. Get this right today and the rest of the module is downhill.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function builds an adjacency list but forgets to make undirected
 edges go both ways. Fix it.

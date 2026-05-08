@@ -71,7 +71,7 @@ You'll be handed a small "codebase" — three functions sharing a
 suspicious pattern. The bug is real. The path to it is *not* "stare
 harder." The path is "rename, dedupe, then look."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function whose name lies. Rename it (in code AND tests) until the
 name and behavior agree.

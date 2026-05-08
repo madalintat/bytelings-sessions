@@ -91,6 +91,6 @@ async def fetch(url):
 `except Exception` will catch it. `CancelledError` should propagate so
 parent tasks can clean up. Re-raise it explicitly if you must catch it.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two of the three suspects appear. Convict them.

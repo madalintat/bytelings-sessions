@@ -107,6 +107,6 @@ A small word-frequency tool that uses a hash function you wrote.
 You'll see the perf cliff yourself: a deliberately bad hash vs a
 good one, on the same input.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A polynomial rolling hash with one bug.

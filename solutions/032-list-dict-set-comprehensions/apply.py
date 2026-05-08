@@ -9,14 +9,14 @@ Output: one line per tag, sorted, with the post ids that carry it.
 
 Try it:
     printf '{"id":1,"tags":["py"]}\\n{"id":2,"tags":["py","cli"]}\\n' \\
-        | uv run python 05_apply.py
+        | uv run python apply.py
 """
 import json
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

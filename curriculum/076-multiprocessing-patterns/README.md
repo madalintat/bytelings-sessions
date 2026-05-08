@@ -100,7 +100,7 @@ Skip if:
 - The function is a pure computation on a small input — try Numba
   or NumPy vectorization first.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A `pool.map` call with a non-pickleable lambda. Refactor it to a
 top-level function so the pool can ship it to workers.

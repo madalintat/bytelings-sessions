@@ -76,6 +76,6 @@ For every tree algorithm, there are two questions:
 That's the whole pattern. Once you internalize it, every tree problem
 melts down to "two questions."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two basic tree-shape helpers, each off by one in a recursive case.

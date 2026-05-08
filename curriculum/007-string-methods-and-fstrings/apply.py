@@ -4,14 +4,14 @@ Tiny CLI: read "Last, First" lines from stdin, print "First Last".
 
 Reuses flip_name from rung 4.
 
-Try it: printf "Smith, John\nDoe, Jane\nalice\n" | uv run python 05_apply.py
+Try it: printf "Smith, John\nDoe, Jane\nalice\n" | uv run python apply.py
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)

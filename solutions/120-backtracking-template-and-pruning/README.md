@@ -122,6 +122,6 @@ If undo is awkward, an alternative is to pass an immutable copy
 ("here's the partial with this choice added") instead of mutating.
 Slower but bug-free.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A subset generator that forgot to undo. Find the missing line.

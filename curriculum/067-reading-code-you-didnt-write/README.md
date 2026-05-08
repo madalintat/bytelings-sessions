@@ -76,7 +76,7 @@ Tomorrow you'll *change* code. Today you build the read-it-first habit
 that separates engineers who can drop into any codebase from those
 who can only work where they wrote the original.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A small, mildly-confusing function. Annotate it with a one-line
 docstring that describes what it does. Tests check your docstring.

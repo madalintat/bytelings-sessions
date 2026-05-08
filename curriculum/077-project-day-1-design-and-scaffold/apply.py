@@ -5,20 +5,20 @@ a tiny summary: total parsed, total skipped (malformed), counts per level.
 
 This is the seed of tomorrow's aggregator.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 from collections import Counter
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _solo_spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_solo_spec)
 _solo_spec.loader.exec_module(_solo)
 
 _parser_spec = spec_from_file_location(
-    "_parser", Path(__file__).parent / "03_guided.py"
+    "_parser", Path(__file__).parent / "guided.py"
 )
 _parser = module_from_spec(_parser_spec)
 _parser_spec.loader.exec_module(_parser)

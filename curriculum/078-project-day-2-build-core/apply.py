@@ -4,7 +4,7 @@ Generate synthetic log files, run analyze_paths over them, print a
 human-readable summary. The logging is configured here in the CLI;
 the library code only does `log = getLogger(__name__)`.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 import logging
 import tempfile
@@ -12,7 +12,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _solo_spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_solo_spec)
 _solo_spec.loader.exec_module(_solo)

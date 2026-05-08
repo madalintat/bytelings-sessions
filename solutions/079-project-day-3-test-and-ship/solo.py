@@ -29,14 +29,14 @@ from pathlib import Path
 _serial_path = (
     Path(__file__).parent.parent
     / "day-078-project-day-2-build-core"
-    / "04_solo.py"
+    / "solo.py"
 )
 _serial_spec = spec_from_file_location("_serial", _serial_path)
 _serial = module_from_spec(_serial_spec)
 _serial_spec.loader.exec_module(_serial)
 
 # Today's parallel analyze_paths_parallel.
-_par_spec = spec_from_file_location("_par", Path(__file__).parent / "03_guided.py")
+_par_spec = spec_from_file_location("_par", Path(__file__).parent / "guided.py")
 _par = module_from_spec(_par_spec)
 _par_spec.loader.exec_module(_par)
 

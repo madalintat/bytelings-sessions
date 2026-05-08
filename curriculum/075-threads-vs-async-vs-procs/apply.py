@@ -3,7 +3,7 @@
 Demonstrate the difference: same problem, three solutions, three
 shapes of code.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 import asyncio
 import time

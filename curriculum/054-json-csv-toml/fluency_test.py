@@ -5,7 +5,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -32,5 +32,5 @@ def test_save_writes_indented(tmp_path):
 
 def test_load_does_not_use_eval():
     """eval is unsafe on untrusted JSON. Source must use json.loads / json.load."""
-    src = (_HERE / "02_fluency.py").read_text()
+    src = (_HERE / "fluency.py").read_text()
     assert "eval(" not in src, "use json.loads, not eval"

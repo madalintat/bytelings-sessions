@@ -110,6 +110,6 @@ You'll hit bottom-up when:
   blocker.
 - Showing off in code review.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Convert a top-down recursion (climb stairs) into a bottom-up loop.

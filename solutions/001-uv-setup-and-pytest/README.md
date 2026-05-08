@@ -41,7 +41,7 @@ For this whole curriculum, you'll use `bytelings` (the watcher) to
 drive your day. Right now, you'll use `uv run pytest` to confirm
 tests pass.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 You'll fix two tiny things. The watcher will tell you when they're
 right. Don't worry — you can't break anything.

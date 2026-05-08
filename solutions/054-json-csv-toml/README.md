@@ -106,6 +106,6 @@ shape, different on-disk format.
 When in doubt, JSON. It's universal and lossless for everything
 JSON-mappable.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function reads JSON the wrong way. Tighten it to the canonical form.

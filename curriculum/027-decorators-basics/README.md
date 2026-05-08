@@ -106,6 +106,6 @@ caller pins with `@deco`.
   way. (You'll write decorators-with-args tomorrow for that.)
 - "Two of these chained" if order matters and isn't obvious. Test it.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Build a hand-rolled decorator (no `@` yet) and a `@`-style one.

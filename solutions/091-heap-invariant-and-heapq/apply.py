@@ -5,7 +5,7 @@ priority order (lowest priority value first, FIFO on ties).
 
 Try it:
     printf "send-email\\t2\\nbackup\\t1\\nrender-report\\t2\\n" \\
-        | uv run python 05_apply.py
+        | uv run python apply.py
     -> backup
        send-email
        render-report
@@ -15,7 +15,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

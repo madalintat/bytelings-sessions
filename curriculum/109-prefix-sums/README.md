@@ -98,6 +98,6 @@ For mutable arrays with range queries, you'd reach for a Fenwick
 tree or segment tree (out of scope here). For static arrays, prefix
 sums are the simplest possible answer.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A range-sum function with an off-by-one. Find it.

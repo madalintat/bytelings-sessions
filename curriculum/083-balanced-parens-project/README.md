@@ -69,6 +69,6 @@ Today's project chunk goes one step further: not just a yes/no, but a
 would have made it right. Real linters do this. You'll do it too,
 and the data structure does most of the work.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two near-correct balanced-paren attempts, each with one bug.

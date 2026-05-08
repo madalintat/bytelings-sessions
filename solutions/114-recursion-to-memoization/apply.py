@@ -3,13 +3,13 @@
 Tiny ATM dispenser: given a target amount, print the fewest coins
 to dispense from a fixed set.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)

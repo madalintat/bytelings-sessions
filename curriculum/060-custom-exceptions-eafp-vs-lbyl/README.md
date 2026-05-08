@@ -80,6 +80,6 @@ Three wins:
 The hierarchy mirrors the built-in tree: a single root, narrow leaves,
 catch the narrowest you can handle.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function written in heavy LBYL style. Rewrite it EAFP.

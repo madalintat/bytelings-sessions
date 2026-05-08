@@ -101,7 +101,7 @@ Refactor in small, testable steps:
 You don't need a refactoring epiphany. You need the tests to be the
 seatbelt. **Without tests, you're not refactoring — you're hoping.**
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A small but tangled function. Apply *extract function* once. The
 behavior tests must keep passing.

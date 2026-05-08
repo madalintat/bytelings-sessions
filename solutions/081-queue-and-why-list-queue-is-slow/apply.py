@@ -9,14 +9,14 @@ Stdin lines look like:
     quit            stop
 
 Try it:
-    printf "add print-doc\\nadd email-bob\\nnext\\nshow\\nquit\\n" | uv run python 05_apply.py
+    printf "add print-doc\\nadd email-bob\\nnext\\nshow\\nquit\\n" | uv run python apply.py
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

@@ -10,14 +10,14 @@ Try it:
   echo "2,Bob"  >> /tmp/p.csv
   echo "1,Alicia" > /tmp/s.csv
   echo "3,Carol" >> /tmp/s.csv
-  uv run python 05_apply.py /tmp/p.csv /tmp/s.csv
+  uv run python apply.py /tmp/p.csv /tmp/s.csv
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
@@ -35,7 +35,7 @@ def load(path: str) -> list[dict]:
 
 def main() -> None:
     if len(sys.argv) != 3:
-        print("usage: 05_apply.py <primary.csv> <secondary.csv>", file=sys.stderr)
+        print("usage: apply.py <primary.csv> <secondary.csv>", file=sys.stderr)
         sys.exit(2)
     merged = _solo.merge_rosters(load(sys.argv[1]), load(sys.argv[2]))
     for c in merged:

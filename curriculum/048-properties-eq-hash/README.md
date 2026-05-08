@@ -96,6 +96,6 @@ The pattern: **start with a plain attribute. Switch to `@property`
 when you need computation, validation, or read-only access** — without
 breaking the existing `obj.x` usage sites.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A class that overrides `__eq__` but forgot `__hash__`. Convict it.

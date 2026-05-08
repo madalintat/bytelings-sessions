@@ -15,20 +15,20 @@ This is mostly an excuse to traverse the tree we built; parsing is
 intentionally tiny.
 
 Try it:
-    echo "(1 (2 _ _) (3 _ _))" | uv run python 05_apply.py
+    echo "(1 (2 _ _) (3 _ _))" | uv run python apply.py
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)
 
 _spec_f = spec_from_file_location(
-    "_fluency", Path(__file__).parent / "02_fluency.py"
+    "_fluency", Path(__file__).parent / "fluency.py"
 )
 _fluency = module_from_spec(_spec_f)
 _spec_f.loader.exec_module(_fluency)

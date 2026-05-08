@@ -71,6 +71,6 @@ a                  # unchanged: [1, 2, 3, 4]
 The `=` doesn't copy a list. It binds another *name* to the same
 *object*. Day 4 (names vs values) was building toward this moment.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three tiny list operations are wrong. Patch them.

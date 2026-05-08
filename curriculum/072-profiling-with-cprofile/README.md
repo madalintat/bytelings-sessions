@@ -106,7 +106,7 @@ That's the whole reason we profile instead of guess. Profile, *then*
 optimize the function the data points to — not the one your gut
 points to. You will be surprised. Embrace the surprise.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A profiler decorator skeleton. Make it return the result and print
 stats sorted by cumulative time.

@@ -3,7 +3,7 @@
 Tiny CLI: tail the last N lines from stdin, then echo them.
 
 Try it:
-    seq 1 100 | uv run python 05_apply.py 5
+    seq 1 100 | uv run python apply.py 5
     -> last five lines: 96..100
 """
 import sys
@@ -11,7 +11,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

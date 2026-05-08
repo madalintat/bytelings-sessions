@@ -3,14 +3,14 @@
 Time both: a recursive sum that crashes on big input, vs an iterative
 sum that handles it. The point is to *feel* the difference.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_solo", Path(__file__).parent / "04_solo.py"
+    "_solo", Path(__file__).parent / "solo.py"
 )
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)

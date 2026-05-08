@@ -76,7 +76,7 @@ only matches if `s` starts with `hello`. New users reach for `match`
 because the name is friendly; almost always they wanted `search` or
 `fullmatch`.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three patterns are slightly off. Read each test, find the bug, fix
 the pattern.

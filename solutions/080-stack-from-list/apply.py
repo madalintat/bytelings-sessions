@@ -9,7 +9,7 @@ Read commands from stdin, one per line:
     quit           stop
 
 Run it:
-    printf "set hello\\nset world\\nundo\\nshow\\nquit\\n" | uv run python 05_apply.py
+    printf "set hello\\nset world\\nundo\\nshow\\nquit\\n" | uv run python apply.py
     -> hello
 """
 import sys
@@ -17,7 +17,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

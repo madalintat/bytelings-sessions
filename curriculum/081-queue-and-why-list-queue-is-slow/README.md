@@ -71,6 +71,6 @@ You'll wrap a `deque` in a `Queue` class today, with the same shape as
 yesterday's `Stack`: `enqueue`, `dequeue`, `peek`, `len`, `bool`. Same
 discipline — empty operations raise a clear `IndexError`.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A queue is misbehaving. Find the slow line and the wrong-end line.

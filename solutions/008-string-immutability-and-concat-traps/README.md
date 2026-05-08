@@ -77,6 +77,6 @@ greeting = f"Hello, {first} {last}!"              # better; readable
 For a fixed number of pieces, `+` and f-strings are equally fast.
 The pain only arrives when the count grows in a loop.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two of these functions look reasonable but suffer the trap. Fix them.

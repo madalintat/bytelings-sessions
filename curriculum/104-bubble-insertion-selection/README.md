@@ -90,6 +90,6 @@ production sorts (Timsort uses insertion sort on small chunks).
 For everything else: `sorted()`. The day's not for production code,
 it's for grokking the moves.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A swap is wrong. Find it.

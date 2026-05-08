@@ -99,7 +99,7 @@ stack exits. Whatever order they entered, they exit in reverse.
 - **`closing` / `suppress` / `ExitStack`**: when your problem already
   matches one of contextlib's recipes.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A class-form context manager rewritten as a function with a missing
 piece — wire it up.

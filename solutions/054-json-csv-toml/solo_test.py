@@ -1,11 +1,11 @@
-"""HIDDEN tests for rung 4 — do not peek before solving 04_solo.py."""
+"""HIDDEN tests for rung 4 — do not peek before solving solo.py."""
 import importlib.util
 import json
 from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_4"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "04_solo.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "solo.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 

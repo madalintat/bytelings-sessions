@@ -107,6 +107,6 @@ def fetch(): ...
 error. Always include `()` for an arg-taking decorator, even if you
 take all defaults.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A 3-layer decorator is partially built. Patch the missing pieces.

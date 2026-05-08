@@ -85,4 +85,4 @@ test builds a client with a mock transport and passes it to `fetch`.
 All of those are Day 58. Today is "make the core work end to end on
 the happy path plus the obvious error case."
 
-Open `02_fluency.py`.
+Open `fluency.py`.

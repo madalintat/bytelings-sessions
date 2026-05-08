@@ -82,6 +82,6 @@ flow, the rungs today are:
 When you finish today, you have a tool you can take to a real log
 directory and run.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Profile a small analyzer run and identify the hotspot.

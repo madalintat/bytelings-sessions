@@ -66,7 +66,7 @@ this fact.)
 2. Negative `step` is a reverse iterator. `s[::-1]` is the canonical
    "reverse a string" idiom.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three slice expressions are wrong. Read each test, predict the right
 slice, then patch it.

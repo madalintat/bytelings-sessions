@@ -111,6 +111,6 @@ Real-world hits: spell-checkers, DNA alignment (Needleman-Wunsch is
 2D edit distance with a different cost matrix), `diff` and `patch`,
 typing autocorrect, bioinformatics in general.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A unique-paths function with a wrong fill order. Fix it.

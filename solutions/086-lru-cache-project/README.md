@@ -87,6 +87,6 @@ under the hood. But the goal today isn't to use a black box — it's to
 *build* the box, so when it shows up in a system design question or a
 hot path you're profiling, you know what's inside.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two tiny LRU helpers, each near-correct.

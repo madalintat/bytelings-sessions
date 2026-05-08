@@ -115,7 +115,7 @@ d["missing"]           # [] — and now d["missing"] exists
 Use `.get(k)` if you want a non-creating read, or convert to a plain
 dict (`dict(d)`) before handing it to code that doesn't expect this.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three functions that do the "if not in d" dance. Replace with
 `defaultdict` or `Counter`.

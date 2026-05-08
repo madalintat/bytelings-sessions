@@ -72,6 +72,6 @@ If you find yourself wanting to iterate twice, that's the signal to
 make it a list. Otherwise, prefer the generator — the default answer
 when streaming data is "lazy."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 You'll convert two memory-hungry list comps into generator expressions.

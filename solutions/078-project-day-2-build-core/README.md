@@ -86,7 +86,7 @@ Then `log.debug(...)`, `log.info(...)`, etc. The CLI wires up the
 handlers and formatters. This split is what makes the analyzer
 embeddable in a bigger app later without log-config conflicts.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A near-complete `Aggregate` with one missing piece: the `merge`
 method. Add it.

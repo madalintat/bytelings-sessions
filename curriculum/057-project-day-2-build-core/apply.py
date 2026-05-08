@@ -3,7 +3,7 @@
 Snapshotter v0.2 — real httpx client + JSON output.
 
 Try it (offline, with the bundled mock transport):
-    uv run python 05_apply.py /tmp/snaps.json
+    uv run python apply.py /tmp/snaps.json
 
 To hit the real network, replace `_demo_client` with `httpx.AsyncClient()`.
 """
@@ -14,7 +14,7 @@ from pathlib import Path
 
 import httpx
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_spec)
 _spec.loader.exec_module(_solo)
 

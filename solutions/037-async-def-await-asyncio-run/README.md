@@ -74,6 +74,6 @@ The `async`/`await` syntax is just sugar over the iterator protocol
 you saw on Day 34, plus a scheduler. You don't have to memorize the
 plumbing — but if you ever need to debug it, that's the model.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two coroutines that look right but aren't quite.

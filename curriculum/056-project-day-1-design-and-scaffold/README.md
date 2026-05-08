@@ -60,4 +60,4 @@ pass only after you've wired up the function `app.py` actually calls.
 - **Day 3:** error handling + retry + tests + polish.
 
 Open the README at the project root if you haven't yet. Then come back
-here and start with `02_fluency.py`.
+here and start with `fluency.py`.

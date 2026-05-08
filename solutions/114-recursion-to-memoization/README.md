@@ -95,7 +95,7 @@ prediction in bioinformatics.
 If your recursive function takes hashable arguments and computes the
 same thing repeatedly, `@cache` is the answer.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A naive recursive function that's too slow on inputs > 30. Speed it
 up with one decorator.

@@ -90,6 +90,6 @@ def test_writes_a_log(tmp_path):
 
 That's the tour. Tomorrow: fixtures and parametrize in depth.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function and a half-broken test file. Make the tests pass.

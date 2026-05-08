@@ -91,6 +91,6 @@ When you build a class that holds a collection, ask: do users want to
 method. Adding them turns your class from "a thing with a method
 called `.size()`" into "a Pythonic container."
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A `Bag` class that stores items but doesn't speak the container protocol.

@@ -74,7 +74,7 @@ The big lesson: **most "parsing" is not regex**. It's split, strip,
 pad, and a tiny filter. Reach for regex only when the structure is
 genuinely irregular.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small parsers are wrong in ways the tests will pinpoint. Fix
 each by composing the patterns above.

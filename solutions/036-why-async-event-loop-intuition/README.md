@@ -67,6 +67,6 @@ the same time*, reach for threads/processes.
 Hold on to this picture. Every async pattern you'll see for the next
 six days is a variation on it.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two predict-the-output questions about a tiny chef-and-ovens simulation.

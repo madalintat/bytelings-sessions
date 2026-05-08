@@ -3,7 +3,7 @@
 Generates synthetic logs in a temp dir, runs the SERIAL and PARALLEL
 analyzers, prints both timings + the speedup, then prints the summary.
 
-Try it: uv run python 05_apply.py
+Try it: uv run python apply.py
 """
 import logging
 import tempfile
@@ -17,7 +17,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 
-_solo_spec = spec_from_file_location("_solo", Path(__file__).parent / "04_solo.py")
+_solo_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
 _solo = module_from_spec(_solo_spec)
 _solo_spec.loader.exec_module(_solo)
 

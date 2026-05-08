@@ -4,7 +4,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -31,7 +31,7 @@ def test_handles_non_ascii(tmp_path):
 
 def test_uses_atomic_write(tmp_path):
     """Source must use os.replace for atomicity."""
-    src = (_HERE / "02_fluency.py").read_text()
+    src = (_HERE / "fluency.py").read_text()
     assert "os.replace" in src, (
         "use os.replace(tmp, path) to make the write atomic"
     )

@@ -94,6 +94,6 @@ Negate values on push, negate them back on pop. Or wrap them in a
 `(priority, item)` tuple where `priority = -score`. There's no
 built-in max-heap.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two heap idioms have one bug each.

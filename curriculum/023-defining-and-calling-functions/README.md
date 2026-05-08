@@ -79,6 +79,6 @@ is worth memorizing — it does the clamp without an `if`.
 - **Docstring tells you what** *the function* **does**, not *how*. The
   body shows how.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small function shapes are slightly off. Match the spec.

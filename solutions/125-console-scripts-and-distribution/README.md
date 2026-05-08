@@ -10,7 +10,7 @@ Pretend Python doesn't have entry points. You wrote a CLI tool yesterday
 called `pyproject-summary`. Right now your friend has to run it with:
 
 ```bash
-uv run python 05_apply.py pyproject.toml
+uv run python apply.py pyproject.toml
 ```
 
 You want them to type:
@@ -89,4 +89,4 @@ string. Then a tiny dispatcher that, given a parsed mapping and a
 This is exactly what `setuptools` does at install time — minus the
 filesystem writes.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`

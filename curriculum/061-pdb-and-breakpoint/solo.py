@@ -14,7 +14,7 @@ Implement `last_frame_summary(func, *args, **kwargs) -> str | None`:
 
   Examples:
     last_frame_summary(lambda: None)              -> None
-    last_frame_summary(lambda: 1/0)               -> "ZeroDivisionError at 04_solo.py:NN in <lambda>: division by zero"
+    last_frame_summary(lambda: 1/0)               -> "ZeroDivisionError at solo.py:NN in <lambda>: division by zero"
 
 Hidden tests in 04_solo_test.py.
 """

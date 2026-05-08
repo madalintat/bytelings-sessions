@@ -6,7 +6,7 @@ from pathlib import Path
 
 _HERE = Path(__file__).parent
 _NAME = f"_{_HERE.name}_rung_2"
-_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "02_fluency.py")
+_spec = importlib.util.spec_from_file_location(_NAME, _HERE / "fluency.py")
 ex = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ex)
 
@@ -27,7 +27,7 @@ def test_runs_concurrently():
 
 def test_no_blocking_sleep():
     """time.sleep in async code freezes the event loop. Use asyncio.sleep."""
-    src = (_HERE / "02_fluency.py").read_text()
+    src = (_HERE / "fluency.py").read_text()
     assert "time.sleep(" not in src, (
         "time.sleep is blocking; use `await asyncio.sleep(...)` instead"
     )

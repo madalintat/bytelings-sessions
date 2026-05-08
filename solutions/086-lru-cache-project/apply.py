@@ -10,7 +10,7 @@ Commands:
 
 Try it:
     printf "put a 1\\nput b 2\\nget a\\nput c 3\\nshow\\nquit\\n" \\
-        | uv run python 05_apply.py 2
+        | uv run python apply.py 2
     -> 1
        a=1, c=3
     (b was evicted because get(a) made b the LRU)
@@ -20,7 +20,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 _spec = spec_from_file_location(
-    "_guided", Path(__file__).parent / "03_guided.py"
+    "_guided", Path(__file__).parent / "guided.py"
 )
 _guided = module_from_spec(_spec)
 _spec.loader.exec_module(_guided)

@@ -107,6 +107,6 @@ fast. The big wins (1000x or more) come from algorithmic changes:
 list -> set, n² -> n. Micro-optimizations buy you a percent. Find
 the algorithmic win, ship it, move on.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 A function that's accidentally O(n²). One-line fix.

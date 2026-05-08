@@ -95,6 +95,6 @@ dict(zip(keys, values))           # from parallel lists
 {k: f(k) for k in keys}           # dict comprehension (Phase 2)
 ```
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Three small dict ops are wrong. Patch them.

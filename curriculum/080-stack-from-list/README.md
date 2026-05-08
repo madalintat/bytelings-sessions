@@ -76,6 +76,6 @@ class Stack:
 
 Twelve lines. That's a real data structure.
 
-## Now: open `02_fluency.py`
+## Now: open `fluency.py`
 
 Two broken stack helpers to fix.
