@@ -214,7 +214,7 @@ def run(day_slug: str | None) -> None:
         return
     rungs = locator.rungs_of(day)
     rung = locator.rung_for(p, rungs)
-    if rung.test_file is None:
+    if rung.test_file is None or not rung.test_file.exists():
         click.echo(f"Rung {rung.number} has no automated tests.")
         return
     result = watcher.run_pytest(rung.test_file)

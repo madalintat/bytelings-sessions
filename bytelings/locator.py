@@ -36,7 +36,12 @@ _RUNG_SPECS = [
     (2, "fluency.py", "fluency_test.py", "Fluency drill"),
     (3, "guided.py", "guided_test.py", "Guided implement"),
     (4, "solo.py", "solo_test.py", "Solo implement"),
-    (5, "apply.py", None, "Apply"),
+    # Apply rung's test_file is optional. Most days don't ship one
+    # (apply runs as a script with inline assertions); days whose
+    # concept is "test something" (mocking, monkeypatch, fixtures)
+    # do ship apply_test.py. The watcher treats a missing
+    # apply_test.py as "no automated tests" — see watcher.py:on_save.
+    (5, "apply.py", "apply_test.py", "Apply"),
 ]
 
 

@@ -44,7 +44,12 @@ def test_rungs_of_day(fake_curriculum: Path):
     assert rungs[1].test_file is not None
     assert rungs[1].test_file.name == "fluency_test.py"
     assert rungs[4].file.name == "apply.py"
-    assert rungs[4].test_file is None
+    # Apply rung now declares apply_test.py as its (optional) test
+    # file. The Rung.test_file path is always set; the watcher checks
+    # .exists() before invoking pytest, so days without an
+    # apply_test.py still behave as "no automated tests" at runtime.
+    assert rungs[4].test_file is not None
+    assert rungs[4].test_file.name == "apply_test.py"
 
 
 def test_first_unfinished_day_skips_completed(fake_curriculum: Path):

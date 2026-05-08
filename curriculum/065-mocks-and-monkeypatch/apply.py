@@ -1,23 +1,48 @@
-"""Rung 5: Apply.
+"""Rung 5: Apply — write tests for env-var-driven code using monkeypatch.
 
-A tiny CLI that prints the greeting from rung 4. In real life, the
-`USER_NAME` would come from a deployment config or session.
+Solo (rung 4) had you write a function that reads env vars; the
+hidden tests already used monkeypatch on it. The lesson there was
+"write code that's testable." This rung flips it: the function is
+provided; YOUR job is to write the test.
 
-Try it:
-  USER_NAME=alice uv run python apply.py
-  uv run python apply.py
+Below is `is_production_env()`. It reads `os.environ["APP_ENV"]` and
+returns one of three categorical answers. There are three branches —
+production / staging / unknown — and you need to cover all three
+without your test ever touching the real environment of the machine
+running pytest.
+
+Open `apply_test.py` next to this file. It imports `is_production_env`
+from here. Fill in the three test bodies using pytest's `monkeypatch`
+fixture (`monkeypatch.setenv`, `monkeypatch.delenv`).
+
+Concept (the day's NEW one): monkeypatch is for testing YOUR
+env-aware code in isolation. It mutates `os.environ` for the test's
+lifetime and restores it on teardown — so a test that sets
+APP_ENV=production cannot leak into the next test. That's the
+property that makes env-driven code testable at all.
+
+Self-check:
+    uv run pytest apply_test.py
 """
-from importlib.util import module_from_spec, spec_from_file_location
-from pathlib import Path
+from __future__ import annotations
 
-_spec = spec_from_file_location("_solo", Path(__file__).parent / "solo.py")
-_solo = module_from_spec(_spec)
-_spec.loader.exec_module(_solo)
+import os
 
 
-def main() -> None:
-    print(_solo.current_user_greeting())
+def is_production_env() -> str:
+    """Return one of {"production", "staging", "unknown"}.
 
+    - APP_ENV=="production"  → "production"
+    - APP_ENV=="staging"     → "staging"
+    - APP_ENV unset, empty,
+      or any other value     → "unknown"
 
-if __name__ == "__main__":
-    main()
+    Reads env LAZILY (each call), not once at import time, so
+    monkeypatch can change it under the function's feet.
+    """
+    value = os.environ.get("APP_ENV", "").strip()
+    if value == "production":
+        return "production"
+    if value == "staging":
+        return "staging"
+    return "unknown"
