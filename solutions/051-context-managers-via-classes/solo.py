@@ -21,6 +21,8 @@ Usage:
     # store is back to {"a": 1} — the "b" was rolled back
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-19 (context-manager-protocol).
 """
 
 

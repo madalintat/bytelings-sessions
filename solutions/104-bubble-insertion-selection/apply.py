@@ -4,6 +4,8 @@ Show insertion sort's best-case vs worst-case empirically — same
 algorithm, very different comparison counts.
 
 Try it: uv run python apply.py
+
+Patterns: P-29 (binary-search-on-answer).
 """
 import random
 from importlib.util import module_from_spec, spec_from_file_location

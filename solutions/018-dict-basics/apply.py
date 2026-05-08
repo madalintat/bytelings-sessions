@@ -5,6 +5,8 @@ Tiny CLI: read 'KEY=VALUE' lines from stdin, print 'VALUE=KEY'.
 Reuses invert from rung 4.
 
 Try it: printf "a=1\nb=2\nc=1\n" | uv run python apply.py
+
+Patterns: P-07 (accumulator-into-dict), P-31 (string-build-via-list-then-join).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

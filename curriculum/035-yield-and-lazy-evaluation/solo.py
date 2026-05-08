@@ -20,6 +20,8 @@ Example:
     list(take_while(lambda n: n < 5, naturals()))   # [1, 2, 3, 4]
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-07 (accumulator-into-dict), P-12 (filter-then-map), P-16 (yield-from-passthrough), P-31 (string-build-via-list-then-join).
 """
 
 

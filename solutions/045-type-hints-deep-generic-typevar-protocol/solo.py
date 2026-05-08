@@ -15,6 +15,8 @@ Type the function so the parameter is `list[Sized]` and the return
 is `Sized`.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-15 (unpacking-into-named), P-21 (protocol-as-interface).
 """
 from typing import Protocol
 

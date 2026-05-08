@@ -5,6 +5,8 @@ Tiny CLI: tail the last N lines from stdin, then echo them.
 Try it:
     seq 1 100 | uv run python apply.py 5
     -> last five lines: 96..100
+
+Patterns: P-25 (deque-rotating-buffer).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

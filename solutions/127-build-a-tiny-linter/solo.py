@@ -20,6 +20,8 @@ Hidden tests cover: print not at top-level (in a function) is allowed,
 print as method call ignored, multiple rules firing on one file.
 
 Hint: M001/M002 live in fluency.py and guided.py — reuse them.
+
+Patterns: P-04 (dispatch-by-dict), P-30 (ast-walker-visitor).
 """
 from __future__ import annotations
 import ast

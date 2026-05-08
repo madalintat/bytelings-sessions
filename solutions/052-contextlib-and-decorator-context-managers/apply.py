@@ -4,6 +4,8 @@ Tiny CLI: read multiple files via ExitStack and print their lines.
 
 Try it:
     uv run python apply.py file1.txt file2.txt
+
+Patterns: P-19 (context-manager-protocol).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

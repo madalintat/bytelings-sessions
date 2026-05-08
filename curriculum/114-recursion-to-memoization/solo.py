@@ -22,6 +22,8 @@ Hints:
 - Use @cache. At the top level, if the result is infinity, return -1.
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-28 (memoize-recursive).
 """
 from functools import cache
 

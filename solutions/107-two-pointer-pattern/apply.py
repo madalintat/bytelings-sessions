@@ -1,6 +1,8 @@
 """Rung 5: Apply — palindrome checker via two pointers.
 
 Try it: uv run python apply.py
+
+Patterns: P-08 (two-pointer-from-ends), P-09 (two-pointer-fast-slow).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

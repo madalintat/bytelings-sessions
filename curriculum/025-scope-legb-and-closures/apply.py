@@ -6,6 +6,8 @@ using a memoizing closure. Print runtime to show the cache wins.
 Reuses make_memoizer from rung 4.
 
 Try it: printf "10\n10\n10\n" | uv run python apply.py
+
+Patterns: P-02 (in-place-vs-returning), P-17 (closure-over-counter).
 """
 import sys
 import time

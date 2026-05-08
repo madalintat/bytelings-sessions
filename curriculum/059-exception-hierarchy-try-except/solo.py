@@ -10,6 +10,8 @@ Implement `classify_failure(callable_, *args)` that:
   - Lets any other exception propagate (do NOT catch Exception).
 
 Hidden tests in 04_solo_test.py.
+
+Patterns: P-05 (eafp-try-then-fallback).
 """
 from typing import Any, Callable
 

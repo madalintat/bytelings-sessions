@@ -23,6 +23,8 @@ Example:
     # trace == [('plus_one', 4), ('times_two', 8), ('to_str', '8')]
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-17 (closure-over-counter).
 """
 from typing import Callable
 

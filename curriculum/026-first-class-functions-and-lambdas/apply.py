@@ -6,6 +6,8 @@ Tiny CLI: read one number from stdin, run it through a 3-step pipeline
 Reuses pipeline from rung 4.
 
 Try it: echo "  7  " | uv run python apply.py
+
+Patterns: P-17 (closure-over-counter).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

@@ -22,6 +22,8 @@ Spec:
     reverse([1, 2, 3, 4])    -> [4, 3, 2, 1]
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-09 (two-pointer-fast-slow).
 """
 from typing import Optional
 

@@ -13,6 +13,8 @@ eviction tomorrow on Day 86.
 Try it:
     printf "a.com\\nb.com\\na.com\\nc.com\\nb.com\\n" | uv run python apply.py
     -> b.com, c.com, a.com
+
+Patterns: P-09 (two-pointer-fast-slow).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

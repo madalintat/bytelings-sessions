@@ -4,6 +4,8 @@ Demonstrates how recursive calls stack and unwind by printing
 indented trace messages on the way down and on the way up.
 
 Try it: uv run python apply.py
+
+Patterns: P-16 (yield-from-passthrough), P-28 (memoize-recursive).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

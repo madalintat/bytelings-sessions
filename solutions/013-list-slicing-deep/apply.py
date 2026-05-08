@@ -8,6 +8,8 @@ Try it:
   echo -e "1\\n2\\n3" > /tmp/a.txt
   echo -e "a\\nb"     > /tmp/b.txt
   uv run python apply.py /tmp/a.txt /tmp/b.txt
+
+Patterns: P-02 (in-place-vs-returning).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

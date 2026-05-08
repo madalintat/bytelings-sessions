@@ -31,6 +31,8 @@ Examples:
     always_bad()       # raises ValueError; successes=0, failures=3
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-18 (decorator-as-wrapper).
 """
 import functools
 

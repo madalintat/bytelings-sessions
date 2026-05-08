@@ -18,6 +18,8 @@ Hint: try a `set` for fast lookup; if you hit a TypeError on
 unhashable items, fall back to a list-based check.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-20 (dataclass-as-record).
 """
 
 

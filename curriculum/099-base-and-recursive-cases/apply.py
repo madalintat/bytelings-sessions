@@ -5,6 +5,8 @@ recursion on tree-shaped data — exactly what a real `find . | wc -l`
 does on disk.
 
 Try it: uv run python apply.py
+
+Patterns: P-28 (memoize-recursive).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

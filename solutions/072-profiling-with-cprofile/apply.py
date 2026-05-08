@@ -4,6 +4,8 @@ Run `bottleneck` on a fake "request handler" that calls several
 helpers, only one of which is slow. Watch it find the slow one.
 
 Try it: uv run python apply.py
+
+Patterns: P-18 (decorator-as-wrapper).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

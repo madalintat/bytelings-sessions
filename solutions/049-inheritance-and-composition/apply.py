@@ -4,6 +4,8 @@ Tiny CLI: log a few messages and dump the store.
 
 Try it:
     uv run python apply.py hello world goodbye
+
+Patterns: P-02 (in-place-vs-returning), P-21 (protocol-as-interface), P-23 (dispatch-by-type).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

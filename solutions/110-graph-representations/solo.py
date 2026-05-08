@@ -20,6 +20,8 @@ weights in the graph (each directed edge once).
 6
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-10 (visit-set-for-dedup), P-27 (dfs-with-explicit-stack).
 """
 
 

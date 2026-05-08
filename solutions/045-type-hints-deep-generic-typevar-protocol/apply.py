@@ -4,6 +4,8 @@ Tiny CLI: read newline-separated strings, print the longest.
 
 Try it:
     printf 'cat\\nelephant\\ndog\\n' | uv run python apply.py
+
+Patterns: P-15 (unpacking-into-named), P-21 (protocol-as-interface).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

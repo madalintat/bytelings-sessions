@@ -14,6 +14,8 @@ Try it:
     -> 1
        a=1, c=3
     (b was evicted because get(a) made b the LRU)
+
+Patterns: P-25 (deque-rotating-buffer).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

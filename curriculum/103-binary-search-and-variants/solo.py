@@ -26,6 +26,8 @@ Hints:
 - That's an upper-bound-style query.
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-29 (binary-search-on-answer).
 """
 
 

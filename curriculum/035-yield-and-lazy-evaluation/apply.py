@@ -19,6 +19,8 @@ the property finite list-based code can't give you.
 
 Run it:
     uv run python apply.py
+
+Patterns: P-07 (accumulator-into-dict), P-12 (filter-then-map), P-16 (yield-from-passthrough), P-31 (string-build-via-list-then-join).
 """
 from __future__ import annotations
 

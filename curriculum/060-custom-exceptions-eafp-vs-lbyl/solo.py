@@ -19,6 +19,8 @@ Then implement:
   - Already borrowed (borrower not None) -> raise AlreadyCheckedOut.
 
 Use EAFP. Hidden tests in 04_solo_test.py.
+
+Patterns: P-04 (dispatch-by-dict), P-05 (eafp-try-then-fallback).
 """
 
 

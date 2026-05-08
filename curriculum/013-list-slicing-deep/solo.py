@@ -17,6 +17,8 @@ Examples:
 Hint: list slicing makes the "tail" part trivial.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-02 (in-place-vs-returning).
 """
 
 

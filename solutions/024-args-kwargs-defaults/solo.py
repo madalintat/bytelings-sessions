@@ -20,6 +20,8 @@ If any positional tag does, raise ValueError.
 (Keyword args can't start with _ in Python anyway, no check needed there.)
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-24 (sentinel-default).
 """
 
 

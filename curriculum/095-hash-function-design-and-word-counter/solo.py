@@ -26,6 +26,8 @@ counts-collect, one sort, one slice — but you choose the sort key
 carefully so ties are deterministic.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-03 (walrus-in-condition), P-07 (accumulator-into-dict), P-10 (visit-set-for-dedup), P-31 (string-build-via-list-then-join).
 """
 
 

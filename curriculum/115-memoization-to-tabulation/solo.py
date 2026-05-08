@@ -24,6 +24,8 @@ Hints (bottom-up is cleanest here):
 - After processing row 0, best[0] is the answer.
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-28 (memoize-recursive).
 """
 
 

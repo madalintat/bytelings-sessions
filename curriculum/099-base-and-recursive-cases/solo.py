@@ -21,6 +21,8 @@ Example:
     count_files(tree) == 4
 
 The tests in 04_solo_test.py are HIDDEN. Try without peeking.
+
+Patterns: P-28 (memoize-recursive).
 """
 
 

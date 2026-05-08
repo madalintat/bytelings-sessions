@@ -5,6 +5,8 @@ Skip lines below absolute zero.
 
 Try it:
     printf '0\\n100\\n-400\\n20\\n' | uv run python apply.py
+
+Patterns: P-22 (cached-property).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

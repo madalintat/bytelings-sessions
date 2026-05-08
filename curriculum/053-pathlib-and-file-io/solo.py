@@ -15,6 +15,8 @@ Constraints:
 - Don't load any file content — only stat sizes.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-01 (sentinel-loop), P-03 (walrus-in-condition).
 """
 from pathlib import Path
 

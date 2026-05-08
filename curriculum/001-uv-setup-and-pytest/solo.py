@@ -10,6 +10,8 @@ the number of vowels in it.
 - Non-letter characters don't count
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-01 (sentinel-loop).
 """
 
 

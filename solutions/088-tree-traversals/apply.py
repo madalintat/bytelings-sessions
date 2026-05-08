@@ -12,6 +12,8 @@ Try it:
     -> 4
        2 6
        1 3 7
+
+Patterns: P-16 (yield-from-passthrough).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

@@ -6,6 +6,8 @@ of tracebacks.
 
 Try it:
   printf '111 bob\n222 carol\n999 dave\n' | uv run python apply.py
+
+Patterns: P-04 (dispatch-by-dict), P-05 (eafp-try-then-fallback).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

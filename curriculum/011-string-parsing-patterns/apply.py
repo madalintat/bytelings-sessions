@@ -6,6 +6,8 @@ sorted by key.
 Reuses parse_env from rung 4.
 
 Try it: printf "B=2\nA=1\n# comment\nC=hello world\n" | uv run python apply.py
+
+Patterns: P-01 (sentinel-loop).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

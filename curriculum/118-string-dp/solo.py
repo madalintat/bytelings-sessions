@@ -24,6 +24,8 @@ Hints:
   expand-around-center version is fine here.
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-28 (memoize-recursive).
 """
 
 

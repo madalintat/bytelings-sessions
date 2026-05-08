@@ -22,6 +22,8 @@ discoverable.
 
 Run it:
     uv run python apply.py
+
+Patterns: P-02 (in-place-vs-returning), P-10 (visit-set-for-dedup).
 """
 from __future__ import annotations
 

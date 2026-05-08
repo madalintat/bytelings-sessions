@@ -29,6 +29,8 @@ Example:
     assert f.hits == 1 and f.misses == 2
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-25 (deque-rotating-buffer).
 """
 from typing import Callable
 

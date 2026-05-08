@@ -21,6 +21,8 @@ the protocol, every standard-library iteration tool — `list(...)`,
 
 Run it:
     uv run python apply.py
+
+Patterns: P-25 (deque-rotating-buffer).
 """
 from collections import deque
 

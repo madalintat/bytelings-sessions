@@ -4,6 +4,8 @@ Tiny CLI: dedupe lines from stdin, preserving first-occurrence order.
 
 Try it:
     printf 'a\\nb\\na\\nc\\nb\\n' | uv run python apply.py
+
+Patterns: P-20 (dataclass-as-record).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

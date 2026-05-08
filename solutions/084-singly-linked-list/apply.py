@@ -13,6 +13,8 @@ Try it:
     -> yo
        hello
        hi
+
+Patterns: P-09 (two-pointer-fast-slow).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

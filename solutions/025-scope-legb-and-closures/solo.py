@@ -27,6 +27,8 @@ Examples:
     assert slow_calls == [5]
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-02 (in-place-vs-returning), P-17 (closure-over-counter).
 """
 from typing import Callable
 

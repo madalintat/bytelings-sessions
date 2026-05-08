@@ -18,6 +18,8 @@ Hint: a `set` of "already seen" gives O(n) total. NOT `set(items)` —
 that loses order.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-02 (in-place-vs-returning), P-10 (visit-set-for-dedup).
 """
 
 

@@ -23,6 +23,8 @@ Hints:
 - Return slow + 1 at the end (size of unique prefix).
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-08 (two-pointer-from-ends), P-09 (two-pointer-fast-slow).
 """
 
 

@@ -4,6 +4,8 @@ A tiny "elevation cost" planner. Read a small triangle of altitudes
 and print the cheapest descent.
 
 Try it: uv run python apply.py
+
+Patterns: P-28 (memoize-recursive).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

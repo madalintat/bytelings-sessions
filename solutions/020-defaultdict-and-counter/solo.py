@@ -29,6 +29,8 @@ Hint: Counter supports subtraction with the - operator (and
 `a - b` keeps only POSITIVE counts. You'll need both directions.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-04 (dispatch-by-dict), P-07 (accumulator-into-dict).
 """
 
 

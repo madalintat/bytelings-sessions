@@ -4,6 +4,8 @@ Tiny rolling-average tool: read 30 days of fake revenue numbers and
 print the 7-day rolling average. Sliding window, O(n).
 
 Try it: uv run python apply.py
+
+Patterns: P-06 (sliding-window).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

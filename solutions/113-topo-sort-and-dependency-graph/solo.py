@@ -22,6 +22,8 @@ Hints:
   ordering (len == n), True; else False.
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-07 (accumulator-into-dict), P-27 (dfs-with-explicit-stack).
 """
 
 

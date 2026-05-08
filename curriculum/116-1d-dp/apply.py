@@ -4,6 +4,8 @@ A tiny "can I split this group into two even-weighted teams?" check
 using subset_sum: a subset summing to total/2 means yes.
 
 Try it: uv run python apply.py
+
+Patterns: P-04 (dispatch-by-dict), P-11 (reduce-with-identity).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

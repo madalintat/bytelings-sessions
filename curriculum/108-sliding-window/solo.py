@@ -24,6 +24,8 @@ Hints (variable-size sliding window):
 - Return 0 if best is still infinity.
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-06 (sliding-window).
 """
 
 

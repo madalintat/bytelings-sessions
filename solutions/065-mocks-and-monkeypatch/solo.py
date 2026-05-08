@@ -11,6 +11,8 @@ Implement `current_user_greeting() -> str`:
 Reads from `os.environ`. The hidden tests use monkeypatch.setenv /
 delenv — so your function must read env LAZILY (each call), not once
 at import time.
+
+Patterns: P-05 (eafp-try-then-fallback), P-07 (accumulator-into-dict), P-19 (context-manager-protocol).
 """
 import os
 

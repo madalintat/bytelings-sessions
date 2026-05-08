@@ -16,6 +16,8 @@ Build a class `Email`:
 - A method `domain(self) -> str`: returns the part after '@'.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-20 (dataclass-as-record).
 """
 
 

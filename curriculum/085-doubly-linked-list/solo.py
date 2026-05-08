@@ -16,6 +16,8 @@ The DoublyLinkedList in this file uses the same Node shape as Day 85's
 guided rung: `value`, `prev`, `next`, plus `head`, `tail`, `_size`.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-09 (two-pointer-fast-slow).
 """
 from typing import Iterator, Optional
 

@@ -20,6 +20,8 @@ Example:
     'A=1\nB = two\n# comment\nC=eq=ok' -> {'A': '1', 'B': 'two', 'C': 'eq=ok'}
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-01 (sentinel-loop).
 """
 
 

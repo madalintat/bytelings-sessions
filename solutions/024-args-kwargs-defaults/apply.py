@@ -6,6 +6,8 @@ each tag and its count.
 Reuses tally from rung 4.
 
 Try it: echo "a b a c b a" | uv run python apply.py
+
+Patterns: P-24 (sentinel-default).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

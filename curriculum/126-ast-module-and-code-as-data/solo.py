@@ -21,6 +21,8 @@ Functions appear in source order (use ast.walk; sort by line if needed).
 
 Hidden tests exercise: empty body, returns count excludes nested fns,
 async, *args/**kwargs not counted, deep nesting.
+
+Patterns: P-27 (dfs-with-explicit-stack), P-30 (ast-walker-visitor).
 """
 from __future__ import annotations
 import ast

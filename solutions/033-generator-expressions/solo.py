@@ -16,6 +16,8 @@ Hint: `sorted(...)` returns a list, but it accepts any iterable. You
 can sort a generator expression directly.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-11 (reduce-with-identity), P-12 (filter-then-map), P-13 (enumerate-for-index).
 """
 
 

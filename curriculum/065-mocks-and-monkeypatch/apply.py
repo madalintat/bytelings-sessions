@@ -23,6 +23,8 @@ property that makes env-driven code testable at all.
 
 Self-check:
     uv run pytest apply_test.py
+
+Patterns: P-05 (eafp-try-then-fallback), P-07 (accumulator-into-dict), P-19 (context-manager-protocol).
 """
 from __future__ import annotations
 

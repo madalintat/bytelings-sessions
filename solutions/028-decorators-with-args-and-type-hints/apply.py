@@ -8,6 +8,8 @@ Reuses validate from rung 4.
 Try it:
   echo "x=5"  | uv run python apply.py
   echo "x=-1" | uv run python apply.py
+
+Patterns: P-18 (decorator-as-wrapper), P-23 (dispatch-by-type).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

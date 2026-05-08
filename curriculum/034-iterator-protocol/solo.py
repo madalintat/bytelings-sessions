@@ -21,6 +21,8 @@ Hint: define a small inner class for the iterator, or define a helper
 class at module level.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-16 (yield-from-passthrough).
 """
 
 

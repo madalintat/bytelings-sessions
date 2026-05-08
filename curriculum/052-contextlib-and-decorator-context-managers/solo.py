@@ -15,6 +15,8 @@ Constraints:
 - The returned list must NOT contain the trailing "\n".
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-19 (context-manager-protocol).
 """
 from contextlib import ExitStack
 

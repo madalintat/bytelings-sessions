@@ -20,6 +20,8 @@ Examples:
 Hint: a sorted-tuple-of-chars makes a hashable group key.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-07 (accumulator-into-dict), P-10 (visit-set-for-dedup).
 """
 
 

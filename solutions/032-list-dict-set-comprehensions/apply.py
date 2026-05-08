@@ -10,6 +10,8 @@ Output: one line per tag, sorted, with the post ids that carry it.
 Try it:
     printf '{"id":1,"tags":["py"]}\\n{"id":2,"tags":["py","cli"]}\\n' \\
         | uv run python apply.py
+
+Patterns: P-12 (filter-then-map), P-13 (enumerate-for-index), P-14 (zip-parallel-walk).
 """
 import json
 import sys

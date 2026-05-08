@@ -20,6 +20,8 @@ Build:
 The test will inject both a real MemoryStore and a fake double.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-02 (in-place-vs-returning), P-21 (protocol-as-interface), P-23 (dispatch-by-type).
 """
 
 

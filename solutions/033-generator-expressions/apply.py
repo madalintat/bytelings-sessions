@@ -7,6 +7,8 @@ it pipes a generator expression through your `top_n_lengths`.
 
 Try it:
     printf 'a\\nbb\\nccc\\ndddd\\n' | uv run python apply.py 2
+
+Patterns: P-11 (reduce-with-identity), P-12 (filter-then-map), P-13 (enumerate-for-index).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

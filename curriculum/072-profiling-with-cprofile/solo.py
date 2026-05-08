@@ -20,6 +20,8 @@ Filter:
   - skip the entry whose funcname matches `func.__name__`.
 
 Hidden tests in 04_solo_test.py.
+
+Patterns: P-18 (decorator-as-wrapper).
 """
 from typing import Any, Callable
 

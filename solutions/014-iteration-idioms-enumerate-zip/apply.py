@@ -5,6 +5,8 @@ Tiny CLI: read numbers from stdin (one per line), print running diffs.
 Reuses running_diffs from rung 4.
 
 Try it: printf "10\n12\n9\n14\n" | uv run python apply.py
+
+Patterns: P-13 (enumerate-for-index), P-14 (zip-parallel-walk), P-15 (unpacking-into-named).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

@@ -4,6 +4,8 @@ Build a tiny city-distances graph as an adjacency list and print a
 summary. This is the same shape Dijkstra will use in PP5.
 
 Try it: uv run python apply.py
+
+Patterns: P-10 (visit-set-for-dedup), P-27 (dfs-with-explicit-stack).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

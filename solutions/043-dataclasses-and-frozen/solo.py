@@ -21,6 +21,8 @@ Constraints:
 - Don't use any external libraries.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-20 (dataclass-as-record).
 """
 from dataclasses import dataclass
 

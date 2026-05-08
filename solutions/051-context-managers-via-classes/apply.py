@@ -4,6 +4,8 @@ Tiny CLI: simulate a transactional update over a small in-memory store.
 
 Try it:
     uv run python apply.py
+
+Patterns: P-19 (context-manager-protocol).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

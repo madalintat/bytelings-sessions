@@ -17,6 +17,8 @@ Examples:
 Naive O(n^2) is fine for this rung. We'll improve it with sets later.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-13 (enumerate-for-index).
 """
 
 

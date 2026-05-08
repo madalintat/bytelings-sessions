@@ -13,6 +13,8 @@ ids that carry it.
 - Posts may share tags. The lists in the result must be sorted ascending.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-12 (filter-then-map), P-13 (enumerate-for-index), P-14 (zip-parallel-walk).
 """
 
 

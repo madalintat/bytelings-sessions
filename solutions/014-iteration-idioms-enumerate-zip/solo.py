@@ -17,6 +17,8 @@ Examples:
 Hint: zip(items, items[1:]) gives you each consecutive pair.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-13 (enumerate-for-index), P-14 (zip-parallel-walk), P-15 (unpacking-into-named).
 """
 
 

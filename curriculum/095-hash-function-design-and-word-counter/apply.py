@@ -8,6 +8,8 @@ Try it:
 Bonus diagnostic: also prints a quality score showing how well your
 djb2 hash distributes those word keys across 256 buckets. A real
 text corpus should land you very close to 1.0.
+
+Patterns: P-03 (walrus-in-condition), P-07 (accumulator-into-dict), P-10 (visit-set-for-dedup), P-31 (string-build-via-list-then-join).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

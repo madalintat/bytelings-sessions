@@ -13,6 +13,8 @@ for "abc":
                    = "cba"
 
 The tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-16 (yield-from-passthrough), P-28 (memoize-recursive).
 """
 
 

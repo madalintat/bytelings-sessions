@@ -4,6 +4,8 @@ Tiny CLI: print the largest file in a directory tree, with its size.
 
 Try it:
     uv run python apply.py /path/to/folder
+
+Patterns: P-01 (sentinel-loop), P-03 (walrus-in-condition).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

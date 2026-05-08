@@ -17,6 +17,8 @@ parent from goal back to start, reverse, return.
 
 Tests in 04_solo_test.py are HIDDEN — they accept any valid shortest
 path of the right length.
+
+Patterns: P-10 (visit-set-for-dedup), P-26 (bfs-from-source).
 """
 
 

@@ -7,6 +7,8 @@ Prints them concatenated.
 
 Try it:
     uv run python apply.py "tick,tock" 3
+
+Patterns: P-16 (yield-from-passthrough).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

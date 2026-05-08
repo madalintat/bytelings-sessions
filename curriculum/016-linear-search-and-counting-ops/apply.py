@@ -6,6 +6,8 @@ pair indices (or 'no pair').
 Reuses find_pair_with_sum from rung 4.
 
 Try it: printf "1\n2\n3\n4\n" | uv run python apply.py 5
+
+Patterns: P-13 (enumerate-for-index).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

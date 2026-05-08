@@ -9,6 +9,8 @@ Read a Python file path. Print a brief AST report:
 Reuses pieces from rungs 3 and 4.
 
     uv run python apply.py solo.py
+
+Patterns: P-27 (dfs-with-explicit-stack), P-30 (ast-walker-visitor).
 """
 from __future__ import annotations
 import ast

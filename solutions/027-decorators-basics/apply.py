@@ -6,6 +6,8 @@ decorator and print success/failure counts.
 Reuses retry from rung 4.
 
 Try it: uv run python apply.py 5
+
+Patterns: P-18 (decorator-as-wrapper).
 """
 import random
 import sys

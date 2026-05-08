@@ -5,6 +5,8 @@ Tiny CLI: read names from stdin (one per line), print an English list.
 Reuses english_list from rung 4.
 
 Try it: printf "alice\nbob\ncarol\n" | uv run python apply.py
+
+Patterns: P-31 (string-build-via-list-then-join).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

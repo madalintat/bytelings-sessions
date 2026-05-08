@@ -4,6 +4,8 @@ A small "import graph" sanity-check: report whether your modules have
 any circular imports.
 
 Try it: uv run python apply.py
+
+Patterns: P-10 (visit-set-for-dedup), P-27 (dfs-with-explicit-stack).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

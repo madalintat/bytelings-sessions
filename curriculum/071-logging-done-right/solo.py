@@ -14,6 +14,8 @@ Reasoning: a log aggregator can pull the dict back out as JSON,
 keeping fields searchable.
 
 Hidden tests in 04_solo_test.py.
+
+Patterns: P-01 (sentinel-loop), P-03 (walrus-in-condition).
 """
 import logging
 

@@ -5,6 +5,8 @@ Tiny CLI: read a sentence from stdin and print the vowel count.
 This uses count_vowels from rung 4 — your first reuse of your own code.
 
 Try it: echo "hello world" | uv run python apply.py
+
+Patterns: P-01 (sentinel-loop).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

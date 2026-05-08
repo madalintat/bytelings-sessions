@@ -4,6 +4,8 @@ Build a tiny package-build planner. Given a list of (prereq, dep)
 pairs, print the order you'd run them. Bail loudly on cycles.
 
 Try it: uv run python apply.py
+
+Patterns: P-07 (accumulator-into-dict), P-27 (dfs-with-explicit-stack).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

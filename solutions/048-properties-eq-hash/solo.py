@@ -16,6 +16,8 @@ Build a class `Temperature`:
 - `__repr__` returns f"Temperature({self.celsius})".
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-22 (cached-property).
 """
 
 

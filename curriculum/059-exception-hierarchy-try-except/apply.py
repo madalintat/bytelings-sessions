@@ -5,6 +5,8 @@ print a one-line summary using classify_failure from rung 4.
 
 Try it:
   printf '/etc/hosts\n/no/such/file\n' | uv run python apply.py
+
+Patterns: P-05 (eafp-try-then-fallback).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

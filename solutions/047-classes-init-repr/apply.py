@@ -6,6 +6,8 @@ Tiny CLI: read raw email addresses from stdin, print canonical form
 Try it:
     printf '  Test@Example.COM\\nbad-line\\nfoo@bar.org\\n' \\
       | uv run python apply.py
+
+Patterns: P-20 (dataclass-as-record).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

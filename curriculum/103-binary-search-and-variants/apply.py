@@ -5,6 +5,8 @@ print how many fall inside the window. Two binary searches do the
 whole job.
 
 Try it: uv run python apply.py
+
+Patterns: P-29 (binary-search-on-answer).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

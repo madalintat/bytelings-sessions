@@ -4,6 +4,8 @@ Set up a real logger and run audit() a few times. Output goes to stderr
 with timestamps and levels — exactly what you'd see in production.
 
 Try it: uv run python apply.py
+
+Patterns: P-01 (sentinel-loop), P-03 (walrus-in-condition).
 """
 import logging
 from importlib.util import module_from_spec, spec_from_file_location

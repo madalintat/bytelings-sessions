@@ -4,6 +4,8 @@ Mini "six degrees" demo: a tiny social graph, find the shortest path
 between two people.
 
 Try it: uv run python apply.py
+
+Patterns: P-10 (visit-set-for-dedup), P-26 (bfs-from-source).
 """
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path

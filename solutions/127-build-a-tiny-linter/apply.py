@@ -12,6 +12,8 @@ Exit code: 0 if no issues, 1 if any.
 
 This is the same output format `flake8` and `ruff` use, which means
 your editor's "jump to next problem" already groks it.
+
+Patterns: P-04 (dispatch-by-dict), P-30 (ast-walker-visitor).
 """
 from __future__ import annotations
 import sys

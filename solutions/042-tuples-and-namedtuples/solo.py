@@ -9,6 +9,8 @@ Then implement `min_max(values)`:
 - For an empty list, raise ValueError.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-14 (zip-parallel-walk), P-15 (unpacking-into-named).
 """
 from typing import NamedTuple
 

@@ -24,6 +24,8 @@ Examples:
     f(1, y=2)      # 3 (kwargs work)
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-18 (decorator-as-wrapper), P-23 (dispatch-by-type).
 """
 import functools
 import inspect

@@ -14,6 +14,8 @@ Use ', '.join and str slicing/concat in a way that stays O(n) overall.
 Don't build the result with `+=` in a loop.
 
 The tests in 04_solo_test.py are HIDDEN. Don't peek before you try.
+
+Patterns: P-31 (string-build-via-list-then-join).
 """
 
 

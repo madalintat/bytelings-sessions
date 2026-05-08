@@ -25,6 +25,8 @@ Hints:
 - Return dp[total].
 
 Tests in 04_solo_test.py are HIDDEN.
+
+Patterns: P-04 (dispatch-by-dict), P-11 (reduce-with-identity).
 """
 
 

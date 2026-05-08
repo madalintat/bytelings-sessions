@@ -4,6 +4,8 @@ Tiny CLI: build an order from CLI args and print the total.
 
 Args come as alternating name/cents pairs:
     uv run python apply.py apple 150 banana 80 coffee 350
+
+Patterns: P-20 (dataclass-as-record).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

@@ -6,6 +6,8 @@ sorted by char.
 Reuses letter_diff from rung 4.
 
 Try it: printf "hello\nworld\n" | uv run python apply.py
+
+Patterns: P-04 (dispatch-by-dict), P-07 (accumulator-into-dict).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location

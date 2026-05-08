@@ -4,6 +4,8 @@ Tiny CLI: read newline-separated integers from stdin, print min/max.
 
 Try it:
     printf '3\\n1\\n4\\n1\\n5\\n' | uv run python apply.py
+
+Patterns: P-14 (zip-parallel-walk), P-15 (unpacking-into-named).
 """
 import sys
 from importlib.util import module_from_spec, spec_from_file_location
