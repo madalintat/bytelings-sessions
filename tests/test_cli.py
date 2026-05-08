@@ -48,7 +48,7 @@ def test_init_force_overwrites(tmp_path: Path, monkeypatch):
 def test_list_shows_days(cli_runner: CliRunner, fake_curriculum: Path):
     result = cli_runner.invoke(cli, ["list"])
     assert result.exit_code == 0
-    assert "day-001" in result.output
+    assert "001-uv-setup" in result.output
 
 
 def test_hint_shows_concept(cli_runner: CliRunner, fake_curriculum: Path):
@@ -72,7 +72,7 @@ def test_today_shows_day_when_curriculum_present(
 ):
     result = cli_runner.invoke(cli, ["today"])
     assert result.exit_code == 0
-    assert "day-001" in result.output
+    assert "001-uv-setup" in result.output
 
 
 def test_progress_command_runs_clean(
