@@ -12,7 +12,7 @@ TOTAL_RUNGS = 5
 
 @dataclass
 class Progress:
-    version: int = 1
+    version: int = 2
     started_at: str = ""
     current_day: str = ""
     current_rung: int = 1
@@ -22,6 +22,7 @@ class Progress:
     longest_streak: int = 0
     last_active_date: str = ""
     notes_path: str = "progress/notes/"
+    patterns_seen: list[str] = field(default_factory=list)
 
 
 def _now_iso() -> str:
@@ -33,13 +34,27 @@ def _today_iso() -> str:
 
 
 def load(path: Path = DEFAULT_PROGRESS_PATH) -> Progress:
-    """Return Progress from disk, or a fresh default if the file is missing."""
+    """Return Progress from disk, or a fresh default if the file is missing.
+
+    Auto-migrates v1 schemas to v2 in place: any older progress.json
+    that predates the patterns_seen field gets migrated and saved back.
+    Slug back-compat for the curriculum tree itself lives in locator.py.
+    """
     if not path.exists():
         # last_active_date stays empty until the first day actually completes.
         # Otherwise mark_day_complete sees today == today and skips the streak
         # bump, leaving the very first completion at 0.
         return Progress(started_at=_now_iso(), last_active_date="")
-    return Progress(**json.loads(path.read_text()))
+    data = json.loads(path.read_text())
+    migrated = False
+    if data.get("version", 1) == 1:
+        data.setdefault("patterns_seen", [])
+        data["version"] = 2
+        migrated = True
+    p = Progress(**data)
+    if migrated:
+        save(p, path)
+    return p
 
 
 def save(p: Progress, path: Path = DEFAULT_PROGRESS_PATH) -> None:
