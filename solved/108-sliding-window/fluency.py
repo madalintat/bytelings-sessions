@@ -3,9 +3,6 @@
 Maintain `running` as the current window's sum. Subtract the
 outgoing element and add the incoming one each step. O(n) total
 instead of O(n*k).
-
-The `running = sum(arr[:k])` initialization computes the FIRST
-window in O(k) once; thereafter each step is O(1).
 """
 
 

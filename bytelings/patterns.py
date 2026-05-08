@@ -480,7 +480,7 @@ PATTERNS: tuple[Pattern, ...] = (
             "            seen.add(nb); stack.append(nb)"
         ),
         when="DFS where recursion depth is unsafe or order matters.",
-        days=(110, 112, 113, 126),
+        days=(110, 112, 113, 117, 120, 126),
     ),
     Pattern(
         id="P-28",
@@ -496,7 +496,7 @@ PATTERNS: tuple[Pattern, ...] = (
             "    return n if n < 2 else fib(n-1) + fib(n-2)"
         ),
         when="recursive function with overlapping subproblems.",
-        days=(99, 100, 114, 115, 118),
+        days=(99, 100, 114, 115, 116, 118, 120),
     ),
     Pattern(
         id="P-29",

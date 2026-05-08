@@ -215,9 +215,8 @@ difference between a 2-year-experience Python dev and a 5-year one.
   "Compare against the canonical solved/<day>/<rung>.py. List up to
   3 idiom upgrades the learner could make. Be specific. Don't suggest
   changes that don't materially improve readability or performance."
-- API: pluggable provider. Default to Anthropic's Claude (note: per
-  user preference, no AI attribution in commit messages, but USING
-  the API is fine). User configures their own API key.
+- API: pluggable provider behind a thin interface so any chat-completion
+  service works. User supplies their own API key via env var.
 - Caches per-rung critiques so re-runs on unchanged code don't
   re-call the API.
 
