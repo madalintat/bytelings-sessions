@@ -78,6 +78,21 @@ def _scaffold_source() -> Path | None:
     return None
 
 
+def _solutions_source() -> Path | None:
+    """Locate the bundled solutions/ mirror inside the installed package.
+
+    Falls back to the repo's `solutions/` for editable / dev installs.
+    Returns None if neither is present (e.g. v0.1.x install before M1).
+    """
+    bundled = resources.files("bytelings") / "_solutions"
+    if bundled.is_dir():
+        return Path(str(bundled))
+    repo_solutions = Path(__file__).resolve().parent.parent / "solutions"
+    if repo_solutions.is_dir():
+        return repo_solutions
+    return None
+
+
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx: click.Context) -> None:
@@ -119,6 +134,10 @@ def init(target: Path, force: bool) -> None:
         shutil.rmtree(target)
     shutil.copytree(src, target / "curriculum")
 
+    sol_src = _solutions_source()
+    if sol_src is not None:
+        shutil.copytree(sol_src, target / "solutions")
+
     scaffold_src = _scaffold_source()
     shipped: list[str] = []
     if scaffold_src is not None:
@@ -130,6 +149,8 @@ def init(target: Path, force: bool) -> None:
             shipped.append(fname)
 
     ui.console.print(f"[bold green]✔ Created ./{target}/[/bold green]")
+    if sol_src is not None:
+        ui.console.print(f"  solutions/ mirror copied (used by `bytelings reset`)")
     if shipped:
         ui.console.print(f"  shipped: {', '.join(shipped)}")
     ui.console.print(

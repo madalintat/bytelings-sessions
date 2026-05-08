@@ -52,14 +52,18 @@ packages = ["bytelings"]
 # `bytelings init` can copy them into a user's working directory after install.
 [tool.hatch.build.targets.wheel.force-include]
 "curriculum" = "bytelings/_curriculum"
+"solutions" = "bytelings/_solutions"
 "scaffold" = "bytelings/_scaffold"
 
 [tool.hatch.build.targets.sdist]
 include = [
     "bytelings/**",
     "curriculum/**",
+    "solutions/**",
     "scaffold/**",
     "tests/**",
+    "scripts/**",
+    "docs/**",
     "README.md",
     "LICENSE",
     "pyproject.toml",
