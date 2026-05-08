@@ -44,7 +44,7 @@ bytelings                # starts the watcher — save a file, see green panels
 
 That's it. Save a file. Watch the tests turn green. **That's the loop.**
 
-> **What does `bytelings init` do?** It creates a `./bytelings/` project folder containing the 135-day curriculum (every day's broken-on-purpose exercises and tests) plus a ready-to-go `pyproject.toml` + `uv.lock`. That's *your* working copy — you edit it, your progress saves alongside it, and `bytelings reset DAY` restores any day to its starter state. You only run `init` once.
+> **What does `bytelings init` do?** It creates a `./bytelings/` project folder containing the 135-day curriculum (every day's broken-on-purpose exercises and tests) plus a ready-to-go `pyproject.toml` + `uv.lock` and a `solutions/` mirror that `bytelings reset DAY` restores from. That's *your* working copy — you edit it, your progress saves alongside it. You only run `init` once.
 
 ---
 
