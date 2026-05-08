@@ -1,101 +1,88 @@
 ---
-day: day-114-recursion-to-memoization
+day: 114-three-lenses-dp-greedy-backtracking
 phase: phase-5-algorithms
 module: module-24-dp-greedy-backtracking
-style: pain
+style: compare
 ---
-# Day 114 — When Fibonacci is the slowest function you've ever written
+# Day 114 — Three lenses for the same kind of problem
 
-Run this:
+You're going to spend the next week on three techniques that share one
+ancestor and one weakness. The ancestor: brute-force recursion (Day 89).
+The weakness: brute force takes O(2^n) or worse, and your laptop fan
+will let you know.
 
-```python
-def fib(n):
-    if n <= 1:
-        return n
-    return fib(n - 1) + fib(n - 2)
+The three lenses are **dynamic programming**, **greedy**, and
+**backtracking**. Most "hard" interview problems can be solved by one
+of them. The actual skill — and the thing nobody teaches well — is
+*choosing which one* by recognizing what the problem looks like.
 
-print(fib(40))   # ...wait, why is my laptop fan spinning up?
-```
+The standard textbook teaches them as three separate chapters and
+hopes you figure it out. We're going to teach them as three *lenses*
+you try in order, and treat picking the right one as the main lesson.
 
-`fib(40)` takes a couple of seconds. `fib(50)` won't finish before
-your meeting. `fib(100)`, you'll be retired.
+## The three lenses, in one sentence each
 
-The pain: this recursion is *exponential*. `fib(n)` makes roughly
-2^n calls because the same subproblem is computed over and over. We
-saw this in Day 100's trace — `fib(2)` was computed twice in `fib(4)`,
-three times in `fib(5)`, eight times in `fib(7)`. By `fib(40)` you've
-recomputed `fib(2)` more than 100 million times.
+**DP** — *the same subproblem keeps coming back*. Cache it.
+> Signal: a recursive solution where `solve(state)` is called with the
+> same `state` more than once. Coin change, longest common subsequence,
+> edit distance, fib.
 
-## The fix in three characters
+**Greedy** — *the locally best move is also globally best, AND you can prove it*.
+> Signal: a problem that decomposes into independent decisions where
+> the best one at each step never has to be undone. Activity selection,
+> Huffman coding, Kruskal's MST, fractional knapsack.
 
-```python
-from functools import cache
+**Backtracking** — *try a choice, recurse, undo if it doesn't work, try the next*.
+> Signal: a constraint-satisfaction shape — the answer is a *sequence of
+> choices*, partial answers are checkable, and you can prune branches
+> that can't possibly succeed. N-queens, sudoku, word search, generating
+> all permutations under a constraint.
 
-@cache
-def fib(n):
-    if n <= 1:
-        return n
-    return fib(n - 1) + fib(n - 2)
-```
+## How you actually pick
 
-`@cache` (Python 3.9+) memoizes the function: the first time you call
-`fib(7)`, the answer is computed and stored; every subsequent call
-with `7` is an O(1) lookup. The same recursion that took seconds for
-n=40 returns instantly for n=400.
+You read the problem. You ask three questions in this order:
 
-That's all dynamic programming is, in its most useful form: **plain
-recursion plus memoization.**
+1. **Can a greedy proof work?** "Always pick the largest coin first" —
+   does that ALWAYS produce optimal? If yes, greedy is the cheapest.
+   If no (and you'll see this on Day 115 with US coins vs the made-up
+   currency `[1, 4, 5]`), greedy is wrong and you fall through.
+2. **Are subproblems overlapping?** Trace the recursion in your head.
+   Does `solve(state)` ever get called with the same `state` twice?
+   If yes, DP. Cache it.
+3. **Is the answer a sequence of choices with a prune condition?** If
+   the answer SHAPE is "a set of moves where each is constrained by
+   the previous," and you can detect a partial dead-end early, that's
+   backtracking.
 
-## Why it works: the right shape
+Most failures aren't because you can't implement DP. They're because
+you reached for greedy when DP was needed, or DP when the state space
+was actually exponential and you needed backtracking with pruning.
+Wrong-lens-first is more common than wrong-implementation.
 
-DP works when:
+## What the next 6 days look like
 
-1. **Optimal substructure.** The answer to a problem can be built
-   from answers to smaller problems. (Fib(n) = fib(n-1) + fib(n-2).)
-2. **Overlapping subproblems.** The same smaller problem is asked
-   many times. (Without overlap, recursion + memoization is just
-   recursion.)
+| Day | Problem | First instinct | What actually works | Why |
+|---|---|---|---|---|
+| 115 | coin change (currency `[1, 4, 5]`, target 8) | greedy: 5+1+1+1 | DP: 4+4 | greedy fails the proof |
+| 116 | 0/1 knapsack | DP: `dp[i][w] = max(take, skip)` | same | overlapping subproblems |
+| 117 | N-queens | DP on board state | backtracking with pruning | state space too big to memoize |
+| 118 | word break | backtracking | memoized backtracking | bridge — both lenses fit |
+| 119 | activity selection | DP | greedy with exchange-argument PROOF | greedy works AND we'll show why |
+| 120 | template consolidation | — | — | one-page recipe per lens |
 
-If you have both, memoization turns exponential into polynomial.
+Each day starts with the WRONG lens, demonstrates why it fails or is
+overkill, and switches. The wrongness is the lesson.
 
-## When not to bother
+## Pattern Catalog cross-refs
 
-If your recursion has no overlap — like merge sort, where you split
-into two completely fresh halves — there's nothing to cache. Adding
-`@cache` to merge sort wastes memory and changes nothing.
-
-The litmus test: do `fib(40)`'s subproblems repeat? Hugely. Do merge
-sort's? Never. The first benefits, the second doesn't.
-
-## The mental shift
-
-Before this module, recursion is "shrink the problem." Now recursion
-is "shrink the problem, *and remember*." That single addition is the
-gateway to DP.
-
-You'll write `@cache` more than any other DP technique in real code,
-because most of the time you don't need to be fancy. A recursive
-solution that's clear, correct, and memoized usually beats a clever
-hand-rolled bottom-up table — and is way easier to debug.
-
-## WHEN you reach for memoized recursion
-
-Trigger phrases that should make you reach for `@cache`:
-
-- "How many ways..." (counting paths, partitions, subsets).
-- "What's the optimal..." (cost, profit, length) where the answer
-  decomposes into a choice plus the optimal of a smaller subproblem.
-- "Can I reach..." with a state space that branches.
-
-Examples in the wild: spell-check edit distance, regex matching,
-text wrapping (Knuth's word-justification algorithm), dynamic
-pricing, optimal binary search trees, RNA secondary structure
-prediction in bioinformatics.
-
-If your recursive function takes hashable arguments and computes the
-same thing repeatedly, `@cache` is the answer.
+`bytelings patterns P-28` — memoize-recursive (the DP cache decorator).
+`bytelings patterns P-27` — dfs-with-explicit-stack (backtracking's
+control flow). `bytelings patterns P-29` — binary-search-on-answer
+(an unrelated optimization, in the same "find the recurrence" family).
 
 ## Now: open `fluency.py`
 
-A naive recursive function that's too slow on inputs > 30. Speed it
-up with one decorator.
+Today's fluency is a recognition drill — five short problem
+descriptions, you write down which lens you'd reach for. No code
+today, just recognition muscle. Tomorrow you start writing code with
+the wrong lens first.
