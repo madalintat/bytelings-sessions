@@ -53,6 +53,7 @@ packages = ["bytelings"]
 [tool.hatch.build.targets.wheel.force-include]
 "curriculum" = "bytelings/_curriculum"
 "solutions" = "bytelings/_solutions"
+"solved" = "bytelings/_solved"
 "scaffold" = "bytelings/_scaffold"
 
 [tool.hatch.build.targets.sdist]
@@ -60,6 +61,7 @@ include = [
     "bytelings/**",
     "curriculum/**",
     "solutions/**",
+    "solved/**",
     "scaffold/**",
     "tests/**",
     "scripts/**",

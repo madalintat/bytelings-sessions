@@ -80,6 +80,10 @@ def _solutions_source() -> Path | None:
     return _bundled_dir("solutions")
 
 
+def _solved_source() -> Path | None:
+    return _bundled_dir("solved")
+
+
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx: click.Context) -> None:
@@ -125,6 +129,10 @@ def init(target: Path, force: bool) -> None:
     if sol_src is not None:
         shutil.copytree(sol_src, target / "solutions")
 
+    solved_src = _solved_source()
+    if solved_src is not None:
+        shutil.copytree(solved_src, target / "solved")
+
     scaffold_src = _scaffold_source()
     shipped: list[str] = []
     if scaffold_src is not None:
@@ -137,7 +145,9 @@ def init(target: Path, force: bool) -> None:
 
     ui.console.print(f"[bold green]✔ Created ./{target}/[/bold green]")
     if sol_src is not None:
-        ui.console.print(f"  solutions/ mirror copied (used by `bytelings reset`)")
+        ui.console.print("  solutions/ mirror copied (used by `bytelings reset`)")
+    if solved_src is not None:
+        ui.console.print("  solved/ mirror copied (used by `bytelings solution`)")
     if shipped:
         ui.console.print(f"  shipped: {', '.join(shipped)}")
     ui.console.print(
