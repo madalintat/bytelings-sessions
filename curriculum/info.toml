@@ -105,7 +105,7 @@ slug = "012-list-basics"
 path = "curriculum/012-list-basics"
 day_number = 12
 phase = "phase-1-python-core"
-module = "module-03-lists-and-bigo"
+module = "module-03-lists-and-counting"
 old_slug = "day-012-list-basics"
 patterns = []
 
@@ -114,7 +114,7 @@ slug = "013-list-slicing-deep"
 path = "curriculum/013-list-slicing-deep"
 day_number = 13
 phase = "phase-1-python-core"
-module = "module-03-lists-and-bigo"
+module = "module-03-lists-and-counting"
 old_slug = "day-013-list-slicing-deep"
 patterns = []
 
@@ -123,7 +123,7 @@ slug = "014-iteration-idioms-enumerate-zip"
 path = "curriculum/014-iteration-idioms-enumerate-zip"
 day_number = 14
 phase = "phase-1-python-core"
-module = "module-03-lists-and-bigo"
+module = "module-03-lists-and-counting"
 old_slug = "day-014-iteration-idioms-enumerate-zip"
 patterns = []
 
@@ -132,7 +132,7 @@ slug = "015-list-methods-and-mutation"
 path = "curriculum/015-list-methods-and-mutation"
 day_number = 15
 phase = "phase-1-python-core"
-module = "module-03-lists-and-bigo"
+module = "module-03-lists-and-counting"
 old_slug = "day-015-list-methods-and-mutation"
 patterns = []
 
@@ -141,17 +141,17 @@ slug = "016-linear-search-and-counting-ops"
 path = "curriculum/016-linear-search-and-counting-ops"
 day_number = 16
 phase = "phase-1-python-core"
-module = "module-03-lists-and-bigo"
+module = "module-03-lists-and-counting"
 old_slug = "day-016-linear-search-and-counting-ops"
 patterns = []
 
 [[day]]
-slug = "017-bigo-notation-intro"
-path = "curriculum/017-bigo-notation-intro"
+slug = "017-what-is-hashing"
+path = "curriculum/017-what-is-hashing"
 day_number = 17
 phase = "phase-1-python-core"
-module = "module-03-lists-and-bigo"
-old_slug = "day-017-bigo-notation-intro"
+module = "module-04-hashing-dicts-sets-and-bigo"
+old_slug = "day-021-what-is-hashing"
 patterns = []
 
 [[day]]
@@ -159,7 +159,7 @@ slug = "018-dict-basics"
 path = "curriculum/018-dict-basics"
 day_number = 18
 phase = "phase-1-python-core"
-module = "module-04-dicts-sets-hashing"
+module = "module-04-hashing-dicts-sets-and-bigo"
 old_slug = "day-018-dict-basics"
 patterns = []
 
@@ -168,7 +168,7 @@ slug = "019-set-operations"
 path = "curriculum/019-set-operations"
 day_number = 19
 phase = "phase-1-python-core"
-module = "module-04-dicts-sets-hashing"
+module = "module-04-hashing-dicts-sets-and-bigo"
 old_slug = "day-019-set-operations"
 patterns = []
 
@@ -177,26 +177,26 @@ slug = "020-defaultdict-and-counter"
 path = "curriculum/020-defaultdict-and-counter"
 day_number = 20
 phase = "phase-1-python-core"
-module = "module-04-dicts-sets-hashing"
+module = "module-04-hashing-dicts-sets-and-bigo"
 old_slug = "day-020-defaultdict-and-counter"
 patterns = []
 
 [[day]]
-slug = "021-what-is-hashing"
-path = "curriculum/021-what-is-hashing"
+slug = "021-dict-vs-list-decision"
+path = "curriculum/021-dict-vs-list-decision"
 day_number = 21
 phase = "phase-1-python-core"
-module = "module-04-dicts-sets-hashing"
-old_slug = "day-021-what-is-hashing"
+module = "module-04-hashing-dicts-sets-and-bigo"
+old_slug = "day-022-dict-vs-list-decision"
 patterns = []
 
 [[day]]
-slug = "022-dict-vs-list-decision"
-path = "curriculum/022-dict-vs-list-decision"
+slug = "022-bigo-notation-intro"
+path = "curriculum/022-bigo-notation-intro"
 day_number = 22
 phase = "phase-1-python-core"
-module = "module-04-dicts-sets-hashing"
-old_slug = "day-022-dict-vs-list-decision"
+module = "module-04-hashing-dicts-sets-and-bigo"
+old_slug = "day-017-bigo-notation-intro"
 patterns = []
 
 [[day]]

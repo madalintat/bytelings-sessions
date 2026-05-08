@@ -27,20 +27,24 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "010-regex-essentials",
         "011-string-parsing-patterns",
     ]),
-    ("phase-1-python-core", "module-03-lists-and-bigo", [
+    # M6 reorder: hashing-first. Big-O moves from end-of-module-03 to
+    # end-of-module-04 (Day 22), so it lands AFTER learners have built
+    # the bucket-list mental model on Day 17 and used dict/set/Counter
+    # in Days 18-20. 'Amortized constant' earns concrete picture.
+    ("phase-1-python-core", "module-03-lists-and-counting", [
         "012-list-basics",
         "013-list-slicing-deep",
         "014-iteration-idioms-enumerate-zip",
         "015-list-methods-and-mutation",
         "016-linear-search-and-counting-ops",
-        "017-bigo-notation-intro",
     ]),
-    ("phase-1-python-core", "module-04-dicts-sets-hashing", [
-        "018-dict-basics",
+    ("phase-1-python-core", "module-04-hashing-dicts-sets-and-bigo", [
+        "017-what-is-hashing",          # was 021 — kicks off module 4
+        "018-dict-basics",              # named instance of hashmap from Day 17
         "019-set-operations",
         "020-defaultdict-and-counter",
-        "021-what-is-hashing",
-        "022-dict-vs-list-decision",
+        "021-dict-vs-list-decision",    # was 022
+        "022-bigo-notation-intro",      # was 017 — lands with worked example
     ]),
     ("phase-1-python-core", "module-05-functions-closures-decorators", [
         "023-defining-and-calling-functions",
