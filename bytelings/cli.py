@@ -108,7 +108,7 @@ def init(target: Path, force: bool) -> None:
     """Create TARGET project directory (default ./bytelings) with the
     bundled curriculum and a uv-ready pyproject.toml inside.
 
-    Then: [cd TARGET && uv sync && bytelings]
+    Then: cd TARGET && uv sync && bytelings
     """
     src = _curriculum_source()
     if target.exists():
@@ -117,7 +117,6 @@ def init(target: Path, force: bool) -> None:
                 f"{target} already exists. Re-run with --force to overwrite."
             )
         shutil.rmtree(target)
-    target.mkdir(parents=True)
     shutil.copytree(src, target / "curriculum")
 
     scaffold_src = _scaffold_source()
