@@ -29,7 +29,7 @@ Run [cyan]bytelings[/cyan] (no args) to start the watcher. Save your
 file → tests run → green panel → next rung. That's the loop.
 
 Other commands:
-  [cyan]bytelings init[/cyan]      — copy curriculum into a fresh dir
+  [cyan]bytelings init[/cyan]      — create ./bytelings/ with curriculum + scaffold
   [cyan]bytelings today[/cyan]     — what you're working on now
   [cyan]bytelings progress[/cyan]  — streak + completion bar
   [cyan]bytelings hint[/cyan]      — show today's concept page
@@ -41,8 +41,8 @@ Other commands:
 PRE_INIT_HINT = """\
 [bold yellow]No curriculum/ folder here.[/bold yellow]
 
-Run [cyan]bytelings init[/cyan] in an empty directory to copy the
-curriculum into your working folder, then start with [cyan]bytelings[/cyan].
+Run [cyan]bytelings init[/cyan] to create a [cyan]./bytelings/[/cyan] project folder, then
+[cyan]cd bytelings && uv sync && bytelings[/cyan] to start the watcher.
 """
 
 
@@ -96,8 +96,8 @@ def cli(ctx: click.Context) -> None:
 
 @cli.command()
 @click.option(
-    "--target", "-t", default="curriculum",
-    help="Directory to copy the curriculum into (default: ./curriculum).",
+    "--target", "-t", default="bytelings",
+    help="Project directory to create (default: ./bytelings).",
     type=click.Path(file_okay=False, path_type=Path),
 )
 @click.option(
@@ -105,12 +105,10 @@ def cli(ctx: click.Context) -> None:
     help="Overwrite an existing target directory.",
 )
 def init(target: Path, force: bool) -> None:
-    """Copy the bundled curriculum into TARGET (default ./curriculum).
+    """Create TARGET project directory (default ./bytelings) with the
+    bundled curriculum and a uv-ready pyproject.toml inside.
 
-    Also drops a pyproject.toml + uv.lock into the parent of TARGET so
-    `uv sync && uv run pytest` work out of the box.
-
-    Run this once in an empty directory before your first session.
+    Then: [cd TARGET && uv sync && bytelings]
     """
     src = _curriculum_source()
     if target.exists():
@@ -119,27 +117,24 @@ def init(target: Path, force: bool) -> None:
                 f"{target} already exists. Re-run with --force to overwrite."
             )
         shutil.rmtree(target)
-    shutil.copytree(src, target)
+    target.mkdir(parents=True)
+    shutil.copytree(src, target / "curriculum")
 
     scaffold_src = _scaffold_source()
-    scaffold_dst = target.parent if str(target.parent) != "" else Path(".")
     shipped: list[str] = []
     if scaffold_src is not None:
         for fname in ("pyproject.toml", "uv.lock"):
             f = scaffold_src / fname
             if not f.is_file():
                 continue
-            dst = scaffold_dst / fname
-            if dst.exists() and not force:
-                continue
-            shutil.copy2(f, dst)
+            shutil.copy2(f, target / fname)
             shipped.append(fname)
 
-    ui.console.print(f"[bold green]✔ Curriculum copied to ./{target}[/bold green]")
+    ui.console.print(f"[bold green]✔ Created ./{target}/[/bold green]")
     if shipped:
         ui.console.print(f"  shipped: {', '.join(shipped)}")
     ui.console.print(
-        "\n[dim]Next:[/dim] [cyan]uv sync && bytelings[/cyan] [dim]to start the watcher.[/dim]"
+        f"\n[dim]Next:[/dim] [cyan]cd {target} && uv sync && bytelings[/cyan]"
     )
 
 

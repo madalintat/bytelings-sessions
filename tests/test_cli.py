@@ -17,19 +17,19 @@ def test_welcome_runs_clean():
     )
 
 
-def test_init_copies_curriculum(tmp_path: Path, monkeypatch):
-    """`init` should produce a curriculum/ directory in cwd."""
+def test_init_creates_project_dir(tmp_path: Path, monkeypatch):
+    """`init` should produce a bytelings/ project dir with curriculum inside."""
     monkeypatch.chdir(tmp_path)
     result = CliRunner().invoke(cli, ["init"])
     assert result.exit_code == 0, result.output
-    assert (tmp_path / "curriculum").is_dir()
-    # Should contain at least phase-1
-    assert (tmp_path / "curriculum" / "phase-1-python-core").is_dir()
+    assert (tmp_path / "bytelings").is_dir()
+    assert (tmp_path / "bytelings" / "curriculum").is_dir()
+    assert (tmp_path / "bytelings" / "curriculum" / "phase-1-python-core").is_dir()
 
 
 def test_init_refuses_to_overwrite(tmp_path: Path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    (tmp_path / "curriculum").mkdir()
+    (tmp_path / "bytelings").mkdir()
     result = CliRunner().invoke(cli, ["init"])
     assert result.exit_code != 0
     assert "already exists" in result.output.lower()
@@ -37,12 +37,12 @@ def test_init_refuses_to_overwrite(tmp_path: Path, monkeypatch):
 
 def test_init_force_overwrites(tmp_path: Path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    (tmp_path / "curriculum").mkdir()
-    (tmp_path / "curriculum" / "stale.txt").write_text("old")
+    (tmp_path / "bytelings").mkdir()
+    (tmp_path / "bytelings" / "stale.txt").write_text("old")
     result = CliRunner().invoke(cli, ["init", "--force"])
     assert result.exit_code == 0, result.output
-    assert not (tmp_path / "curriculum" / "stale.txt").exists()
-    assert (tmp_path / "curriculum" / "phase-1-python-core").is_dir()
+    assert not (tmp_path / "bytelings" / "stale.txt").exists()
+    assert (tmp_path / "bytelings" / "curriculum" / "phase-1-python-core").is_dir()
 
 
 def test_list_shows_days(cli_runner: CliRunner, fake_curriculum: Path):
