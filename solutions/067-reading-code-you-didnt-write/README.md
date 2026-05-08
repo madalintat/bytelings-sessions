@@ -1,9 +1,11 @@
 ---
 day: day-067-reading-code-you-didnt-write
 phase: phase-3-quality-production
-module: module-13-reading-refactoring-style
+module: module-13-refactor-in-context
 style: tour
 ---
+**Connections:** today, you'll re-read and refactor the decorator you wrote on Day 27 (Module 5). Pull it up before you start.
+
 # Day 67 — A guided tour of "what does this thing do?"
 
 It's day three at a new job. Your task is to add a feature to a 4,000-

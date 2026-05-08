@@ -600,7 +600,7 @@ slug = "067-reading-code-you-didnt-write"
 path = "curriculum/067-reading-code-you-didnt-write"
 day_number = 67
 phase = "phase-3-quality-production"
-module = "module-13-reading-refactoring-style"
+module = "module-13-refactor-in-context"
 old_slug = "day-067-reading-code-you-didnt-write"
 patterns = []
 
@@ -609,7 +609,7 @@ slug = "068-refactoring-katas"
 path = "curriculum/068-refactoring-katas"
 day_number = 68
 phase = "phase-3-quality-production"
-module = "module-13-reading-refactoring-style"
+module = "module-13-refactor-in-context"
 old_slug = "day-068-refactoring-katas"
 patterns = []
 
@@ -618,7 +618,7 @@ slug = "069-pythonic-style-and-idioms"
 path = "curriculum/069-pythonic-style-and-idioms"
 day_number = 69
 phase = "phase-3-quality-production"
-module = "module-13-reading-refactoring-style"
+module = "module-13-refactor-in-context"
 old_slug = "day-069-pythonic-style-and-idioms"
 patterns = []
 
@@ -627,7 +627,7 @@ slug = "070-refactor-a-codebase"
 path = "curriculum/070-refactor-a-codebase"
 day_number = 70
 phase = "phase-3-quality-production"
-module = "module-13-reading-refactoring-style"
+module = "module-13-refactor-in-context"
 old_slug = "day-070-refactor-a-codebase"
 patterns = []
 

@@ -1,7 +1,7 @@
 ---
 day: day-070-refactor-a-codebase
 phase: phase-3-quality-production
-module: module-13-reading-refactoring-style
+module: module-13-refactor-in-context
 style: detective
 ---
 # Day 70 — The codebase has secrets. Find them.

@@ -1,9 +1,11 @@
 ---
 day: day-069-pythonic-style-and-idioms
 phase: phase-3-quality-production
-module: module-13-reading-refactoring-style
+module: module-13-refactor-in-context
 style: compare
 ---
+**Connections:** today, you'll re-read and refactor the test fixtures you wrote on Day 64 (Module 12). Pull it up before you start.
+
 # Day 69 — Two ways, one Pythonic
 
 There's a phrase old-school Pythonistas use: "code that *reads* like

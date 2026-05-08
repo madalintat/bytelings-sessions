@@ -1,9 +1,11 @@
 ---
 day: day-068-refactoring-katas
 phase: phase-3-quality-production
-module: module-13-reading-refactoring-style
+module: module-13-refactor-in-context
 style: pain
 ---
+**Connections:** today, you'll re-read and refactor the context manager you wrote on Day 51 (Module 9). Pull it up before you start.
+
 # Day 68 — The 80-line function nobody wants to touch
 
 You inherited this:

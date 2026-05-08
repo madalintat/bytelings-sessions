@@ -112,7 +112,14 @@ SKELETON: list[tuple[str, str, list[str]]] = [
         "065-mocks-and-monkeypatch",
         "066-property-based-testing-intro",
     ]),
-    ("phase-3-quality-production", "module-13-reading-refactoring-style", [
+        # M8: Module 13 retargeted as "refactor what YOU wrote in earlier
+    # modules." Days 67-69 each refactor specific prior-module code:
+    #   67 reads/refactors the decorator from Day 27 (Module 5)
+    #   68 reads/refactors the context manager from Day 51 (Module 9)
+    #   69 reads/refactors the test fixture from Day 64 (Module 12)
+    #   70 stays as the meta refactor-a-codebase capstone
+    # Day count + slugs unchanged so progress.json stays valid.
+    ("phase-3-quality-production", "module-13-refactor-in-context", [
         "067-reading-code-you-didnt-write",
         "068-refactoring-katas",
         "069-pythonic-style-and-idioms",
