@@ -1,7 +1,20 @@
-"""File-watching + pytest-running heart of the bytelings runner."""
+"""File-watching + pytest-running heart of the bytelings runner.
+
+The watcher owns three things:
+
+1. A ``watchdog`` observer scoped to the current day's directory.
+2. A persistent ``RunnerUI`` (alt-screen Live + Layout) that shows the
+   day, rung table, latest test status, and key legend, all in place.
+3. A keystroke loop on stdin (``r`` rerun, ``h`` hint, ``l`` list, ``c``
+   change day, ``q`` quit).
+
+Saves and keystrokes both mutate the same ``RunnerUI`` — that's why
+``RunnerUI`` is internally locked.
+"""
 from __future__ import annotations
 
 import contextlib
+import os
 import select
 import subprocess
 import sys
@@ -15,12 +28,7 @@ from watchdog.observers import Observer
 from . import locator, progress as progress_mod, ui
 
 DEBOUNCE_SECONDS = 0.4
-
-KEY_LEGEND = (
-    "[dim]keys: [bold]r[/bold] rerun  "
-    "[bold]h[/bold] hint  [bold]l[/bold] list  "
-    "[bold]c[/bold] change day  [bold]q[/bold] quit[/dim]"
-)
+DEBUG = bool(os.environ.get("BYTELINGS_DEBUG"))
 
 
 @dataclass
@@ -51,12 +59,7 @@ def _project_python() -> str:
 
 
 def uv_sync_done() -> bool:
-    """True iff the student's `.venv` exists and has pytest importable.
-
-    This is Rung 1's check on Day 1 (and a precondition for every rung
-    after): without `uv sync`, no test can run, so the watcher can't do
-    its job.
-    """
+    """True iff the student's `.venv` exists and has pytest importable."""
     py = _project_python_path()
     if py is None:
         return False
@@ -116,6 +119,8 @@ class _RungHandler(FileSystemEventHandler):
         if now - self._last_run < DEBOUNCE_SECONDS:
             return
         self._last_run = now
+        if DEBUG:
+            sys.stderr.write(f"[bytelings:debug] save event → {path_str}\n")
         self._on_change(path_str)
 
     def on_modified(self, event: FileSystemEvent) -> None:
@@ -168,11 +173,7 @@ def _read_key() -> str | None:
 
 
 def _wait_for_uv_sync(is_day_one: bool) -> bool:
-    """Block until `.venv` exists with pytest. Return False on Ctrl-C.
-
-    Polls once a second and re-prints a hint every ~10s so the student
-    sees something is alive while they go run `uv sync`.
-    """
+    """Block until `.venv` exists with pytest. Return False on Ctrl-C."""
     if uv_sync_done():
         return True
     if is_day_one:
@@ -204,6 +205,70 @@ def _wait_for_uv_sync(is_day_one: bool) -> bool:
     return True
 
 
+def _show_concept_blocking(day) -> None:
+    """Print a day's concept.md to the regular terminal and wait for a key."""
+    concept = day.path / "concept.md"
+    ui.header(f"Concept: {day.slug}")
+    if concept.is_file():
+        ui.console.print(concept.read_text())
+    else:
+        ui.console.print(f"[dim]No concept.md for {day.slug}[/dim]")
+    ui.console.print("\n[dim](press any key to return)[/dim]")
+    _wait_any_key()
+
+
+def _show_list_blocking(p, current_day_slug: str) -> None:
+    """Print every day with completion markers; wait for a key."""
+    completed = set(p.completed_days)
+    for d in locator.all_days():
+        if d.slug == current_day_slug:
+            marker = "[cyan]→[/cyan]"
+        elif d.slug in completed:
+            marker = "[green]✔[/green]"
+        else:
+            marker = "[dim]○[/dim]"
+        ui.console.print(f"{marker} {d.slug} [dim]({d.module})[/dim]")
+    ui.console.print("\n[dim](press any key to return)[/dim]")
+    _wait_any_key()
+
+
+def _wait_any_key() -> None:
+    """Block until the user presses any key. cbreak-aware."""
+    if not sys.stdin.isatty():
+        return
+    # If we're already in cbreak (the watcher's main loop), a single
+    # read is enough. If we're in cooked mode (after stop()), readline.
+    try:
+        sys.stdin.read(1)
+    except (KeyboardInterrupt, EOFError):
+        pass
+
+
+def _prompt_for_day(days) -> str | None:
+    """Prompt for a day slug or number on the cooked terminal. Returns slug."""
+    ui.console.print(
+        "[bold]Change day[/bold] — enter day number (e.g. 7) or slug, "
+        "or press Enter to cancel:"
+    )
+    try:
+        answer = input("> ").strip()
+    except (EOFError, KeyboardInterrupt):
+        return None
+    if not answer:
+        return None
+    if answer.isdigit():
+        n = int(answer)
+        target = next((d for d in days if d.number == n), None)
+    else:
+        target = next((d for d in days if d.slug == answer), None)
+    if target is None:
+        ui.console.print(f"[red]No such day: {answer}[/red]")
+        ui.console.print("[dim](press any key to return)[/dim]")
+        _wait_any_key()
+        return None
+    return target.slug
+
+
 def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
     """Watch the current rung's files and run tests on save until exit."""
     p = progress_mod.load(progress_path)
@@ -220,10 +285,11 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
 
     rungs = locator.rungs_of(day)
 
-    # Rung 1 = "Read the concept". On Day 1 specifically, the concept IS
-    # `uv sync`, so we check that here. For other days, `uv sync` is still
-    # a hard precondition — without `.venv`, no rung can run pytest, so
-    # we wait for it before going any further.
+    # Rung 1 = "Read the concept". On Day 1 the concept IS `uv sync`,
+    # so we gate on that. For any day, `uv sync` is a hard precondition
+    # — without `.venv`, no rung can run pytest. Wait for it before
+    # going any further. This happens BEFORE we start the live UI so
+    # the user can read the hint in the regular terminal.
     if p.current_rung == 1:
         is_day_one = day.number == 1
         if not _wait_for_uv_sync(is_day_one):
@@ -242,25 +308,30 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
             )
 
     rung = locator.rung_for(p, rungs)
-    ui.header(f"{day.slug} — Rung {rung.number}: {rung.name}")
-    ui.rung_table(rungs, p.current_rung, p.completed_rungs_today)
+
+    runner = ui.RunnerUI()
+    runner.set_title(f"{day.slug} — Rung {rung.number}: {rung.name}")
+    runner.set_rungs(rungs, p.current_rung, p.completed_rungs_today)
+
+    nonlocal_state: dict = {"next_day_slug": None}
 
     def on_save(_path: str) -> None:
         nonlocal p, rung, rungs, day
         if rung.test_file is None:
-            ui.banner_pass(
-                f"Rung {rung.number}",
-                "(no automated tests — run `bytelings done` to advance)",
+            runner.set_message(
+                f"[bold]Rung {rung.number}:[/bold] no automated tests.\n\n"
+                "Run [cyan]bytelings done[/cyan] to advance.",
+                border="cyan",
             )
             return
+        runner.set_running()
         result = run_pytest(rung.test_file)
         if not result.passed:
-            ui.banner_fail(result.summary)
+            runner.set_fail(result.summary)
             return
 
-        ui.banner_pass(f"Rung {rung.number}: {rung.name}")
         if rung.number == progress_mod.TOTAL_RUNGS:
-            # Find next day before applying state change so we can save once.
+            # Find next day before applying state change so we save once.
             next_day = next(
                 (d for d in locator.all_days()
                  if d.slug not in p.completed_days and d.slug != day.slug),
@@ -271,84 +342,42 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
                 next_day.slug if next_day else None,
             )
             progress_mod.save(p, progress_path)
-            ui.banner_day_complete(day.slug, p.streak_days)
+            runner.set_day_complete(day.slug, p.streak_days)
             if next_day is None:
-                ui.header("All 135 days complete!")
+                runner.set_title("All 135 days complete!")
                 return
             day = next_day
             rungs = locator.rungs_of(day)
-            # New day's Rung 1 is "Read the concept" (no test_file). Auto-pass it
-            # like the watcher's startup path so the student lands on Rung 2.
+            # New day's Rung 1 ("Read the concept") auto-passes so the
+            # student lands on Rung 2.
             p = progress_mod.mark_rung_complete(p, 1)
             progress_mod.save(p, progress_path)
             rung = locator.rung_for(p, rungs)
-            # Re-aim the observer at the new day's directory; otherwise saves
-            # in the new day silently fall on the floor.
+            # Re-aim the observer at the new day's directory; otherwise
+            # saves in the new day silently fall on the floor.
             observer.unschedule_all()
             observer.schedule(handler, str(day.path), recursive=False)
-            ui.header(f"Next up: {day.slug} — Rung {rung.number}: {rung.name}")
-            ui.rung_table(rungs, p.current_rung, p.completed_rungs_today)
+            runner.set_title(f"{day.slug} — Rung {rung.number}: {rung.name}")
+            runner.set_rungs(rungs, p.current_rung, p.completed_rungs_today)
         else:
+            runner.set_pass(f"Rung {rung.number}: {rung.name}")
             p = progress_mod.mark_rung_complete(p, rung.number)
             progress_mod.save(p, progress_path)
             rung = locator.rung_for(p, rungs)
-            ui.header(f"{day.slug} — Rung {rung.number}: {rung.name}")
+            runner.set_title(f"{day.slug} — Rung {rung.number}: {rung.name}")
+            runner.set_rungs(rungs, p.current_rung, p.completed_rungs_today)
 
     handler = _RungHandler(on_change=on_save)
     observer = Observer()
     observer.schedule(handler, str(day.path), recursive=False)
     observer.start()
 
-    def show_hint() -> None:
-        concept = day.path / "concept.md"
-        if concept.is_file():
-            ui.header(f"Concept: {day.slug}")
-            ui.console.print(concept.read_text())
-        else:
-            ui.console.print(f"[dim]No concept.md for {day.slug}[/dim]")
-
-    def show_list() -> None:
-        completed = set(p.completed_days)
-        for d in locator.all_days():
-            if d.slug == day.slug:
-                marker = "[cyan]→[/cyan]"
-            elif d.slug in completed:
-                marker = "[green]✔[/green]"
-            else:
-                marker = "[dim]○[/dim]"
-            ui.console.print(f"{marker} {d.slug} [dim]({d.module})[/dim]")
-
-    def change_day() -> bool:
-        """Prompt for a day; switch to it. Returns True if the watcher should restart."""
-        # Drop out of cbreak so input() works normally.
-        ui.console.print(
-            "[bold]Change day[/bold] — enter day number (e.g. 7) or slug, "
-            "or press Enter to cancel:"
-        )
-        try:
-            answer = input("> ").strip()
-        except (EOFError, KeyboardInterrupt):
-            return False
-        if not answer:
-            return False
-        days = locator.all_days()
-        target = None
-        if answer.isdigit():
-            n = int(answer)
-            target = next((d for d in days if d.number == n), None)
-        else:
-            target = next((d for d in days if d.slug == answer), None)
-        if target is None:
-            ui.console.print(f"[red]No such day: {answer}[/red]")
-            return False
-        nonlocal_state["next_day_slug"] = target.slug
-        return True
-
-    nonlocal_state: dict = {"next_day_slug": None, "quit": False}
+    runner.start()
     try:
+        # Initial run so the body shows real status, not the idle hint.
         if rung.test_file is not None:
             on_save(str(rung.file))
-        ui.console.print(KEY_LEGEND)
+
         with _cbreak_stdin() as keys_active:
             while True:
                 if not keys_active:
@@ -359,41 +388,31 @@ def watch(progress_path: Path = progress_mod.DEFAULT_PROGRESS_PATH) -> None:
                     time.sleep(0.05)
                     continue
                 if key == "q":
-                    nonlocal_state["quit"] = True
                     break
                 if key == "r":
                     if rung.test_file is not None:
                         on_save(str(rung.file))
                     else:
-                        ui.console.print(
-                            "[dim](no automated tests — run `bytelings done` to advance)[/dim]"
+                        runner.set_message(
+                            f"[bold]Rung {rung.number}:[/bold] no automated tests.",
+                            border="cyan",
                         )
-                    ui.console.print(KEY_LEGEND)
                 elif key == "h":
-                    show_hint()
-                    ui.console.print(KEY_LEGEND)
+                    with runner.paused():
+                        _show_concept_blocking(day)
                 elif key == "l":
-                    show_list()
-                    ui.console.print(KEY_LEGEND)
+                    with runner.paused():
+                        _show_list_blocking(p, day.slug)
                 elif key == "c":
-                    # input() needs canonical mode; pop out of cbreak briefly.
-                    import termios, tty
-                    fd = sys.stdin.fileno()
-                    saved = termios.tcgetattr(fd)
-                    termios.tcsetattr(fd, termios.TCSADRAIN, saved)  # leave alone
-                    try:
-                        # Restore canonical mode for input()
-                        cooked = termios.tcgetattr(fd)
-                        cooked[3] |= termios.ICANON | termios.ECHO
-                        termios.tcsetattr(fd, termios.TCSADRAIN, cooked)
-                        if change_day():
-                            break
-                    finally:
-                        tty.setcbreak(fd)
-                    ui.console.print(KEY_LEGEND)
+                    with runner.paused():
+                        slug = _prompt_for_day(locator.all_days())
+                    if slug is not None:
+                        nonlocal_state["next_day_slug"] = slug
+                        break
     except KeyboardInterrupt:
         pass
     finally:
+        runner.stop()
         observer.stop()
         observer.join()
 
